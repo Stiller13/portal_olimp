@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<rules override="1">
+		<group name="pmg_partner">
+			<allow>
+				<command class="MessageSystemGroupShow"/>
+				<command class="MessageSystemMessageCreate"/>
+				<command class="MSPersonalGroupUnsubscribe"/>
+			</allow>
+		</group>
+		<group name="pmg_admin">
+			<allow>
+				<command class="MessageSystemGroupShow"/>
+				<command class="MessageSystemMessageCreate"/>
+				<command class="MessageSystemGroupSettingsShow"/>
+				<command class="MessageSystemGroupSettingsSave"/>
+				<command class="MSPersonalGroupUnsubscribe"/>
+			</allow>
+		</group>
+
+		<group name="emg_expert">
+			<allow>
+				<command class="MessageSystemGroupShow"/>
+				<command class="MessageSystemMessageCreate"/>
+				<command class="MSExpertiseGroupOk"/>
+				<command class="MSExpertiseGroupReturn"/>
+			</allow>
+		</group>
+		<group name="emg_author">
+			<allow>
+				<command class="MessageSystemGroupShow"/>
+				<command class="MessageSystemMessageCreate"/>
+				<command class="MSExpertiseGroupStart"/>
+			</allow>
+		</group>
+		<group name="smg_partner">
+			<allow>
+				<command class="MessageSystemGroupShow"/>
+			</allow>
+		</group>
+
+		<group name="author">
+			<allow>
+				<command class="DefaultCommand"/>
+			</allow>
+		</group>
+		<group name="MESS">
+			<allow>
+			</allow>
+		</group>
+	</rules>
+
+	<roles>
+		<group name="ALL" role="1">
+			<allow>
+				<command class="Msg404"/>
+				<command class="DefaultCommand"/>
+			</allow>
+		</group>
+		<group name="USER" parent="ALL" role="1">
+			<allow>
+				<command class="SignOut"/>
+				<command class="MessageSystemFileGet"/>
+				<command class="MessageSystemGroupsShow"/>
+				<command class="MSExpertiseGroupToCreate"/>
+				<command class="MSPersonalGroupToCreate"/>
+				<command class="MSExpertiseGroupCreate"/>
+				<command class="MSPersonalGroupCreate"/>
+				<command class="MessageSystemShow"/>
+				<command class="MSSystemGroupToCreate"/>
+				<command class="MSSystemGroupCreate"/>
+				<command class="MessageSystemGroupShow">
+					<status name="open"/>
+				</command>
+			</allow>
+			<deny>
+			</deny>
+		</group>
+		<group name="GUEST" parent="ALL" role="1">
+			<allow>
+				<command class="SignIn"/>
+				<command class="SignInResult"/>
+				<command class="RegistrationResult"/>
+				<command class="Registration"/>
+			</allow>
+		</group>
+		<group name="ADMIN" parent="ALL" role="1">
+			<allow>
+			</allow>
+		</group>
+	</roles>
+
+</config>

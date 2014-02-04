@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<config>
+	<db host="localhost" user="root" pass="" dbname="conference" />
+	<routes>
+		<route id="default" path="/" command="DefaultCommand" />
+
+		<route id="profile" path="/users/{uid}" command="ShowProfile">
+			<param name="uid" pattern="uid" />
+		</route>
+
+		<route id="profile_ex" path="/users/{uid}/{extra}" command="ShowProfile">
+			<param name="uid" pattern="uid" />
+			<param name="extra">hello|world</param>
+		</route>
+
+		<route id="profile_edit" path="/profile/edit" command="EditProfile" method="get" />
+		<route id="profile_save" path="/profile/edit" command="SaveProfile" method="post" />
+
+	</routes>
+
+	<commands>
+		<command class="DefaultCommand" view="DefaultView" />
+		<command class="ShowProfile" view="Profile">
+			<param name="uid" required="1" />
+			<param name="extra" required="0">Default value</param>
+		</command>
+		<command class="EditProfile" view="EditProfile" />
+		<command class="SaveProfile" />
+	</commands>
+
+	<patterns>
+		<pattern id="default">[a-z\_]{1,32}</pattern>
+		<pattern id="uid">[0-9]{1,32}</pattern>
+		<pattern id="mg_type">system|comment|personal|expertise</pattern>
+	</patterns>
+</config>
