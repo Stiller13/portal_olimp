@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<routes override="1">
-		<route id="default" path="/" command="DefaultCommand" />
+		<route id="default" path="/default" command="DefaultCommand" />
 
 		<route id="SignIn" path="/SignIn" command="SignIn" method="get" />
 		<route id="SignInResult" path="/SignIn" command="SignInResult" method="post" />
@@ -12,6 +12,8 @@
 		<route id="SignOut" path="/SignOut" command="SignOut" method="get"/>
 		
 		<route id="Msg404" path="/Msg404" command="Msg404" method="get"/>
+
+		<route id="MainPageShow" path="/" command="MainPageShow" method="get" />
 
 		<route id="message_groups_types" path="/message" command="MessageSystemShow" method="get" />
 

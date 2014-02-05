@@ -82,6 +82,7 @@
 				<command class="SignInResult"/>
 				<command class="RegistrationResult"/>
 				<command class="Registration"/>
+				<command class="MainPageShow"/>
 			</allow>
 		</group>
 		<group name="ADMIN" parent="ALL" role="1">

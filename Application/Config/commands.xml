@@ -13,6 +13,8 @@
 
 		<command class="MessageSystemShow" view="MessageSystemShow" />
 
+		<command class="MainPageShow" view="MainPageShow" />
+
 		<command class="MessageSystemGroupsShow" view="MSGroupsShow">
 			<param name="mg_type" required="1"/>
 		</command>
