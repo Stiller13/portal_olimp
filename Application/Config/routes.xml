@@ -3,18 +3,6 @@
 	<routes override="1">
 		<route id="default" path="/" command="DefaultCommand" />
 
-		<route id="profile" path="/users/{uid}" command="ShowProfile">
-			<param name="uid" pattern="uid" />
-		</route>
-
-		<route id="profile_ex" path="/users/{uid}/{extra}" command="ShowProfile">
-			<param name="uid" pattern="uid" />
-			<param name="extra">hello|world</param>
-		</route>
-
-		<route id="profile_edit" path="/profile/edit" command="EditProfile" method="get" />
-		<route id="profile_save" path="/profile/edit" command="SaveProfile" method="post" />
-		
 		<route id="SignIn" path="/SignIn" command="SignIn" method="get" />
 		<route id="SignInResult" path="/SignIn" command="SignInResult" method="post" />
 		

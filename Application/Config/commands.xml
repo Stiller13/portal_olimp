@@ -2,17 +2,11 @@
 <config>
 	<commands override="1">
 		<command class="DefaultCommand" view="DefaultView" />
-		<command class="ShowProfile" view="Profile" mainObj="User">
-			<param name="uid" required="1" objId="1" />
-			<param name="extra" required="0">Default value</param>
-		</command>
-		<command class="EditProfile" view="EditProfile" />
-		<command class="SaveProfile" />
-		
+
 		<command class="SignIn" view="SignIn" />
 		<command class="Msg404" view="Msg404" />
 		<command class="SignOut" />
-		
+
 		<command class="SignInResult" view="SignInResult" />
 		<command class="RegistrationResult" view="RegistrationResult" />
 		<command class="Registration" view="Registration" />

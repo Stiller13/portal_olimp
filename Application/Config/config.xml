@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding='UTF-8'?>
 <config>
-	<db host="localhost" user="root" pass="" dbname="conference" />
+	<db host="localhost" user="root" pass="" dbname="portal_olimp" />
 	<routes>
 		<route id="default" path="/" command="DefaultCommand" />
 
