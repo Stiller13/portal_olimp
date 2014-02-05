@@ -4,8 +4,6 @@
 	<title>Главная</title>
 	<meta charset="utf8">
 	<link href="/Design/css/bootstrap.css" rel="stylesheet">
-	<style type="text/css">
-	</style>
 </head>
 <body>
 	<div class="container">
@@ -49,7 +47,7 @@
 				<div class="form-group">
 				<input type="text" class="form-control" placeholder="Search">
 				</div>
-				<button type="submit" class="btn btn-default btn-success">Submit</button>
+				<button type="submit" class="btn btn-success">Submit</button>
 			</form>
 			</div><!-- /.navbar-collapse -->
 		</nav>

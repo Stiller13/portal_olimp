@@ -5,7 +5,7 @@ namespace Application\Model;
 use System\Orm\DomainObject;
 
 /**
- * Авторизационный класс  
+ * РђРІС‚РѕСЂРёР·Р°С†РёРѕРЅРЅС‹Р№ РєР»Р°СЃСЃ  
  * 
  * @uses DomainObject
  * @package Auth
@@ -16,7 +16,7 @@ use System\Orm\DomainObject;
  */
 class Account extends DomainObject{
 	/**
-	 * логин пользователя 
+	 * Р»РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 
 	 * 
 	 * @var string
 	 * @access private
@@ -24,7 +24,7 @@ class Account extends DomainObject{
 	private $login;
 
 	/**
-	 * пароль  
+	 * РїР°СЂРѕР»СЊ  
 	 * 
 	 * @var string
 	 * @access private
@@ -32,7 +32,7 @@ class Account extends DomainObject{
 	private $pass;
 
 	/**
-	 * соль  
+	 * СЃРѕР»СЊ  
 	 * 
 	 * @var string
 	 * @access private
@@ -40,7 +40,7 @@ class Account extends DomainObject{
 	private $salt;
 
 	/**
-	 * глобальная группа. Например, админ.  
+	 * РіР»РѕР±Р°Р»СЊРЅР°СЏ РіСЂСѓРїРїР°. РќР°РїСЂРёРјРµСЂ, Р°РґРјРёРЅ.  
 	 * 
 	 * @var string
 	 * @access private
@@ -57,7 +57,7 @@ class Account extends DomainObject{
 	}
 
 	/**
-	 * Получить логина  
+	 * РџРѕР»СѓС‡РёС‚СЊ Р»РѕРіРёРЅР°  
 	 * 
 	 * @access public
 	 * @return string
@@ -67,7 +67,7 @@ class Account extends DomainObject{
 	}	
 	
 	/**
-	 * Установить логин  
+	 * РЈСЃС‚Р°РЅРѕРІРёС‚СЊ Р»РѕРіРёРЅ  
 	 * 
 	 * @param string $login 
 	 * @access public
@@ -79,7 +79,7 @@ class Account extends DomainObject{
 	}
 
 	/**
-	 * Получить пароль  
+	 * РџРѕР»СѓС‡РёС‚СЊ РїР°СЂРѕР»СЊ  
 	 * 
 	 * @access public
 	 * @return string
@@ -89,7 +89,7 @@ class Account extends DomainObject{
 	}
 
 	/**
-	 * Установить паролль  
+	 * РЈСЃС‚Р°РЅРѕРІРёС‚СЊ РїР°СЂРѕР»Р»СЊ  
 	 * 
 	 * @param string $pass 
 	 * @access public
@@ -101,7 +101,7 @@ class Account extends DomainObject{
 	}
 	
 	/**
-	 * Получить соль  
+	 * РџРѕР»СѓС‡РёС‚СЊ СЃРѕР»СЊ  
 	 * 
 	 * @access public
 	 * @return string
@@ -111,7 +111,7 @@ class Account extends DomainObject{
 	}
 
 	/**
-	 * Установить соль  
+	 * РЈСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРѕР»СЊ  
 	 * 
 	 * @param string $salt 
 	 * @access public
@@ -123,7 +123,7 @@ class Account extends DomainObject{
 	}
 
 	/**
-	 * Получить глобальную роль  
+	 * РџРѕР»СѓС‡РёС‚СЊ РіР»РѕР±Р°Р»СЊРЅСѓСЋ СЂРѕР»СЊ  
 	 * 
 	 * @access public
 	 * @return string
@@ -133,7 +133,7 @@ class Account extends DomainObject{
 	}
 
 	/**
-	 * Установить роль  
+	 * РЈСЃС‚Р°РЅРѕРІРёС‚СЊ СЂРѕР»СЊ  
 	 * 
 	 * @param string $status 
 	 * @access public
