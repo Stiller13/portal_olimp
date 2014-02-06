@@ -3,12 +3,14 @@
 	<commands override="1">
 		<command class="DefaultCommand" view="DefaultView" />
 
-		<command class="SignIn" view="SignIn" />
 		<command class="Msg404" view="Msg404" />
+
 		<command class="SignOut" />
 
-		<command class="SignInResult" view="SignInResult" />
+		<command class="SignInResult" />
+
 		<command class="RegistrationResult" view="RegistrationResult" />
+
 		<command class="Registration" view="Registration" />
 
 		<command class="MessageSystemShow" view="MessageSystemShow" />

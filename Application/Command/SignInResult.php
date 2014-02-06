@@ -1,4 +1,5 @@
 <?php
+
 namespace Application\Command;
 
 
@@ -13,7 +14,10 @@ class SignInResult extends \System\Core\Command{
 		$auth = Login::instance();
 		$result = $auth->SignIn($this->req["login"], $this->req["pass"]);
 
-		return $this->render(
-			array("result" => $result));
+		if ($result === "Ok") {
+			return $this->redirect("/");
+		}
+
+		return $this->render(array("message" => $result), "MainPageShow");
 	}
 }

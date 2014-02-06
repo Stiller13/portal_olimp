@@ -31,8 +31,8 @@ class DefaultGate extends Gate{
 		
 
 		$passwd = Crypter::genPass($pass, $acc->getSalt());
-		echo $passwd."<br>";
-		echo $acc->getPass();
+		// echo $passwd."<br>";
+		// echo $acc->getPass();
 		if ($acc->getPass() === $passwd){
 			$session = new Session();
 
@@ -44,7 +44,7 @@ class DefaultGate extends Gate{
 			//дальше не знаю. Что с группами и где они хранятся (к какому объекту)  - предстоит выяснить
 
 			$session->set('user', $user);
-			return "OK";	
+			return "Ok";
 		}
 		return "DENIED";
 	}
