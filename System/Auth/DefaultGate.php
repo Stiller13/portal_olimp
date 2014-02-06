@@ -18,18 +18,21 @@ class DefaultGate extends Gate{
 	}
 
 	public function SignIn($user, $pass){
-
+		
 		$factory= PersistenceFactory::getFactory('Account');
 		$finder= new DomainObjectAssembler($factory);
 		$idobj=$factory->getIndentityObject();
-		$idobj->field('authorization_login')->eq($user);
-		$acc = $finder->findOne($idobj,'authorization');
-
-		
+		$idobj->field('account_login')->eq($user);
+		$acc = $finder->findOne($idobj,'account');
+	
 		if (!$acc){
 			return "Not Found";
 		}
+		
+
 		$passwd = Crypter::genPass($pass, $acc->getSalt());
+		echo $passwd."<br>";
+		echo $acc->getPass();
 		if ($acc->getPass() === $passwd){
 			$session = new Session();
 
@@ -55,4 +58,4 @@ class DefaultGate extends Gate{
 }
 
 
-?>
+

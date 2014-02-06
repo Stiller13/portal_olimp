@@ -18,7 +18,7 @@ class Crypter {
 	 * @var string
 	 * @access private
 	 */
-	private $default_salt = "axqfHJAgtH!#&%";
+	static private $default_salt = "axqfHJAgtH!#&%";
 
 	public function __construct(){
 	}
@@ -32,7 +32,7 @@ class Crypter {
 	 * @return string - шифрованный пароль
 	 */
 	static public function genPass($pass, $salt){
-		$result_pass = md5(md5($salt).md5($pass).md5($default_pass));
+		$result_pass = sha1(sha1($salt).sha1($pass).sha1(self::$default_salt));
 		return $result_pass;
 	}
 

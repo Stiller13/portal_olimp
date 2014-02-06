@@ -1,0 +1,11 @@
+# sublime project file
+*.sublime-*
+# eclipse project files
+.buildpath
+.project
+# swap from vim
+*.*~
+*.swp
+# some tmp files 
+Application/Tmp/
+smarty/plugins
