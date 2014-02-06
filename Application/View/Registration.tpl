@@ -77,7 +77,7 @@
 
 			<div class="row">
 				<div class="col-md-4 col-md-offset-3">
-					<form class="form-horizontal form-signin" method="post" action="/Registration">
+					<form class="form-horizontal" method="post" action="/Registration">
 						{if $message_error}<div class="alert alert-danger">{$message_error}</div>{/if}
 						<div class="control-group">
 							<label class="control-label" for="inputLogin">Login</label>

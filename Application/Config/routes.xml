@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<routes override="1">
+		<route id="MainPageShow" path="/" command="MainPageShow" method="get" />
+
 		<route id="default" path="/default" command="DefaultCommand" />
 
 		<route id="SignInResult" path="/SignIn" command="SignInResult" method="post" />
 
-		<route id="Registration" path="/Registration" command="Registration" method="get" /> 
+		<route id="Registration" path="/Registration" command="Registration" method="get" />
 
 		<route id="RegistrationResult" path="/Registration" command="RegistrationResult" method="post" />
 
-		<route id="SignOut" path="/SignOut" command="SignOut" method="get"/>
+		<route id="SignOut" path="/SignOut" command="SignOut" method="get" />
 
-		<route id="Msg404" path="/Msg404" command="Msg404" method="get"/>
+		<route id="Msg404" path="/Msg404" command="Msg404" method="get" />
 
-		<route id="MainPageShow" path="/" command="MainPageShow" method="get" />
+<!-- профиль -->
+		<route id="MyProfileShow" path="/cabinet/profile" command="MyProfileShow" method="get" />
 
+		<route id="MyProfileSave" path="/cabinet/profile/save" command="MyProfileSave" method="post" />
+
+
+<!-- система ообщений -->
 		<route id="message_groups_types" path="/message" command="MessageSystemShow" method="get" />
 
 		<route id="message_groups_show" path="/message/{mg_type}/groups" command="MessageSystemGroupsShow" method="get">

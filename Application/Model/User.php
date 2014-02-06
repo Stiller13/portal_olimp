@@ -15,6 +15,10 @@ class User extends \System\Orm\DomainObject{
 
 	private $gender;
 
+	private $mail;
+
+	private $telephone;
+
 	private $role_in_group;
 
 	function setName($name) {
@@ -70,13 +74,22 @@ class User extends \System\Orm\DomainObject{
 		return $this->gender;
 	}
 
-	function setEducation($education) {
-		$this->education = $education;
+	function setMail($mail) {
+		$this->mail = $mail;
 		$this->markDirty();
 	}
 
-	function getEducation() {
-		return $this->education;
+	function getMail() {
+		return $this->mail;
+	}
+
+	function setTelephone($telephone) {
+		$this->telephone = $telephone;
+		$this->markDirty();
+	}
+
+	function getTelephone() {
+		return $this->telephone;
 	}
 
 	function setRoleInGroup($role) {

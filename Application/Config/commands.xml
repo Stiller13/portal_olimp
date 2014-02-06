@@ -13,6 +13,14 @@
 
 		<command class="Registration" view="Registration" />
 
+
+<!-- профиль -->
+		<command class="MyProfileShow" view="MyProfileShow" />
+
+		<command class="MyProfileSave" view="MyProfileSave" />
+
+
+<!-- система сообшений -->
 		<command class="MessageSystemShow" view="MessageSystemShow" />
 
 		<command class="MainPageShow" view="MainPageShow" />

@@ -61,6 +61,8 @@
 			<allow>
 				<command class="MainPageShow"/>
 				<command class="SignOut"/>
+				<command class="MyProfileShow"/>
+				<command class="MyProfileSave"/>
 				<command class="MessageSystemFileGet"/>
 				<command class="MessageSystemGroupsShow"/>
 				<command class="MSExpertiseGroupToCreate"/>

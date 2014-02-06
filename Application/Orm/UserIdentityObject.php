@@ -10,8 +10,11 @@ class UserIdentityObject extends \System\Orm\IdentityObject{
 			'user_name',
 			'user_surname',
 			'user_patronymic',
-			'paper_id',
-			'journal_id'));
+			'user_date',
+			'user_gender',
+			'user_residence',
+			'user_mail',
+			'user_telephone'));
 	}
 }
 ?>
