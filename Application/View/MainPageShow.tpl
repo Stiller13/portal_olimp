@@ -19,14 +19,14 @@
 						<li><a href="#">Мероприятия</a></li>
 						<li><a href="#">Курсы</a></li>
 						<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Action</a></li>
-							<li><a href="#">Another action</a></li>
-							<li><a href="#">Something else here</a></li>
-							<li><a href="#">Separated link</a></li>
-							<li><a href="#">One more separated link</a></li>
-						</ul>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li><a href="#">Separated link</a></li>
+								<li><a href="#">One more separated link</a></li>
+							</ul>
 						</li>
 					</ul>
 
@@ -56,7 +56,7 @@
 					{/if}
 				</div><!-- /.navbar-collapse -->
 			</nav>
-			{if $message}<div class="alert alert-danger">{$message}</div>{/if}
+			{if $message}<div class="alert {$type_message}"><p class="text-center">{$message}</p></div>{/if}
 			<div class="col-md-4 col-md-offset-3">
 				<a href="http://bsu.ru">
 				<img src="/Design/images/bsu.gif" alt="ГБУ">
@@ -75,7 +75,7 @@
 					</div>
 				</div>
 			</div>
-
+		</div>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="/Design/js/bootstrap.min.js"></script>
 	</body>

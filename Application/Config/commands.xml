@@ -9,7 +9,7 @@
 
 		<command class="SignInResult" />
 
-		<command class="RegistrationResult" view="RegistrationResult" />
+		<command class="RegistrationResult" />
 
 		<command class="Registration" view="Registration" />
 

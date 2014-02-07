@@ -56,7 +56,7 @@
 					{/if}
 				</div><!-- /.navbar-collapse -->
 			</nav>
-			{if $message}<div class="alert alert-danger">{$message}</div>{/if}
+			{if $message}<div class="alert {$type_message}"><p class="text-center">{$message}</p></div>{/if}
 
 			<div class="row">
 				<div class="col-md-4 col-md-offset-4">
@@ -91,7 +91,7 @@
 					</form>
 				</div>
 			</div>
-
+		</div>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="/Design/js/bootstrap.min.js"></script>
 	</body>

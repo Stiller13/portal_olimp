@@ -56,28 +56,27 @@
 					{/if}
 				</div><!-- /.navbar-collapse -->
 			</nav>
-			{if $message}<div class="alert alert-danger">{$message}</div>{/if}
+			{if $message}<div class="alert {$type_message}"><p class="text-center">{$message}</p></div>{/if}
 
 			<div class="row">
 				<div class="col-md-4 col-md-offset-3">
 					<form class="form-horizontal" method="post" action="/Registration">
-						{if $message_error}<div class="alert alert-danger">{$message_error}</div>{/if}
-						<div class="control-group">
+						<div class="input-group">
 							<label class="control-label" for="inputLogin">Login</label>
 							<input type="text" name="login" class="form-control" id="inputLogin" placeholder="Login">
 						</div>
-						<div class="control-group">
+						<div class="input-group">
 							<label class="control-label" for="inputPassword">Password1</label>
 							<input type="password" name="pass1" class="form-control" id="inputPassword" placeholder="Password1">
 						</div>
-						<div class="control-group">
+						<div class="input-group">
 							<label class="control-label" for="inputPassword">Password2</label>
 							<input type="password" name="pass2" class="form-control" id="inputPassword" placeholder="Password2">
 						</div>
-						<div class="control-group">
-							<div class="controls">
+						<div class="input-group">
+							<!-- <div class="controls"> -->
 								<button type="submit" name="signin" class="btn btn-success">Registration</button>
-							</div>
+							<!-- </div> -->
 						</div>
 					</form>
 				</div>
