@@ -14,11 +14,14 @@
 		<command class="Registration" view="Registration" />
 
 
-<!-- профиль -->
+<!-- кабинет -->
 		<command class="MyProfileShow" view="MyProfileShow" />
 
-		<command class="MyProfileSave" view="MyProfileSave" />
+		<command class="MyProfileSave" />
 
+		<command class="MyAccountShow" view="MyAccountShow" />
+
+		<command class="MyAccountSave" />
 
 <!-- система сообшений -->
 		<command class="MessageSystemShow" view="MessageSystemShow" />

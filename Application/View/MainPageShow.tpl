@@ -9,47 +9,12 @@
 	<body>
 		<div class="container">
 			<nav class="navbar navbar-default" role="navigation">
-				{if $user}
-					<p class="navbar-text pull-right">Signed in as {$user->getName()} {$user->getFamily()} <a class="btn btn-danger btn-xs" href="/SignOut">SignOut</a></p>
-				{else}
-				<div class="collapse navbar-collapse navbar-ex1-collapse">
-					<form class="navbar-form navbar-right" action="/SignIn" method="post">
-						<div class="form-group">
-							<a href="/Registration" class="navbar-link">Registration</a>
-						</div>
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Login" name="login">
-						</div>
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Password" name="pass">
-						</div>
-						<button type="submit" class="btn btn-success">SigIn</button>
-					</form>
-				</div>
-				{/if}
-			</nav>
-			{if $message}<div class="alert alert-danger">{$message}</div>{/if}
-
-			<div class="row">
-				<div class="col-sm-6 col-md-4 col-md-offset-5">
-					<a href="http://bsu.ru">
-					<img src="/Design/images/bsu.gif" alt="ГБУ">
-					<!-- цвет картинки #014397 -->
-					</a>
-				</div>
-				<div class="col-sm-10 col-md-offset-1">
-					<div class="page-header">
-						<h1>Портал олимпиадной информатики <small>будущее зависит только от тебя</small></h1>
-					</div>
-				</div>
-			</div>
-			<nav class="navbar navbar-default" role="navigation">
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
 						{if $user}
-							<li><a href="/cabinet/profile">Кабинет</a></li>
+							<li><a href="/cabinet">Кабинет</a></li>
 						{/if}
-						<li class="active"><a href="#">Главная</a></li>
+						<li class="active"><a href="/">Главная</a></li>
 						<li><a href="#">Новости</a></li>
 						<li><a href="#">Мероприятия</a></li>
 						<li><a href="#">Курсы</a></li>
@@ -64,14 +29,52 @@
 						</ul>
 						</li>
 					</ul>
-					<form class="navbar-form navbar-right" role="search">
+
+					{if $user}
+					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
 						<input type="text" class="form-control" placeholder="Search">
 						</div>
 						<button type="submit" class="btn btn-success">Submit</button>
 					</form>
+					<p class="navbar-text pull-right">Signed in as {$user->getName()} {$user->getFamily()} <a class="btn btn-danger btn-xs" href="/SignOut">SignOut</a></p>
+					{else}
+					<div class="collapse navbar-collapse navbar-ex1-collapse">
+						<form class="navbar-form navbar-right" action="/SignIn" method="post">
+							<div class="form-group">
+								<a href="/Registration" class="navbar-link">Registration</a>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Login" name="login">
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Password" name="pass">
+							</div>
+							<button type="submit" class="btn btn-success">SigIn</button>
+						</form>
+					</div>
+					{/if}
 				</div><!-- /.navbar-collapse -->
 			</nav>
+			{if $message}<div class="alert alert-danger">{$message}</div>{/if}
+			<div class="col-md-4 col-md-offset-3">
+				<a href="http://bsu.ru">
+				<img src="/Design/images/bsu.gif" alt="ГБУ">
+				<!-- цвет картинки #014397 -->
+				</a>
+			</div>
+			<div class="col-md-4">
+				<a href="#">
+				<img src="/Design/images/rssp.gif" alt="">
+				</a>
+			</div>
+			<div class="row">
+				<div class="col-sm-10 col-md-offset-1">
+					<div class="page-header">
+						<h1>Портал олимпиадной информатики <small>будущее зависит только от тебя</small></h1>
+					</div>
+				</div>
+			</div>
 
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="/Design/js/bootstrap.min.js"></script>

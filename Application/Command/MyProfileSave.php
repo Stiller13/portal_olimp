@@ -8,17 +8,15 @@ class MyProfileSave extends \System\Core\Command{
 		$session = new \System\Session\Session();
 		$user = $session->get("user");
 
-		if ($this->req['name']) {
-			$user->setName($this->req['name']);
-		}
+		$user->setName($this->req['name']);
+		$user->setFamily($this->req['surname']);
+		$user->setPatronymic($this->req['patronymic']);
+		$user->setBirthday($this->req['birthday']);
+		$user->setResidence($this->req['residence']);
+		$user->setGender($this->req['gender']);
+		$user->setMail($this->req['mail']);
+		$user->setTelephone($this->req['telephone']);
 
-		if ($this->req['surname']) {
-			$user->setFamily($this->req['surname']);
-		}
-
-		if ($this->req['patronymic']) {
-			$user->setPatronymic($this->req['patronymic']);
-		}
 
 		$factory = \System\Orm\PersistenceFactory::getFactory('User');
 		$finder = new \System\Orm\DomainObjectAssembler($factory);

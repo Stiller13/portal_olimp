@@ -15,10 +15,16 @@
 
 		<route id="Msg404" path="/Msg404" command="Msg404" method="get" />
 
-<!-- профиль -->
+<!-- кабинет -->
+		<route id="MyCabinet" path="/cabinet" command="MyAccountShow" method="get" />
+
 		<route id="MyProfileShow" path="/cabinet/profile" command="MyProfileShow" method="get" />
 
-		<route id="MyProfileSave" path="/cabinet/profile/save" command="MyProfileSave" method="post" />
+		<route id="MyProfileSave" path="/cabinet/profile" command="MyProfileSave" method="post" />
+
+		<route id="MyAccountShow" path="/cabinet/account" command="MyAccountShow" method="get" />
+
+		<route id="MyAccountSave" path="/cabinet/account" command="MyAccountSave" method="post" />
 
 
 <!-- система ообщений -->
