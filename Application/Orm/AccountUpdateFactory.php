@@ -8,7 +8,7 @@ class AccountUpdateFactory extends \System\Orm\UpdateFactory{
 		$values["login"]=$obj->getLogin();
 		$values["password"]=$obj->getPass();
 		$values["salt"]=$obj->getSalt();
-
+		
 		if($obj->getId() > -1){
 			return $this->buildStatement('update_account',$values);
 		}

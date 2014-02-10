@@ -64,15 +64,8 @@ class Registration {
 			$idobj=$factory->getIndentityObject();
 			$idobj->field('user_id')->eq($acc->getId());
 			$user = $finder->findOne($idobj,'user');
+			
 
-
-			/*$user = new User();
-			$factory= PersistenceFactory::getFactory('User');
-			$finder= new DomainObjectAssembler($factory);
-			$idobj=$factory->getIndentityObject();
-			$finder->insert();
-			$user = $finder->findOne($idobj,'user');
-			 */
 			return "Ok";
 		}
 		else {

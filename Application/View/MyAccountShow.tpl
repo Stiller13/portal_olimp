@@ -79,11 +79,11 @@
 						</div>
 						<div class="input-group">
 							<span class="input-group-addon">Новый пароль</span>
-							<input type="text" class="form-control" name="surname"}>
+							<input type="text" class="form-control" name="new_pass1"}>
 						</div>
 						<div class="input-group">
 							<span class="input-group-addon">Еще раз новый пароль</span>
-							<input type="text" class="form-control" name="patronymic"}>
+							<input type="text" class="form-control" name="new_pass2"}>
 						</div>
 						<div class="input-group">
 							<button type="submit" class="btn btn-success">Сохранить</button>

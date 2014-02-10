@@ -4,7 +4,6 @@ namespace System\Auth;
 use System\Core\Application;
 use System\Core\Command;
 use System\Auth\GroupMap;
-use PDO;
 use System\Auth\Group;
 use System\Session\Session;
 use System\Orm\PersistenceFactory;
