@@ -8,6 +8,7 @@ use System\Auth\Login;
  * @author user
  *        
  */
+
 class SignOut extends \System\Core\Command{
 	public function exec(){
 		$login = Login::instance();

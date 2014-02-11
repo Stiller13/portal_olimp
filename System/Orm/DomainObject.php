@@ -29,7 +29,7 @@ abstract class DomainObject{ //??????????? ??(!) ?????
     
     function finder(){
         $factory= PersistenceFactory::getFactory($this->targetClass());
-        return new DomainObjectAssembler($factory);   
+        return new DomainObjectAssembler($factory); 
     }
     
     function markNew(){

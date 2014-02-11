@@ -59,12 +59,7 @@
 		</group>
 		<group name="USER" parent="ALL" role="1">
 			<allow>
-				<command class="MainPageShow"/>
 				<command class="SignOut"/>
-				<command class="MyProfileShow"/>
-				<command class="MyProfileSave"/>
-				<command class="MyAccountShow"/>
-				<command class="MyAccountSave"/>
 				<command class="MessageSystemFileGet"/>
 				<command class="MessageSystemGroupsShow"/>
 				<command class="MSExpertiseGroupToCreate"/>
@@ -72,8 +67,6 @@
 				<command class="MSExpertiseGroupCreate"/>
 				<command class="MSPersonalGroupCreate"/>
 				<command class="MessageSystemShow"/>
-				<command class="MSSystemGroupToCreate"/>
-				<command class="MSSystemGroupCreate"/>
 				<command class="MessageSystemGroupShow">
 					<status name="open"/>
 				</command>
@@ -83,14 +76,17 @@
 		</group>
 		<group name="GUEST" parent="ALL" role="1">
 			<allow>
+				<command class="SignIn"/>
 				<command class="SignInResult"/>
 				<command class="RegistrationResult"/>
 				<command class="Registration"/>
-				<command class="MainPageShow"/>
 			</allow>
 		</group>
 		<group name="ADMIN" parent="ALL" role="1">
 			<allow>
+				<command class="MSSystemGroupToCreate"/>
+				<command class="MSSystemGroupCreate"/>
+				<command class="MessageSystemMessageCreate"/>
 			</allow>
 		</group>
 	</roles>

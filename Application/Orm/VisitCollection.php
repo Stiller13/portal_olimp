@@ -4,9 +4,9 @@ namespace Application\Orm;
 
 class VisitCollection extends \System\Orm\Collection {
 
-	public function targetClass() {
-		return "Visit";
-	}
+    public function targetClass() {
+        return "Visit";
+    }
 }
 
 ?>

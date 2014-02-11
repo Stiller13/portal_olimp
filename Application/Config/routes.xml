@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<routes override="1">
-		<route id="MainPageShow" path="/" command="MainPageShow" method="get" />
+		<route id="default" path="/" command="DefaultCommand" />
 
-		<route id="default" path="/default" command="DefaultCommand" />
+		<route id="profile" path="/users/{uid}" command="ShowProfile">
+			<param name="uid" pattern="uid" />
+		</route>
 
+		<route id="profile_ex" path="/users/{uid}/{extra}" command="ShowProfile">
+			<param name="uid" pattern="uid" />
+			<param name="extra">hello|world</param>
+		</route>
+
+		<route id="profile_edit" path="/profile/edit" command="EditProfile" method="get" />
+		<route id="profile_save" path="/profile/edit" command="SaveProfile" method="post" />
+
+		<route id="SignIn" path="/SignIn" command="SignIn" method="get" />
 		<route id="SignInResult" path="/SignIn" command="SignInResult" method="post" />
-
-		<route id="Registration" path="/Registration" command="Registration" method="get" />
-
+		
+		<route id="Registration" path="/Registration" command="Registration" method="get" /> 
 		<route id="RegistrationResult" path="/Registration" command="RegistrationResult" method="post" />
+		
+		<route id="SignOut" path="/SignOut" command="SignOut" method="get"/>
+		
+		<route id="Msg404" path="/Msg404" command="Msg404" method="get"/>
 
-		<route id="SignOut" path="/SignOut" command="SignOut" method="get" />
-
-		<route id="Msg404" path="/Msg404" command="Msg404" method="get" />
-
-<!-- кабинет -->
-		<route id="MyCabinet" path="/cabinet" command="MyAccountShow" method="get" />
-
-		<route id="MyProfileShow" path="/cabinet/profile" command="MyProfileShow" method="get" />
-
-		<route id="MyProfileSave" path="/cabinet/profile" command="MyProfileSave" method="post" />
-
-		<route id="MyAccountShow" path="/cabinet/account" command="MyAccountShow" method="get" />
-
-		<route id="MyAccountSave" path="/cabinet/account" command="MyAccountSave" method="post" />
-
-
-<!-- система ообщений -->
 		<route id="message_groups_types" path="/message" command="MessageSystemShow" method="get" />
 
 		<route id="message_groups_show" path="/message/{mg_type}/groups" command="MessageSystemGroupsShow" method="get">

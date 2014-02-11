@@ -32,22 +32,44 @@ class SystemMGManager extends \System\Msg\MessageGroupManager {
 		$idobj2 = $factory2->getIndentityObject();
 
 		$idobj2->addWhat(array('message_group_id', 'message_group_title', 'message_group_description', 'message_group_partners', 'message_group_type', 'message_group_status'));
-		$idobj2->addJoin('INNER',array('message_group','user_userset'),array('message_group_partners','userset_id'));
+		// $idobj2->addJoin('INNER',array('message_group','user_userset'),array('message_group_partners','userset_id'));
 		$idobj2->field('message_group_type')->eq($this->type_group);
 		$idobj2->field('message_group_status')->eq(5);
 
 		$second_list = $finder2->find($idobj2, 'message_group');
 		//супер код 0_o
-		$i = 1;
 		foreach ($second_list as $key => $value) {
-			if ($i%2 === 0)
-				$main_list->add($value);
-			$i++;
+			$main_list->add($value);
 		}
 
 		return $main_list;
 	}
 
-}
+	/**
+	 * Отправить сообщение
+	 */
+	public function SendMessage($data) {
+		// Создаем автора
+		$author = new \Application\Model\User();
+		$author->setId($data['author_id']);
 
+		if (is_null($data['upload']))
+			$data['upload'] = new \Application\Orm\FileCollection();
+
+		$new_message = new \Application\Model\SysMessage();
+		$new_message->setText($data['text']);
+		$new_message->setAuthor($author);
+		$new_message->setGroup($data['group_id']);
+		$new_message->setFiles($data['upload']);
+		$new_message->setStartShow($data['date_start']);
+		$new_message->setStopShow($data['date_stop']);
+
+
+		// Производим вставку
+		$message_factory = \System\Orm\PersistenceFactory::getFactory('SysMessage');
+		$message_finder = new \System\Orm\DomainObjectAssembler($message_factory);
+		$message_finder->insert($new_message);
+
+	}
+}
 ?>

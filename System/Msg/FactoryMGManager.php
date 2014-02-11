@@ -37,17 +37,17 @@ class FactoryMGManager {
 
 	static $roles = array(
 		'personal' => array(
-			'admin' => 11,
-			'partner' => 12),
+			'admin' => 5,
+			'partner' => 6),
 
 		'comment' => array(),
 
 		'expertise' => array(
-			'expert' => 13,
-			'author' => 14),
+			'expert' => 7,
+			'author' => 8),
 
 		'system' => array(
-			'partner' => 15));
+			'partner' => 9));
 
 	public static function getManager($type) {
 		$class = '\System\Msg\\'.self::$managers[$type];

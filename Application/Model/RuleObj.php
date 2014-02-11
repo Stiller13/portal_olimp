@@ -63,7 +63,7 @@ class RuleObj extends \System\Orm\DomainObject{
 	 * @return void
 	 */
 	public function setUser_id($user_id){
-		$this->user_id = $user_id;
+		$this->user_id - $user_id;
 		$this->markDirty();
 	}
 
@@ -134,7 +134,7 @@ class RuleObj extends \System\Orm\DomainObject{
 	}
 
 	public function targetClass(){
-		return 'RuleObj';
+		return 'RuleObj';	
 	}
 }	
 

@@ -6,12 +6,14 @@ class PersonalMessageGroupIdentityObject extends \System\Orm\IdentityObject {
 
     function __construct($field=null){
         parent::__construct($field, array(
-            'messagegroup_id',
-            'messagegroup_partners',
-            'messagegroup_type',
-            'messagegroup_status',
-            'user_userset_userset_id',
-            'user_userset_user_id'));
+            'message_group_id',
+            'message_group_title',
+            'message_group_description',
+            'message_group_partners',
+            'message_group_type',
+            'message_group_status',
+            'userset_id',
+            'user_id'));
     }
 }
 

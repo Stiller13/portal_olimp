@@ -2,9 +2,10 @@
 
 namespace Application\Orm;
 
-class UserCollection extends \System\Orm\Collection {
-	function targetClass() {
-		return "User";
-	}
+class UserCollection extends \System\Orm\Collection{
+    function targetClass(){
+        return "User";
+    }
 }
+
 ?>

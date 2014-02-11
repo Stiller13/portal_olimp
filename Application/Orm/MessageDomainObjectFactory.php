@@ -10,11 +10,11 @@ class MessageDomainObjectFactory extends \System\Orm\DomainObjectFactory {
 		$obj->setId($array['message_id']);
 		$obj->setText($array['message_text']);
 		$obj->setDate($array['message_date']);
-		$obj->setGroup($array['message_group']);
+		$obj->setGroup($array['messageset_id']);
 
-		// $obj->setFiles($this->createFiles($array['message_id']));
+		$obj->setFiles($this->createFiles($array['message_id']));
 
-		$obj->setAuthor($this->createAuthor($array['message_user']));
+		$obj->setAuthor($this->createAuthor($array['user_id']));
 
 		return $obj;
 	}

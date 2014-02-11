@@ -2,43 +2,28 @@
 <config>
 	<commands override="1">
 		<command class="DefaultCommand" view="DefaultView" />
-
-		<command class="Msg404" view="Msg404" />
+		<command class="ShowProfile" view="Profile" mainObj="User">
+			<param name="uid" required="1" objId="1" />
+			<param name="extra" required="0">Default value</param>
+		</command>
+		<command class="EditProfile" view="EditProfile" />
+		<command class="SaveProfile" />
 
 		<command class="SignIn" view="SignIn" />
-
+		<command class="Msg404" view="Msg404" />
 		<command class="SignOut" />
 
-		<command class="SignInResult" />
-
-		<command class="RegistrationResult" />
-
+		<command class="SignInResult" view="SignInResult" />
+		<command class="RegistrationResult" view="RegistrationResult" />
 		<command class="Registration" view="Registration" />
-
-
-<!-- кабинет -->
-		<command class="MyProfileShow" view="MyProfileShow" />
-
-		<command class="MyProfileSave" />
-
-		<command class="MyAccountShow" view="MyAccountShow" />
-
-		<command class="MyAccountSave" />
-
-
-<!-- система сообшений -->
-		<command class="MSShow" view="MSShow"/>
-
-		<command class="MSGroupsShow" view="MSGroupsShow">
-			<param name="mg_type" required="1"/>
-		</command>
-
-
 
 		<command class="MessageSystemShow" view="MessageSystemShow" />
 
-		<command class="MainPageShow" view="MainPageShow" />
+		<command class="MessageSystemShow" view="MessageSystemShow" />
 
+		<command class="MessageSystemGroupsShow" view="MSGroupsShow">
+			<param name="mg_type" required="1"/>
+		</command>
 
 		<command class="MessageSystemGroupShow" mainObj="messageset">
 			<param name="mg_type" required="1"/>
@@ -91,13 +76,5 @@
 		<command class="MessageSystemFileGet">
 			<param name="code" required="1"/>
 		</command>
-
-<!--Мероприятия -->
-		<command class="CreateEvent" view="CreateEvent"/>
-		<command class="CreateEventResult"/>
-		<command class="ShowEvent" view="ShowEvent">
-			<param name="e_id" required="1"/>
-		</command>
-
 	</commands>
 </config>
