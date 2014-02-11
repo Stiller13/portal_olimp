@@ -5,8 +5,6 @@
 
 		<command class="Msg404" view="Msg404" />
 
-		<command class="SignIn" view="SignIn" />
-
 		<command class="SignOut" />
 
 		<command class="SignInResult" />
@@ -25,20 +23,14 @@
 
 		<command class="MyAccountSave" />
 
-
 <!-- система сообшений -->
-		<command class="MSShow" view="MSShow"/>
-
-		<command class="MSGroupsShow" view="MSGroupsShow">
-			<param name="mg_type" required="1"/>
-		</command>
-
-
-
 		<command class="MessageSystemShow" view="MessageSystemShow" />
 
 		<command class="MainPageShow" view="MainPageShow" />
 
+		<command class="MessageSystemGroupsShow" view="MSGroupsShow">
+			<param name="mg_type" required="1"/>
+		</command>
 
 		<command class="MessageSystemGroupShow" mainObj="messageset">
 			<param name="mg_type" required="1"/>
@@ -93,11 +85,15 @@
 		</command>
 
 <!--Мероприятия -->
-		<command class="CreateEvent" view="CreateEvent"/>
-		<command class="CreateEventResult"/>
-		<command class="ShowEvent" view="ShowEvent">
+		<command class="EventCreate" view="EventCreate"/>
+		<command class="EventCreateResult"/>
+		<command class="EventShow" view="EventShow">
 			<param name="e_id" required="1"/>
 		</command>
+		<command class="EventChange" view="EventChange">
+			<param name="e_id" required="1"/>
+		</command>
+		<command class="EventChangeResult"/>
 
 	</commands>
 </config>

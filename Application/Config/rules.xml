@@ -77,6 +77,11 @@
 				<command class="MessageSystemGroupShow">
 					<status name="open"/>
 				</command>
+				<command class="EventCreate"/> <!--Потом убрать отсюда и вообще пересмотреть права -->
+				<command class="EventCreateResult"/>
+				<command class="EventShow"/>
+				<command class="EventChange"/>
+				<command class="EventChangeResult"/>
 			</allow>
 			<deny>
 			</deny>

@@ -85,5 +85,17 @@
 		<route id="return_expertise" path="/message/expertise/group/{mg_id}/return" command="MSExpertiseGroupReturn" method="post">
 			<param name="mg_id" pattern="uid"/>
 		</route>
+
+<!-- Мероприятия -->
+		<route id="EventCreate" path="/EventCreate" command="EventCreate" method="get" />
+		<route id="EventCreateResult" path="/EventCreateResult" command="EventCreateResult" method="post" />
+		<route id="EventShow" path="/EventShow/{e_id}" command="EventShow" method="get">
+			<param name="e_id">[1-9][0-9]*</param>
+		</route>
+		<route id="EventChange" path="/EventChange/{e_id}" command="EventChange" method="get">
+			<param name="e_id">[1-9][0-9]*</param>
+		</route>
+		<route id="EventChangeResult" path="/EventChangeResult" command="EventChangeResult" method="post" />
+
 	</routes>
 </config>

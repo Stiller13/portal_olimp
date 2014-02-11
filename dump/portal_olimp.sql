@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Фев 10 2014 г., 04:10
+-- Время создания: Фев 11 2014 г., 11:35
 -- Версия сервера: 5.6.14
 -- Версия PHP: 5.5.6
 
@@ -61,11 +61,11 @@ UPDATE `account` SET `account_password`=password, `account_salt`=salt WHERE `acc
 COMMIT;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_event`(IN `id` INT, IN `title` VARCHAR(255), IN `description_public` TEXT, IN `description_private` TEXT, IN `type` VARCHAR(10), IN `confirm` BOOLEAN, IN `confirm_description` TEXT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_event`(IN `title` VARCHAR(255), IN `description_public` TEXT, IN `description_private` TEXT, IN `type` VARCHAR(10), IN `confirm` BOOLEAN, IN `confirm_description` TEXT, IN `id` INT)
     NO SQL
 BEGIN
 START TRANSACTION;
-UPDATE `event` SET `event_title`=title, `event_description_public`=description_public,`event_description_private`=description_private, `event_type`=type, `event_confirm`=confirm, `event_confirm_description`=event_confirm_description WHERE `event_id`=id;
+UPDATE `event` SET `event_title`=title, `event_description_public`=description_public,`event_description_private`=description_private, `event_type`=type, `event_confirm`=confirm, `event_confirm_description`=confirm_description WHERE `event_id`=id;
 COMMIT;
 END$$
 
@@ -149,14 +149,26 @@ CREATE TABLE IF NOT EXISTS `event` (
   `event_userset_id` int(11) NOT NULL,
   `event_messagegroup_id` int(11) NOT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Дамп данных таблицы `event`
 --
 
 INSERT INTO `event` (`event_id`, `event_title`, `event_description_public`, `event_description_private`, `event_type`, `event_confirm`, `event_confirm_description`, `event_userset_id`, `event_messagegroup_id`) VALUES
-(1, 'even_changed', 'public', 'private', 'closed', 1, 'qqwe', 1, 1);
+(1, 'even_changed', 'public', 'private', 'closed', 1, 'qqwe', 1, 1),
+(2, 'qwe', 'qwe', 'qwe', '', 0, 'eeeq', 2, 2),
+(3, 'ddd', 'ddd', 'ddd', '', 0, 'dddd', 3, 3),
+(4, 'aaas', 'aaas', 'aaas', 'open', 0, 'aaaa', 4, 4),
+(5, '123', '1233', '3213', '', 0, 'fasfsfa', 5, 5),
+(6, 'asfdfasf', 'asfasfafs', 'asfasfasf', 'private', 0, 'asfsaf', 6, 6),
+(7, 'as', 'fs', 'fsa', 'open', 1, 'saf', 7, 7),
+(8, 'as', 'fs', 'fsa', 'open', 1, 'saf', 8, 8),
+(9, 'qweee', 'ee', 'ee', 'open', 1, 'eee', 9, 9),
+(10, 'qweee', 'ee', 'ee', 'open', 1, 'eee', 10, 10),
+(11, 'qweee', 'ee', 'ee', 'open', 1, 'eee', 11, 11),
+(12, 'rf', 'fr', 'fr', 'private', 1, 'fr', 12, 12),
+(13, 'aaa', 'a', 'a', 'private', 0, 'a', 13, 13);
 
 -- --------------------------------------------------------
 
@@ -256,14 +268,26 @@ INSERT INTO `user` (`user_id`, `user_name`, `user_surname`, `user_patronymic`, `
 CREATE TABLE IF NOT EXISTS `userset` (
   `userset_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`userset_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Дамп данных таблицы `userset`
 --
 
 INSERT INTO `userset` (`userset_id`) VALUES
-(1);
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8),
+(9),
+(10),
+(11),
+(12),
+(13);
 
 -- --------------------------------------------------------
 
@@ -274,15 +298,30 @@ INSERT INTO `userset` (`userset_id`) VALUES
 CREATE TABLE IF NOT EXISTS `user_userset` (
   `user_userset_user_id` int(11) NOT NULL,
   `user_userset_userset_id` int(11) NOT NULL,
-  `user_userset_rule_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `user_userset_rule_id` int(11) NOT NULL,
+  `user_userset_id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`user_userset_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
 -- Дамп данных таблицы `user_userset`
 --
 
-INSERT INTO `user_userset` (`user_userset_user_id`, `user_userset_userset_id`, `user_userset_rule_id`) VALUES
-(0, 1, 0);
+INSERT INTO `user_userset` (`user_userset_user_id`, `user_userset_userset_id`, `user_userset_rule_id`, `user_userset_id`) VALUES
+(0, 1, 0, 1),
+(0, 2, 0, 2),
+(0, 3, 0, 3),
+(16, 4, 0, 4),
+(0, 5, 0, 5),
+(0, 6, 0, 6),
+(0, 7, 0, 7),
+(0, 8, 0, 8),
+(0, 9, 0, 9),
+(0, 10, 0, 10),
+(0, 11, 0, 11),
+(17, 4, 0, 12),
+(0, 12, 0, 13),
+(0, 13, 0, 14);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
