@@ -58,11 +58,12 @@
 				<command class="MyAccountSave"/>
 
 				<command class="MessageSystemFileGet"/>
-				<command class="MessageSystemGroupsShow"/>
-				<command class="MSExpertiseGroupToCreate"/>
-				<command class="MSPersonalGroupToCreate"/>
-				<command class="MSExpertiseGroupCreate"/>
-				<command class="MSSystemGroupCreate"/>
+
+				<command class="EventCreate"/> <!--Потом убрать отсюда и вообще пересмотреть права -->
+				<command class="EventCreateResult"/>
+				<command class="EventShow"/>
+				<command class="EventChange"/>
+				<command class="EventChangeResult"/>
 			</allow>
 			<deny>
 			</deny>

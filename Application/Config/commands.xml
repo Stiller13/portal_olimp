@@ -50,5 +50,16 @@
 			<param name="code" required="1"/>
 		</command>
 
+<!--Мероприятия -->
+		<command class="EventCreate" view="EventCreate"/>
+		<command class="EventCreateResult"/>
+		<command class="EventShow" view="EventShow">
+			<param name="e_id" required="1"/>
+		</command>
+		<command class="EventChange" view="EventChange">
+			<param name="e_id" required="1"/>
+		</command>
+		<command class="EventChangeResult"/>
+
 	</commands>
 </config>
