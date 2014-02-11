@@ -31,6 +31,6 @@
 	<patterns>
 		<pattern id="default">[a-z\_]{1,32}</pattern>
 		<pattern id="uid">[0-9]{1,32}</pattern>
-		<pattern id="mg_type">system|comment|personal|expertise</pattern>
+		<pattern id="mg_type">system|comment|personal</pattern>
 	</patterns>
 </config>
