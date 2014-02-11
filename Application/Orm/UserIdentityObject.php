@@ -15,8 +15,7 @@ class UserIdentityObject extends \System\Orm\IdentityObject{
 			'user_gender',
 			'user_residence',
 			'user_mail',
-			'user_telephone',
-			'user_userset_user_id'));
+			'user_telephone'));
 	}
 }
 ?>

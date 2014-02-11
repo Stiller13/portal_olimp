@@ -5,6 +5,8 @@
 
 		<command class="Msg404" view="Msg404" />
 
+		<command class="SignIn" view="SignIn" />
+
 		<command class="SignOut" />
 
 		<command class="SignInResult" />
@@ -23,10 +25,8 @@
 
 		<command class="MyAccountSave" />
 
+
 <!-- система сообшений -->
-<<<<<<< HEAD
-		<command class="MessageSystemShow" view="MessageSystemShow" />
-=======
 		<command class="MyMessageShow" view="MyMessageShow" />
 
 		<command class="MSPersonalGroupsShow" view="MSPersonalGroupsShow" />
@@ -38,45 +38,17 @@
 		</command>
 
 		<command class="MSPersonalGroupMessageCreate" />
->>>>>>> 36727f74329cf8bbd35ce8863c16408aa7290781
 
 		<command class="MSPersonalGroupAddUsers" />
 
-		<command class="MessageSystemGroupsShow" view="MSGroupsShow">
-			<param name="mg_type" required="1"/>
-		</command>
 
 
 		<command class="MainPageShow" view="MainPageShow" />
 
 
-		<command class="MSPersonalGroupToCreate" view="MSPersonalGroupToCreate" />
-
-		<command class="MSSystemGroupToCreate" view="MSSystemGroupToCreate" />
-
-		<command class="MSPersonalGroupCreate"/>
-
-
-		<command class="MSSystemGroupCreate"/>
-
-
 		<command class="MessageSystemFileGet">
 			<param name="code" required="1"/>
 		</command>
-<<<<<<< HEAD
 
-<!--Мероприятия -->
-		<command class="EventCreate" view="EventCreate"/>
-		<command class="EventCreateResult"/>
-		<command class="EventShow" view="EventShow">
-			<param name="e_id" required="1"/>
-		</command>
-		<command class="EventChange" view="EventChange">
-			<param name="e_id" required="1"/>
-		</command>
-		<command class="EventChangeResult"/>
-
-=======
->>>>>>> 36727f74329cf8bbd35ce8863c16408aa7290781
 	</commands>
 </config>
