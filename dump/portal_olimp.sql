@@ -3,9 +3,15 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
+<<<<<<< HEAD
+-- Время создания: Фев 11 2014 г., 11:48
+-- Версия сервера: 5.6.14
+-- Версия PHP: 5.5.6
+=======
 -- Время создания: Фев 11 2014 г., 19:47
 -- Версия сервера: 5.1.40-community
 -- Версия PHP: 5.3.3
+>>>>>>> 5ac8f51200a868ab9f5e1ede16f1df3a10d9e190
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
