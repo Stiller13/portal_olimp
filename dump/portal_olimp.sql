@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.9
+-- version 4.0.5
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Фев 10 2014 г., 04:10
--- Версия сервера: 5.6.14
--- Версия PHP: 5.5.6
+-- Время создания: Фев 11 2014 г., 18:58
+-- Версия сервера: 5.1.40-community
+-- Версия PHP: 5.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -53,6 +53,48 @@ INSERT INTO event(event_title, event_description_public, event_description_priva
 COMMIT;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_message`(IN `text_message` TEXT, IN `id_user` INT, IN `id_group` INT, IN `id_message` INT, IN `status_message` INT, OUT `id` INT)
+    NO SQL
+BEGIN
+	START TRANSACTION;
+	INSERT INTO message (message_text, message_user, message_group, message_message, message_status) VALUES (text_message, id_user, id_group, id_message, status_message);
+	SET id=LAST_INSERT_ID();
+    COMMIT;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_messagegroup`(IN `type_mg` INT, IN `status_mg` INT, OUT `id` INT)
+    NO SQL
+BEGIN
+	CALL insert_userset(@k);
+    INSERT INTO messagegroup (messagegroup_partners, messagegroup_type, messagegroup_status) VALUES (@k, type_mg, status_mg);
+	SET id=LAST_INSERT_ID();
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_userset`(OUT `id` INT)
+    NO SQL
+BEGIN
+START TRANSACTION;
+INSERT INTO userset(userset_id) value (NULL);
+SET id=LAST_INSERT_ID();
+COMMIT;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_user_userset`(IN `id_user` INT, IN `id_userset` INT, IN `id_rule` INT)
+    NO SQL
+BEGIN
+    START TRANSACTION;
+    INSERT INTO user_userset (user_userset_user_id, user_userset_userset_id, user_userset_rule_id) VALUES (id_user, id_userset, id_rule);
+    COMMIT;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_visit`(IN `id_user` INT, IN `id_group` INT)
+    NO SQL
+BEGIN
+	START TRANSACTION;
+    INSERT INTO `user_mg_read` (`user_mg_read_user`,`user_mg_read_mg`) VALUES (id_user, id_group);
+	COMMIT;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_account`(IN `login` VARCHAR(25), IN `password` VARCHAR(40) CHARSET utf8, IN `salt` VARCHAR(255) CHARSET utf8)
     NO SQL
 BEGIN
@@ -69,12 +111,35 @@ UPDATE `event` SET `event_title`=title, `event_description_public`=description_p
 COMMIT;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_message`(IN `text_m` TEXT, IN `status_m` INT, IN `id_m` INT)
+    NO SQL
+BEGIN
+	START TRANSACTION;
+	UPDATE message SET message_text = text_m, message_status = status_m WHERE message_id = id_m;
+	COMMIT;
+	
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_messagegroup`(IN `status_mg` INT, IN `id_messagegroup` INT)
+    NO SQL
+BEGIN
+	START TRANSACTION;
+    UPDATE messagegroup SET messagegroup_status = status_mg WHERE messagegroup_id = id_messagegroup;
+	COMMIT;	
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_user`(IN `name` VARCHAR(25) CHARSET utf8, IN `surname` VARCHAR(25) CHARSET utf8, IN `patronymic` VARCHAR(25) CHARSET utf8, IN `birthday` DATE, IN `residence` VARCHAR(50) CHARSET utf8, IN `gender` VARCHAR(6) CHARSET utf8, IN `mail` VARCHAR(32) CHARSET utf8, IN `telephone` VARCHAR(11) CHARSET utf8, IN `id` INT)
     NO SQL
 BEGIN
 START TRANSACTION;
 UPDATE `user` SET `user_name`=name, `user_surname`=surname, `user_patronymic`=patronymic, `user_date`=birthday, `user_residence`=residence, `user_gender`=gender, `user_mail`=mail, `user_telephone`=telephone WHERE `user_id`=id;
 COMMIT;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_visit`(IN `id_user` INT, IN `id_group` INT)
+    NO SQL
+BEGIN
+    UPDATE `user_mg_read`  SET user_mg_read_last_date=NULL WHERE user_mg_read_user=id_user AND user_mg_read_mg=id_group;
 END$$
 
 DELIMITER ;
@@ -100,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `account` (
 INSERT INTO `account` (`account_id`, `account_login`, `account_password`, `account_salt`) VALUES
 (15, 'qwe', '26e48a2f89e8b948eb7aa0c444b3c9e9240ea28d', '#pkc$3ort~brt'),
 (16, 'tom', 'f9ee1af57ba88fe3612922e209bdce2649027eb1', '_3k*k*pt&gg+e'),
-(17, 'dim', '92dbc51328f6f1cf62700ff2e993249d86a4a9cf', 'zrhv+m%fj&ijyq'),
+(17, 'dim', '5e35c69583248f72d56c9643f97f43c2016ba39a', '#m+n28h+r*2ejs'),
 (18, 'dim2', '203b306a46e1a296bfbf2d5a237d9708b471f070', '5%hc#nv_jl$!q'),
 (19, 'fffaf', '2222231', 'dadsad'),
 (20, 'qqq', 'f29e05566dbf26107dede7ffe71cd29032929cb1', 'dl6w%xt8yi6z3');
@@ -157,6 +222,63 @@ CREATE TABLE IF NOT EXISTS `event` (
 
 INSERT INTO `event` (`event_id`, `event_title`, `event_description_public`, `event_description_private`, `event_type`, `event_confirm`, `event_confirm_description`, `event_userset_id`, `event_messagegroup_id`) VALUES
 (1, 'even_changed', 'public', 'private', 'closed', 1, 'qqwe', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `message`
+--
+
+CREATE TABLE IF NOT EXISTS `message` (
+  `message_id` int(11) NOT NULL AUTO_INCREMENT,
+  `message_text` text NOT NULL,
+  `message_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `message_user` int(11) NOT NULL,
+  `message_group` int(11) DEFAULT NULL,
+  `message_message` int(11) NOT NULL,
+  `message_status` smallint(6) NOT NULL,
+  PRIMARY KEY (`message_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- Дамп данных таблицы `message`
+--
+
+INSERT INTO `message` (`message_id`, `message_text`, `message_date`, `message_user`, `message_group`, `message_message`, `message_status`) VALUES
+(2, 'hi', '2014-02-10 12:36:23', 17, 6, 0, 1),
+(3, '123', '2014-02-11 05:36:43', 1, 2, 0, 1),
+(4, 'q', '2014-02-11 05:38:40', 17, 1, 0, 0),
+(5, 'q', '2014-02-11 05:47:49', 17, 1, 0, 0),
+(6, 'qwwww', '2014-02-11 05:48:04', 17, 1, 0, 0),
+(7, 'wee', '2014-02-11 05:48:59', 17, 1, 0, 0),
+(8, '1', '2014-02-11 05:49:02', 17, 1, 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `messagegroup`
+--
+
+CREATE TABLE IF NOT EXISTS `messagegroup` (
+  `messagegroup_id` int(11) NOT NULL AUTO_INCREMENT,
+  `messagegroup_partners` int(11) NOT NULL,
+  `messagegroup_type` int(11) NOT NULL,
+  `messagegroup_status` int(11) NOT NULL,
+  PRIMARY KEY (`messagegroup_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+--
+-- Дамп данных таблицы `messagegroup`
+--
+
+INSERT INTO `messagegroup` (`messagegroup_id`, `messagegroup_partners`, `messagegroup_type`, `messagegroup_status`) VALUES
+(1, 2, 1, 1),
+(2, 3, 1, 1),
+(3, 4, 1, 1),
+(4, 5, 1, 1),
+(5, 6, 1, 1),
+(6, 7, 1, 1),
+(7, 8, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -218,6 +340,27 @@ CREATE TABLE IF NOT EXISTS `rule` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `type_messagegroup`
+--
+
+CREATE TABLE IF NOT EXISTS `type_messagegroup` (
+  `type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type_name` varchar(15) NOT NULL,
+  PRIMARY KEY (`type_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Дамп данных таблицы `type_messagegroup`
+--
+
+INSERT INTO `type_messagegroup` (`type_id`, `type_name`) VALUES
+(1, 'personal'),
+(2, 'comment'),
+(3, 'system');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `user`
 --
 
@@ -241,11 +384,11 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`user_id`, `user_name`, `user_surname`, `user_patronymic`, `user_date`, `user_gender`, `user_residence`, `user_role`, `user_mail`, `user_telephone`) VALUES
 (15, '1', '', '', '0000-00-00', '', '', 0, '', ''),
-(16, '2', '2312', '332', '0000-00-00', '', '', 0, '', ''),
-(17, 'dim', 'zal', 'andr', '0000-00-00', '', '', 0, '', ''),
-(18, '', '', '', '0000-00-00', '', '', 0, '', ''),
-(19, '', '', '', '0000-00-00', '', '', 0, '', ''),
-(20, '', '', '', '0000-00-00', '', '', 0, '', '');
+(16, 'kol', '2312', '332', '0000-00-00', '', '', 0, '', ''),
+(17, 'dim', 'zal', 'andr', '0000-00-00', '', '', 0, '', '3434'),
+(18, 'aaaa', '', '', '0000-00-00', '', '', 0, '', ''),
+(19, 'sss', '', '', '0000-00-00', '', '', 0, '', ''),
+(20, 'ddddd', '', '', '0000-00-00', '', '', 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -256,14 +399,72 @@ INSERT INTO `user` (`user_id`, `user_name`, `user_surname`, `user_patronymic`, `
 CREATE TABLE IF NOT EXISTS `userset` (
   `userset_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`userset_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Дамп данных таблицы `userset`
 --
 
 INSERT INTO `userset` (`userset_id`) VALUES
-(1);
+(1),
+(2),
+(3),
+(4),
+(5),
+(6),
+(7),
+(8);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_mg_read`
+--
+
+CREATE TABLE IF NOT EXISTS `user_mg_read` (
+  `user_mg_read_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_mg_read_user` int(11) DEFAULT NULL,
+  `user_mg_read_mg` int(11) DEFAULT NULL,
+  `user_mg_read_last_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_mg_read_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+--
+-- Дамп данных таблицы `user_mg_read`
+--
+
+INSERT INTO `user_mg_read` (`user_mg_read_id`, `user_mg_read_user`, `user_mg_read_mg`, `user_mg_read_last_date`) VALUES
+(1, 17, 1, '2014-02-11 09:57:38'),
+(2, 17, 7, '2014-02-11 08:08:13'),
+(3, 17, 3, '2014-02-11 08:29:23'),
+(4, 16, 1, '2014-02-11 09:12:58'),
+(5, 17, 4, '2014-02-11 09:20:46'),
+(6, 17, 5, '2014-01-11 09:20:49'),
+(7, 16, 5, '2014-02-11 09:20:55'),
+(8, 17, 6, '2014-02-11 09:27:32'),
+(9, 16, 6, '2014-02-11 09:27:37'),
+(10, 18, 6, '2014-02-11 09:27:37'),
+(11, 19, 6, '2014-02-11 09:27:37');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_role`
+--
+
+CREATE TABLE IF NOT EXISTS `user_role` (
+  `user_status_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_status_name` varchar(15) NOT NULL,
+  PRIMARY KEY (`user_status_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Дамп данных таблицы `user_role`
+--
+
+INSERT INTO `user_role` (`user_status_id`, `user_status_name`) VALUES
+(1, 'pmg_admin'),
+(2, 'pmg_partner');
 
 -- --------------------------------------------------------
 
@@ -282,7 +483,39 @@ CREATE TABLE IF NOT EXISTS `user_userset` (
 --
 
 INSERT INTO `user_userset` (`user_userset_user_id`, `user_userset_userset_id`, `user_userset_rule_id`) VALUES
-(0, 1, 0);
+(0, 1, 0),
+(17, 2, 1),
+(17, 4, 1),
+(17, 5, 1),
+(17, 5, 1),
+(17, 6, 1),
+(17, 7, 1),
+(16, 1, 1),
+(16, 6, 1),
+(16, 7, 1),
+(18, 7, 1),
+(19, 7, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Дублирующая структура для представления `visit`
+--
+CREATE TABLE IF NOT EXISTS `visit` (
+`visit_id` int(11)
+,`visit_user` int(11)
+,`visit_group` int(11)
+,`visit_datetime` timestamp
+,`visit_count_message` bigint(21)
+);
+-- --------------------------------------------------------
+
+--
+-- Структура для представления `visit`
+--
+DROP TABLE IF EXISTS `visit`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `visit` AS select `b`.`user_mg_read_id` AS `visit_id`,`b`.`user_mg_read_user` AS `visit_user`,`b`.`user_mg_read_mg` AS `visit_group`,`b`.`user_mg_read_last_date` AS `visit_datetime`,count(`a`.`message_id`) AS `visit_count_message` from (`user_mg_read` `b` left join `message` `a` on(((`a`.`message_group` = `b`.`user_mg_read_mg`) and (`b`.`user_mg_read_last_date` < `a`.`message_date`)))) group by `b`.`user_mg_read_mg`,`b`.`user_mg_read_user`;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
