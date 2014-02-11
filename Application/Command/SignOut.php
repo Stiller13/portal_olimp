@@ -2,16 +2,10 @@
 
 namespace Application\Command;
 
-use System\Auth\Login;
-/**
- *
- * @author user
- *        
- */
-
 class SignOut extends \System\Core\Command{
-	public function exec(){
-		$login = Login::instance();
+
+	protected function exec(){
+		$login = \System\Auth\Login::instance();
 		$login->SignOut();
 
 		return $this->redirect("/");

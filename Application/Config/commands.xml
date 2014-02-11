@@ -2,40 +2,49 @@
 <config>
 	<commands override="1">
 		<command class="DefaultCommand" view="DefaultView" />
-		<command class="ShowProfile" view="Profile" mainObj="User">
-			<param name="uid" required="1" objId="1" />
-			<param name="extra" required="0">Default value</param>
-		</command>
-		<command class="EditProfile" view="EditProfile" />
-		<command class="SaveProfile" />
+
+		<command class="Msg404" view="Msg404" />
 
 		<command class="SignIn" view="SignIn" />
-		<command class="Msg404" view="Msg404" />
+
 		<command class="SignOut" />
 
-		<command class="SignInResult" view="SignInResult" />
-		<command class="RegistrationResult" view="RegistrationResult" />
+		<command class="SignInResult" />
+
+		<command class="RegistrationResult" />
+
 		<command class="Registration" view="Registration" />
 
-		<command class="MessageSystemShow" view="MessageSystemShow" />
 
-		<command class="MessageSystemShow" view="MessageSystemShow" />
+<!-- кабинет -->
+		<command class="MyProfileShow" view="MyProfileShow" />
 
-		<command class="MessageSystemGroupsShow" view="MSGroupsShow">
-			<param name="mg_type" required="1"/>
+		<command class="MyProfileSave" />
+
+		<command class="MyAccountShow" view="MyAccountShow" />
+
+		<command class="MyAccountSave" />
+
+
+<!-- система сообшений -->
+		<command class="MyMessageShow" view="MyMessageShow" />
+
+		<command class="MSPersonalGroupsShow" view="MSPersonalGroupsShow" />
+
+		<command class="MSPersonalGroupCreate" />
+
+		<command class="MSPersonalGroupShow" view="MSPersonalGroupShow">
+				<param name="mg_id" required="1" objId="1"/>
 		</command>
 
-		<command class="MessageSystemGroupShow" mainObj="messageset">
-			<param name="mg_type" required="1"/>
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
+		<command class="MSPersonalGroupMessageCreate" />
 
-		<command class="MessageSystemMessageCreate" mainObj="messageset">
-			<param name="mg_type" required="1"/>
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
+		<command class="MSPersonalGroupAddUsers" />
 
-		<command class="MSExpertiseGroupToCreate" view="MSExpertiseGroupToCreate" />
+
+
+		<command class="MainPageShow" view="MainPageShow" />
+
 
 		<command class="MSPersonalGroupToCreate" view="MSPersonalGroupToCreate" />
 
@@ -43,35 +52,9 @@
 
 		<command class="MSPersonalGroupCreate"/>
 
-		<command class="MSExpertiseGroupCreate"/>
 
 		<command class="MSSystemGroupCreate"/>
 
-		<command class="MessageSystemGroupSettingsShow" view="MessageSystemGroupSettingsShow" mainObj="messageset">
-			<param name="mg_type" required="1"/>
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MessageSystemGroupSettingsSave" mainObj="messageset">
-			<param name="mg_type" required="1"/>
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MSPersonalGroupUnsubscribe" mainObj="messageset">
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MSExpertiseGroupOk" mainObj="messageset">
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MSExpertiseGroupStart" mainObj="messageset">
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MSExpertiseGroupReturn" mainObj="messageset">
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
 
 		<command class="MessageSystemFileGet">
 			<param name="code" required="1"/>

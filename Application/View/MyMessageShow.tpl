@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Страница не найдена</title>
+		<title>Главная</title>
 		<meta charset="utf8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="/Design/css/styles.css" rel="stylesheet">
@@ -57,11 +57,40 @@
 					{/if}
 				</div><!-- /.navbar-collapse -->
 			</nav>
-			<div class="alert alert-danger"><p class="text-center">Страница не найдена</p></div>
+			{if $message}<div class="alert {$type_message}"><p class="text-center">{$message}</p></div>{/if}
 
-		</div> <!-- /container -->
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<h2>Личный кабинет</h2>
+				</div>
+			</div>
+			<ul class="nav nav-tabs">
+				<li><a href="/cabinet/account">Аккаунт</a></li>
+				<li><a href="/cabinet/profile">Профиль</a></li>
+				<li class="active"><a href="/cabinet/message">Сообщения</a></li>
+				<li><a href="/cabinet/statistic">Статистика</a></li>
+			</ul>
 
-
+			<div class="row margtp-25">
+				<div class="col-md-3">
+					<ul class="nav nav-pills nav-stacked">
+						<li>
+							<a href="/cabinet/message/personal">
+								<span class="badge pull-right"></span>
+								Личные
+							</a>
+						</li>
+						<li>
+							<a href="/cabinet/message/system">
+								<span class="badge pull-right"></span>
+								Системные
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="/Design/js/bootstrap.min.js"></script>
 	</body>

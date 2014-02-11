@@ -2,7 +2,7 @@
 
 namespace Application\Command;
 
-class MyAccountShow extends \System\Core\Command{
+class MyMessageShow extends \System\Core\Command{
 
 	protected function exec() {
 

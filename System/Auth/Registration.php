@@ -32,8 +32,8 @@ class Registration {
 		$factory= PersistenceFactory::getFactory('Account');
 		$finder= new DomainObjectAssembler($factory);
 		$idobj=$factory->getIndentityObject();
-		$idobj->field('authorization_login')->eq($user);
-		$acc = $finder->findOne($idobj,'authorization');
+		$idobj->field('account_login')->eq($user);
+		$acc = $finder->findOne($idobj,'account');
 
 		$pattern = '/^[a-zA-Z][a-zA-Z0-9\-\_]{2,9}+$/';
 
@@ -64,16 +64,9 @@ class Registration {
 			$idobj=$factory->getIndentityObject();
 			$idobj->field('user_id')->eq($acc->getId());
 			$user = $finder->findOne($idobj,'user');
+			
 
-
-			/*$user = new User();
-			$factory= PersistenceFactory::getFactory('User');
-			$finder= new DomainObjectAssembler($factory);
-			$idobj=$factory->getIndentityObject();
-			$finder->insert();
-			$user = $finder->findOne($idobj,'user');
-			 */
-			return "Registration Complete";
+			return "Ok";
 		}
 		else {
 			return "Passwords are not equal";

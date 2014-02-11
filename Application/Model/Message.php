@@ -4,7 +4,7 @@ namespace Application\Model;
 
 /**
 * @author Zalutskii
-* @version 31.01.14
+* @version 10.02.14
 * Класс сообщения
 */
 
@@ -30,13 +30,31 @@ class Message extends \System\Orm\DomainObject {
 	 * Группа сообщений
 	 * @var integer
 	 */
-	private $group_id;
+	private $group;
 
 	/**
 	 * Дата отправки сообщения
 	 * @var date
 	 */
 	private $date;
+
+	/**
+	 * Статус сообщения
+	 * @var int
+	 */
+	private $status;
+
+	/**
+	 * Ответы
+	 * @var MessageCollection
+	 */
+	private $messages;
+
+	/**
+	 * Отвечаемое сообщение
+	 * @var integer
+	 */
+	private $remessage;
 
 	/**
 	 * Задать автора
@@ -75,7 +93,7 @@ class Message extends \System\Orm\DomainObject {
 	 * Задать id группы сообщений
 	 */
 	public function setGroup($group_id) {
-		$this->group_id = $group_id;
+		$this->group = $group_id;
 		$this->markDirty();
 	}
 
@@ -84,7 +102,7 @@ class Message extends \System\Orm\DomainObject {
 	 * @return integer
 	 */
 	public function getGroup() {
-		return $this->group_id;
+		return $this->group;
 	}
 
 	/**
@@ -130,6 +148,66 @@ class Message extends \System\Orm\DomainObject {
 	 */
 	public function getDate() {
 		return $this->date;
+	}
+
+	/**
+	 * Установить статус сообщения
+	 * @param int $status
+	 */
+	public function setStatus($status) {
+		$this->status = $status;
+		$this->markDirty();
+	}
+
+	/**
+	 * Получить статус сообщения
+	 */
+	public function getStatus() {
+		return $this->status;
+	}
+
+	/**
+	 * Задать коллекцию ответов
+	 * @param Application\Orm\MessageCollection $mes 
+	 */
+	public function setMessages(\Application\Orm\MessageCollection $mes) {
+		$this->messages = $mes;
+		$this->markDirty();
+	}
+
+	/**
+	 * Получить коллекцию ответов
+	 * @return Application\Orm\MessageCollection
+	 */
+	public function getMessages() {
+		if (!isset($this->messages)) {
+			$this->messages = $this->getCollection($this->targetClass(), $this->getId());
+		}
+		return $this->messages;
+	}
+
+	/**
+	 * Добавить ответ
+	 */
+	public function addMessage($mes) {
+		$this->getMessages()->add($mes);
+		$this->markDirty();
+	}
+
+	/**
+	 * Установить твечаемое сообщение
+	 * @param integer $id
+	 */
+	public function setReMessage($id) {
+		$this->remessage = $id;
+		$this->markDirty();
+	}
+
+	/**
+	 * Получить отвечаемое сообщение
+	 */
+	public function getReMessage() {
+		return $this->remessage;
 	}
 
 	public function targetClass() {
