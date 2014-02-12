@@ -76,7 +76,7 @@
 					<ul class="nav nav-pills nav-stacked">
 						<li class="active">
 							<a href="/cabinet/message/personal">
-								<span class="badge pull-right"></span>
+								<span class="badge pull-right">{$personal_mess}</span>
 								Личные
 							</a>
 						</li>
@@ -105,12 +105,21 @@
 					{foreach from=$group->getPartners() item=partner}
 					{$partner->getName()} {$partner->getFamily()} 
 					{/foreach}
-					<hr>
+
 					{foreach from=$group->getMessages() item=one_message}
-					{$one_message->getAuthor()->getName()} {$one_message->getAuthor()->getFamily()}<br>
-					{$one_message->getText()}<br>
-					{$one_message->getDate()}
-					<hr>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								{$one_message->getAuthor()->getName()} 
+								{$one_message->getAuthor()->getFamily()} 
+								<p class="pull-right">{$one_message->getDate()}</p>
+							</h3>
+						</div>
+						<div class="panel-body">
+							{$one_message->getText()}
+						</div>
+					</div>
+
 					{/foreach}
 					<form role="form" action="/cabinet/message/personal/new_message" method="post">
 						<div class="form-group">

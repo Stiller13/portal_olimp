@@ -76,7 +76,7 @@
 					<ul class="nav nav-pills nav-stacked">
 						<li class="active">
 							<a href="/cabinet/message/personal">
-								<span class="badge pull-right"></span>
+								<span class="badge pull-right">{$personal_mess}</span>
 								Личные
 							</a>
 						</li>
@@ -90,7 +90,7 @@
 				</div>
 				<div class="col-md-4 col-md-3-offset">
 					<a href="/cabinet/message/personal/new"><button class="btn btn-success">Новая группа</button></a>
-					<ul>
+					<ul class="nav nav-pills nav-stacked">
 					{foreach from=$list_group item=one_group}
 						<li>
 							<a href="/cabinet/message/personal/{$one_group->getId()}">
@@ -102,7 +102,7 @@
 								{/if}
 								{/foreach}
 								{if $one_group->getVisit()}
-								<span class="badge">{$one_group->getVisit()->getCountMessage()}</span>
+								<span class="badge pull-right">{$one_group->getVisit()->getCountMessage()}</span>
 								{/if}
 							</a>
 						</li>

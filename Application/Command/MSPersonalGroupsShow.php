@@ -25,6 +25,6 @@ class MSPersonalGroupsShow extends \System\Core\Command {
 			$personal_mess += $group->getVisit()->getCountMessage();
 		}
 
-		return $this->render(array("user" => $user, "list_group" => $list_group));
+		return $this->render(array("user" => $user, "list_group" => $list_group, "personal_mess" => $personal_mess));
 	}
 }

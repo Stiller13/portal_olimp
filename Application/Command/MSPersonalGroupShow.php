@@ -9,8 +9,6 @@ class MSPersonalGroupShow extends \System\Core\Command {
 		$session = new \System\Session\Session();
 		$user = $session->get('user');
 
-		$mg_type = 'personal';
-
 		$factory_group = \System\Orm\PersistenceFactory::getFactory('PersonalMessageGroup');
 		$finder_group = new \System\Orm\DomainObjectAssembler($factory_group);
 		$idobj = $factory_group->getIndentityObject();
@@ -39,10 +37,26 @@ class MSPersonalGroupShow extends \System\Core\Command {
 		$factory_user = \System\Orm\PersistenceFactory::getFactory('User');
 		$finder_user = new \System\Orm\DomainObjectAssembler($factory_user);
 		$idobj = $factory_user->getIndentityObject();
-		$idobj->field('user_id')->neq($user->getId());
 		$user_list = $finder_user->find($idobj, 'user');
 
+		//Количество непрочитанных
+		$factory = \System\Orm\PersistenceFactory::getFactory('PersonalMessageGroup');
+		$finder = new \System\Orm\DomainObjectAssembler($factory);
+		$idobj = $factory->getIndentityObject();
 
-		return $this->render(array("user" => $user, "group" => $group, "user_list" => $user_list));
+		$idobj->addWhat(array('messagegroup_id', 'messagegroup_partners', 'messagegroup_type', 'messagegroup_status'));
+		$idobj->addJoin('INNER',array('messagegroup','user_userset'),array('messagegroup_partners','user_userset_userset_id'));
+		$idobj->field('messagegroup_type')->eq(1);
+		$idobj->field('user_userset_user_id')->eq($user->getId());
+
+		$list_group = $finder->find($idobj, 'messagegroup');
+
+		$personal_mess = 0;
+		foreach ($list_group as $group) {
+			$personal_mess += $group->getVisit()->getCountMessage();
+		}
+
+
+		return $this->render(array("user" => $user, "group" => $group, "user_list" => $user_list, "personal_mess" => $personal_mess));
 	}
 }
