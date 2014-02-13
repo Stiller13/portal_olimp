@@ -44,6 +44,7 @@
 		</group>
 		<group name="USER" parent="ALL" role="1">
 			<allow>
+				<command class="AllUsersShow"/>
 				<command class="MyStatisticShow"/>
 				<command class="MSPersonalGroupDelMe"/>
 				<command class="MSPersonalGroupAddUsers"/>
@@ -59,7 +60,6 @@
 				<command class="MyAccountShow"/>
 				<command class="MyAccountSave"/>
 
-				<command class="MessageSystemFileGet"/>
 
 				<command class="EventCreate"/> <!--Потом убрать отсюда и вообще пересмотреть права -->
 				<command class="EventCreateResult"/>

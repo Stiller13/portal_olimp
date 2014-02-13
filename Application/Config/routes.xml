@@ -48,11 +48,8 @@
 
 		<route id="MSPersonalGroupDelMe" path="/cabinet/message/personal/del_me" command="MSPersonalGroupDelMe" method="post" />
 
+		<route id="AllUsersShow" path="/allusers" command="AllUsersShow" method="get" />
 
-
-		<route id="get_file" path="/message/get/file/{code}" command="MessageSystemFileGet" method="get">
-			<param name="code">[a-zA-Z0-9]{1,32}</param>
-		</route>
 
 <!-- Мероприятия -->
 		<route id="EventCreate" path="/EventCreate" command="EventCreate" method="get" />

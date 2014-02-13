@@ -48,10 +48,7 @@
 
 		<command class="MainPageShow" view="MainPageShow" />
 
-
-		<command class="MessageSystemFileGet">
-			<param name="code" required="1"/>
-		</command>
+		<command class="AllUsersShow" view="AllUsersShow"/>
 
 <!--Мероприятия -->
 		<command class="EventCreate" view="EventCreate"/>
