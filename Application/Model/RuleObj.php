@@ -46,6 +46,14 @@ class RuleObj extends \System\Orm\DomainObject{
 	private $rule;
 
 	/**
+	 * id группы пользователей
+	 * 
+	 * @var integer
+	 * @access private
+	 */
+	private $userset_id;
+
+	/**
 	 * Получение id пользователя  
 	 * 
 	 * @access public
@@ -53,8 +61,8 @@ class RuleObj extends \System\Orm\DomainObject{
 	 */
 	public function getUser_id(){
 		return $this->user_id;
-	}	
-	
+	}
+
 	/**
 	 * Установить id пользователя  
 	 * 
@@ -130,6 +138,28 @@ class RuleObj extends \System\Orm\DomainObject{
 	 */
 	public function setRule($rule){
 		$this->rule = $rule;
+		$this->markDirty();
+	}
+
+	/**
+	 * Получение id группы пользователей
+	 * 
+	 * @access public
+	 * @return integer
+	 */
+	public function getUserset_id(){
+		return $this->userset_id;
+	}
+
+	/**
+	 * Установить id группы пользователей
+	 * 
+	 * @param integer $rule
+	 * @access public
+	 * @return void
+	 */
+	public function setUserset_id($userset_id){
+		$this->userset_id = $userset_id;
 		$this->markDirty();
 	}
 

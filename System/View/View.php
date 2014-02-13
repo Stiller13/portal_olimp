@@ -12,6 +12,7 @@ class View {
 		$this->_smarty = new \Smarty;
 		$this->_smarty->compile_dir = TMP.DS."smarty_templates_c";
 		$this->_smarty->cache_dir = TMP.DS."smarty_cache";
+		$this->_smarty->template_dir = APP.DS.App::DIR_VIEW;
 		// $f = fopen(TMP.DS."f", "rw");
 		// fwrite($f, "i");
 		// fclose($f);

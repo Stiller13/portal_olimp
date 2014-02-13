@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Главная</title>
+		<title>{block name=title}{/block}</title>
 		<meta charset="utf8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="/Design/css/styles.css" rel="stylesheet">
@@ -20,9 +20,9 @@
 							</ul>
 						</li>
 						{/if}
-						<li><a href="/">Главная</a></li>
-						<li><a href="/news">Новости</a></li>
-						<li><a href="#">Мероприятия</a></li>
+						<li{if $menu_main} class="active"{/if}><a href="/">Главная</a></li>
+						<li{if $menu_news} class="active"{/if}><a href="/news">Новости</a></li>
+						<li{if $menu_events} class="active"{/if}><a href="#">Мероприятия</a></li>
 						<li><a href="#">Курсы</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
@@ -59,37 +59,7 @@
 			</nav>
 			{if $message}<div class="alert {$type_message}"><p class="text-center">{$message}</p></div>{/if}
 
-			<div class="row">
-				<div class="col-md-4 col-md-offset-4">
-					<h2>Личный кабинет</h2>
-				</div>
-			</div>
-			<ul class="nav nav-tabs">
-				<li><a href="/cabinet/account">Аккаунт</a></li>
-				<li><a href="/cabinet/profile">Профиль</a></li>
-				<li class="active"><a href="/cabinet/message">Сообщения</a></li>
-				<li><a href="/cabinet/statistic">Статистика</a></li>
-			</ul>
-
-			<div class="row margtp-25">
-				<div class="col-md-3">
-					<ul class="nav nav-pills nav-stacked">
-						<li>
-							<a href="/cabinet/message/personal">
-								<span class="badge pull-right">{$personal_mess}</span>
-								Личные
-							</a>
-						</li>
-						<li>
-							<a href="/cabinet/message/system">
-								<span class="badge pull-right"></span>
-								Системные
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-			
+			{block name=content}{/block}
 		</div>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="/Design/js/bootstrap.min.js"></script>

@@ -7,10 +7,10 @@ class PersonalMessageGroupUpdateFactory extends \System\Orm\UpdateFactory {
 	public function newUpdate(\System\Orm\DomainObject $obj) {
 
 		if ($obj->getId() >-1) {
-			$values["message_group_status"] = $obj->getStatus();
-			$values["message_group_partners"] = $partners_str;
-			$values['message_group_id']=$obj->getId();
-			return $this->buildStatement('update_messageset', $values);
+			$values["status_mg"] = $obj->getStatus();
+			$values['id_mg']=$obj->getId();
+
+			return $this->buildStatement('update_messagegroup', $values);
 		}
 
 		$values["type_mg"] = $obj->getTypeId();

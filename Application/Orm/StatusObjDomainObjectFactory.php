@@ -3,16 +3,18 @@
 namespace Application\Orm;
 
 class StatusObjDomainObjectFactory extends \System\Orm\DomainObjectFactory{
-    function doCreateObject(array $array){
-        $obj= new \Application\Model\StatusObj();
-	$obj->setObj_id($array['object_id']); 
-	$obj->setObj_type($array['type_object_map_name']);
-	$obj->setObj_status($array['status_map_name']);	
-        return $obj;
-    }
-    
-    function targetClass(){
-        return "StatusObj";
-    }
+	function doCreateObject(array $array){
+		$obj= new \Application\Model\StatusObj();
+
+		$obj->setObj_id($array['obj_id']); 
+		$obj->setObj_type($array['obj_type']);
+		$obj->setObj_status($array['obj_status']);
+
+		return $obj;
+	}
+
+	function targetClass(){
+		return "StatusObj";
+	}
 }
 ?>

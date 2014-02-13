@@ -10,7 +10,6 @@ class VisitUpdateFactory extends \System\Orm\UpdateFactory {
 		$values['id_user'] = $obj->getUserId();
 		$values['id_group'] = $obj->getMessageGroupId();
 
-
 		if ($obj->getId() > -1) {
 			return $this->buildStatement('update_visit', $values);
 		}

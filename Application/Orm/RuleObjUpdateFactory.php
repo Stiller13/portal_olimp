@@ -10,7 +10,10 @@ class RuleObjUpdateFactory extends \System\Orm\UpdateFactory {
 		$values['id_userset'] = $obj->getObj_id();
 		$values['id_rule'] = $obj->getRule();
 
-		return $this->buildStatement('insert_user_userset', $values);
+		if ($obj->getObj_type())
+			return $this->buildStatement('update_user_userset', $values);
+		else
+			return $this->buildStatement('insert_user_userset', $values);
 	}
 }
 
