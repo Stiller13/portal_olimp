@@ -1,5 +1,5 @@
 {extends file="MainPage.tpl"}
-{block name=title}Главная{/block}
+{block name=title}Мой аккаунт{/block}
 {block name=content}
 <div class="row">
 	<div class="col-md-4 col-md-offset-4">
