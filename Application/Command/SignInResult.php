@@ -19,6 +19,6 @@ class SignInResult extends \System\Core\Command{
 			return $this->render(array("user" => $user, "message" => "Вход в систему осуществлен", "type_message" => "alert-success"), "MainPageShow");
 		}
 
-		return $this->render(array("message" => $result, "type_message" => "alert-danger"), "MainPageShow");
+		return $this->render(array("message" => $result, "type_message" => "alert-danger"), "SignIn");
 	}
 }

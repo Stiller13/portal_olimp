@@ -25,6 +25,8 @@
 
 		<command class="MyAccountSave" />
 
+		<command class="MyStatisticShow" view="MyStatisticShow"/>
+
 
 <!-- система сообшений -->
 		<command class="MyMessageShow" view="MyMessageShow" />
@@ -41,6 +43,7 @@
 
 		<command class="MSPersonalGroupAddUsers" />
 
+		<command class="MSPersonalGroupDelMe" />
 
 
 		<command class="MainPageShow" view="MainPageShow" />

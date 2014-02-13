@@ -29,6 +29,7 @@
 
 		<route id="MyAccountSave" path="/cabinet/account" command="MyAccountSave" method="post" />
 
+		<route id="MyStatisticShow" path="/cabinet/statistic" command="MyStatisticShow" method="get" />
 
 <!-- система ообщений -->
 		<route id="MyMessageShow" path="/cabinet/message" command="MyMessageShow" method="get" />
@@ -45,11 +46,9 @@
 
 		<route id="MSPersonalGroupAddUsers" path="/cabinet/message/personal/add_users" command="MSPersonalGroupAddUsers" method="post" />
 
+		<route id="MSPersonalGroupDelMe" path="/cabinet/message/personal/del_me" command="MSPersonalGroupDelMe" method="post" />
 
 
-		<route id="unsubcribe_personal_mg" path="/message/personal/group/{mg_id}/unsubcribe" command="MSPersonalGroupUnsubscribe" method="get">
-			<param name="mg_id" pattern="uid"/>
-		</route>
 
 		<route id="get_file" path="/message/get/file/{code}" command="MessageSystemFileGet" method="get">
 			<param name="code">[a-zA-Z0-9]{1,32}</param>

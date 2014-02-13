@@ -28,6 +28,12 @@ abstract class MessageGroup extends \System\Orm\DomainObject {
 	private $status;
 
 	/**
+	 * id группы пользователей
+	 * @var integer
+	 */
+	private $userset;
+
+	/**
 	 * Установить участников группы
 	 * @param Application\Orm\AccountCollection $partners
 	 */
@@ -91,6 +97,22 @@ abstract class MessageGroup extends \System\Orm\DomainObject {
 	 */
 	public function getStatus() {
 		return $this->status;
+	}
+
+	/**
+	 * Установить id группы пользователей
+	 */
+	public function setUserset($id) {
+		$this->userset = $id;
+		$this->markDirty();
+	}
+
+	/**
+	 * Получить id группы пользователей
+	 * @return integer
+	 */
+	public function getUserset() {
+		return $this->userset;
 	}
 
 	/**
