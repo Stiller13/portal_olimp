@@ -5,6 +5,8 @@
 
 		<command class="Msg404" view="Msg404" />
 
+		<command class="SignIn" view="SignIn" />
+
 		<command class="SignOut" />
 
 		<command class="SignInResult" />
@@ -23,80 +25,30 @@
 
 		<command class="MyAccountSave" />
 
-<<<<<<< HEAD
-=======
 		<command class="MyStatisticShow" view="MyStatisticShow"/>
 
 
->>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513
 <!-- система сообшений -->
-		<command class="MessageSystemShow" view="MessageSystemShow" />
+		<command class="MyMessageShow" view="MyMessageShow" />
+
+		<command class="MSPersonalGroupsShow" view="MSPersonalGroupsShow" />
+
+		<command class="MSPersonalGroupCreate" />
+
+		<command class="MSPersonalGroupShow" view="MSPersonalGroupShow">
+				<param name="mg_id" required="1" objId="1"/>
+		</command>
+
+		<command class="MSPersonalGroupMessageCreate" />
+
+		<command class="MSPersonalGroupAddUsers" />
+
+		<command class="MSPersonalGroupDelMe" />
+
 
 		<command class="MainPageShow" view="MainPageShow" />
 
-		<command class="MessageSystemGroupsShow" view="MSGroupsShow">
-			<param name="mg_type" required="1"/>
-		</command>
-
-		<command class="MessageSystemGroupShow" mainObj="messageset">
-			<param name="mg_type" required="1"/>
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MessageSystemMessageCreate" mainObj="messageset">
-			<param name="mg_type" required="1"/>
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MSExpertiseGroupToCreate" view="MSExpertiseGroupToCreate" />
-
-		<command class="MSPersonalGroupToCreate" view="MSPersonalGroupToCreate" />
-
-<<<<<<< HEAD
-		<command class="MSSystemGroupToCreate" view="MSSystemGroupToCreate" />
-=======
-		<command class="MSPersonalGroupDelMe" />
->>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513
-
-		<command class="MSPersonalGroupCreate"/>
-
-		<command class="MSExpertiseGroupCreate"/>
-
-		<command class="MSSystemGroupCreate"/>
-
-		<command class="MessageSystemGroupSettingsShow" view="MessageSystemGroupSettingsShow" mainObj="messageset">
-			<param name="mg_type" required="1"/>
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-<<<<<<< HEAD
-		<command class="MessageSystemGroupSettingsSave" mainObj="messageset">
-			<param name="mg_type" required="1"/>
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MSPersonalGroupUnsubscribe" mainObj="messageset">
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MSExpertiseGroupOk" mainObj="messageset">
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MSExpertiseGroupStart" mainObj="messageset">
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MSExpertiseGroupReturn" mainObj="messageset">
-			<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="MessageSystemFileGet">
-			<param name="code" required="1"/>
-		</command>
-=======
 		<command class="AllUsersShow" view="AllUsersShow"/>
->>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513
 
 <!--Мероприятия -->
 		<command class="EventCreate" view="EventCreate"/>
