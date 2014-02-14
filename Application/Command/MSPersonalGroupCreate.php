@@ -9,8 +9,6 @@ class MSPersonalGroupCreate extends \System\Core\Command {
 		$session = new \System\Session\Session();
 		$user = $session->get('user');
 
-		$mg_type = 'personal';
-
 		$new_mg = new \Application\Model\PersonalMessageGroup();
 		$new_mg->setStatus(1);
 
@@ -18,11 +16,15 @@ class MSPersonalGroupCreate extends \System\Core\Command {
 		$group_finder = new \System\Orm\DomainObjectAssembler($factory_group);
 		$group_finder->insert($new_mg);
 
+		$group_io = $factory_group->getIndentityObject();
+		$group_io->field('messagegroup_id')->eq($new_mg->getId());
+		$new_mg = $group_finder->findOne($group_io, 'messagegroup');
+
 //Вставка в группу пользователей
 		$ruleobj = new \Application\Model\RuleObj();
 
 		$ruleobj->setUser_id($user->getId());
-		$ruleobj->setObj_id($new_mg->getId());
+		$ruleobj->setUserset_id($new_mg->getUserset());
 		$ruleobj->setRule(1);
 
 		$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');

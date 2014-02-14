@@ -8,21 +8,28 @@ class MSPersonalGroupAddUsers extends \System\Core\Command {
 
 		if ($this->req['secret_param'] === 'top_s_e_cret') {
 			$factory_group = \System\Orm\PersistenceFactory::getFactory('PersonalMessageGroup');
-			$finder_group = new \System\Orm\DomainObjectAssembler($factory_group);
-			$idobj = $factory_group->getIndentityObject();
+			$group_finder = new \System\Orm\DomainObjectAssembler($factory_group);
+			$group_io = $factory_group->getIndentityObject();
+			$group_io->field('messagegroup_id')->eq($this->req['group_id']);
+			$mg = $group_finder->findOne($group_io, 'messagegroup');
 
-			$idobj->field('messagegroup_id')->eq($this->req['group_id']);
-
-			$group = $finder_group->findOne($idobj, 'messagegroup');
+			$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
+			$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
 
 			foreach ($this->req['users'] as $id_user) {
+				$rule_io = $factory_ruleobj->getIndentityObject();
+				$rule_io->field('user_userset_user_id')->eq($id_user);
+				$rule_io->field('user_userset_userset_id')->eq($mg->getUserset());
+
+				$rule = $ruleobj_finder->findOne($rule_io, 'user_userset');
+				if ($rule)
+					continue;
+
 				$ruleobj = new \Application\Model\RuleObj();
 				$ruleobj->setUser_id($id_user);
-				$ruleobj->setObj_id($group->getUserset());
+				$ruleobj->setUserset_id($mg->getUserset());
 				$ruleobj->setRule(1);
 
-				$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
-				$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
 				$ruleobj_finder->insert($ruleobj);
 
 				$visit = new \Application\Model\Visit();

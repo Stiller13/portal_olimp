@@ -27,6 +27,7 @@
 
 		<route id="MyAccountSave" path="/cabinet/account" command="MyAccountSave" method="post" />
 
+		<route id="MyStatisticShow" path="/cabinet/statistic" command="MyStatisticShow" method="get" />
 
 <!-- система ообщений -->
 		<route id="message_groups_types" path="/message" command="MessageSystemShow" method="get" />
@@ -45,6 +46,7 @@
 
 		<route id="ecreate_xpertise_mg" path="/message/expertise/group/create" command="MSExpertiseGroupCreate" method="post" />
 
+<<<<<<< HEAD
 		<route idcreate_="system_mg" path="/message/system/group/create" command="MSSystemGroupCreate" method="post" />
 
 		<route id="message_group_show" path="/message/{mg_type}/group/{mg_id}" command="MessageSystemGroupShow" method="get">
@@ -74,6 +76,12 @@
 		<route id="get_file" path="/message/get/file/{code}" command="MessageSystemFileGet" method="get">
 			<param name="code">[a-zA-Z0-9]{1,32}</param>
 		</route>
+=======
+		<route id="MSPersonalGroupDelMe" path="/cabinet/message/personal/del_me" command="MSPersonalGroupDelMe" method="post" />
+
+		<route id="AllUsersShow" path="/allusers" command="AllUsersShow" method="get" />
+
+>>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513
 
 		<route id="ok_expertise" path="/message/expertise/group/{mg_id}/ok" command="MSExpertiseGroupOk" method="get">
 			<param name="mg_id" pattern="uid"/>

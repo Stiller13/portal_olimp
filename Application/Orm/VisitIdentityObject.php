@@ -10,7 +10,9 @@ class VisitIdentityObject extends \System\Orm\IdentityObject {
 			'visit_user',
 			'visit_group',
 			'visit_datetime',
-			'visit_count_message'));
+			'visit_count_message',
+			'user_mg_read_user',
+			'user_mg_read_mg'));
 	}
 }
 

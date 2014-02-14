@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 	<head>
@@ -29,6 +30,22 @@
 						</ul>
 						</li>
 					</ul>
+=======
+{extends file="MainPage.tpl"}
+{block name=title}Мой аккаунт{/block}
+{block name=content}
+<div class="row">
+	<div class="col-md-4 col-md-offset-4">
+		<h2>Личный кабинет</h2>
+	</div>
+</div>
+<ul class="nav nav-tabs">
+	<li class="active"><a href="/cabinet/account">Аккаунт</a></li>
+	<li><a href="/cabinet/profile">Профиль</a></li>
+	<li><a href="/cabinet/message">Сообщения</a></li>
+	<li><a href="/cabinet/statistic">Статистика</a></li>
+</ul>
+>>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513
 
 					{if $user}
 					<form class="navbar-form navbar-left" role="search">

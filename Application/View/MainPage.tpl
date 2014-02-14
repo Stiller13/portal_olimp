@@ -16,6 +16,7 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Моё <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="/cabinet">Кабинет</a></li>
+								<li><a href="/allusers">Все соседи</a></li>
 								<li><a href="/SignOut">Выход</a></li>
 							</ul>
 						</li>

@@ -59,12 +59,24 @@
 		</group>
 		<group name="USER" parent="ALL" role="1">
 			<allow>
+<<<<<<< HEAD
+=======
+				<command class="AllUsersShow"/>
+				<command class="MyStatisticShow"/>
+				<command class="MSPersonalGroupDelMe"/>
+				<command class="MSPersonalGroupAddUsers"/>
+				<command class="MSPersonalGroupMessageCreate"/>
+				<command class="MSPersonalGroupShow"/>
+				<command class="MSPersonalGroupCreate"/>
+				<command class="MSPersonalGroupsShow"/>
+>>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513
 				<command class="MainPageShow"/>
 				<command class="SignOut"/>
 				<command class="MyProfileShow"/>
 				<command class="MyProfileSave"/>
 				<command class="MyAccountShow"/>
 				<command class="MyAccountSave"/>
+<<<<<<< HEAD
 				<command class="MessageSystemFileGet"/>
 				<command class="MessageSystemGroupsShow"/>
 				<command class="MSExpertiseGroupToCreate"/>
@@ -77,6 +89,10 @@
 				<command class="MessageSystemGroupShow">
 					<status name="open"/>
 				</command>
+=======
+
+
+>>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513
 				<command class="EventCreate"/> <!--Потом убрать отсюда и вообще пересмотреть права -->
 				<command class="EventCreateResult"/>
 				<command class="EventShow"/>

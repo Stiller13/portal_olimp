@@ -23,6 +23,12 @@
 
 		<command class="MyAccountSave" />
 
+<<<<<<< HEAD
+=======
+		<command class="MyStatisticShow" view="MyStatisticShow"/>
+
+
+>>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513
 <!-- система сообшений -->
 		<command class="MessageSystemShow" view="MessageSystemShow" />
 
@@ -46,7 +52,11 @@
 
 		<command class="MSPersonalGroupToCreate" view="MSPersonalGroupToCreate" />
 
+<<<<<<< HEAD
 		<command class="MSSystemGroupToCreate" view="MSSystemGroupToCreate" />
+=======
+		<command class="MSPersonalGroupDelMe" />
+>>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513
 
 		<command class="MSPersonalGroupCreate"/>
 
@@ -59,6 +69,7 @@
 			<param name="mg_id" required="1" objId="1"/>
 		</command>
 
+<<<<<<< HEAD
 		<command class="MessageSystemGroupSettingsSave" mainObj="messageset">
 			<param name="mg_type" required="1"/>
 			<param name="mg_id" required="1" objId="1"/>
@@ -83,6 +94,9 @@
 		<command class="MessageSystemFileGet">
 			<param name="code" required="1"/>
 		</command>
+=======
+		<command class="AllUsersShow" view="AllUsersShow"/>
+>>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513
 
 <!--Мероприятия -->
 		<command class="EventCreate" view="EventCreate"/>

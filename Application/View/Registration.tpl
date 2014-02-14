@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 	<head>
@@ -80,7 +81,30 @@
 						</div>
 					</form>
 				</div>
+=======
+{extends file="MainPage.tpl"}
+{block name=title}Регистрация{/block}
+{block name=content}<!DOCTYPE html>
+<div class="row">
+	<div class="col-md-3 col-md-offset-4">
+		<form class="form-horizontal" method="post" action="/Registration">
+			<div class="form-group">
+				<label class="control-label" for="inputLogin">Логин</label>
+				<input type="text" name="login" class="form-control" id="inputLogin" placeholder="Логин">
+>>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513
 			</div>
-		</div>
-	</body>
-</html>
+			<div class="form-group">
+				<label class="control-label" for="inputPassword">Пароль</label>
+				<input type="password" name="pass1" class="form-control" id="inputPassword" placeholder="Пароль">
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="inputPassword">Пароль</label>
+				<input type="password" name="pass2" class="form-control" id="inputPassword" placeholder="Пароль">
+			</div>
+			<div class="form-group">
+				<button type="submit" name="signin" class="btn btn-success">Регистрация</button>
+			</div>
+		</form>
+	</div>
+</div>
+{/block}

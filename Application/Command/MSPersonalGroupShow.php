@@ -52,8 +52,8 @@ class MSPersonalGroupShow extends \System\Core\Command {
 		$list_group = $finder->find($idobj, 'messagegroup');
 
 		$personal_mess = 0;
-		foreach ($list_group as $group) {
-			$personal_mess += $group->getVisit()->getCountMessage();
+		foreach ($list_group as $one_group) {
+			$personal_mess += $one_group->getVisit()->getCountMessage();
 		}
 
 
