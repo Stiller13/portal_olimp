@@ -4,103 +4,146 @@ namespace System\Msg;
 
 /**
  * @author Zalutskii
- * @version 10.02.13
+ * @version 23.12.13
  * Абстрактный класс группы сообщений
  */
 
 abstract class MessageGroup extends \System\Orm\DomainObject {
-	/**
-	 * Участники группы
-	 * @var UserCollection
-	 */
-	private $partners;
+    /**
+     * Заголовок группы
+     * @var string
+     */
+    private $title;
 
-	/**
-	 * Сообщения группы
-	 * @var \Application\Model\Message
-	 */
-	private $messages;
+    /**
+     * Описание группы
+     * @var string
+     */
+    private $description;
 
-	/**
-	 * Статус
-	 * @var integer
-	 */
-	private $status;
+    /**
+     * Участники группы
+     * @var UserCollection
+     */
+    private $partners;
 
-	/**
-	 * Установить участников группы
-	 * @param Application\Orm\AccountCollection $partners
-	 */
+    /**
+     * Сообщения группы
+     * @var \Application\Model\Message
+     */
+    private $messages;
 
-	public function setPartners(\Application\Orm\UserCollection $partners) {
-		$this->partners = $partners;
-		$this->markDirty();
-	}
-	/**
-	 * Получить участников группы
-	 * @return \Application\Model\Account
-	 */
+    /**
+     * Статус
+     * @var integer
+     */
+    private $status;
 
-	public function getPartners() {
-		if (!isset($this->partners)) {
-			$this->partners = $this->getCollection($this->targetClass(), $this->getId());
-		}
-		return $this->partners;
-	}
+    /**
+     * Задать заголовок группы
+     * @param string $title
+     */
+    public function setTitle($title) {
+        $this->title = $title;
+        $this->markDirty();
+    }
 
-	/**
-	 * Задать список сообщений
-	 * @param Application\Orm\MessageCollection $messages
-	 */
-	public function setMessages(\Application\Orm\MessageCollection $messages) {
-		$this->messages = $messages;
-		$this->markDirty();
-	}
+    /**
+     * Получить заголовок группы
+     */
+    public function getTitle() {
+        return $this->title;
+    }
 
-	/**
-	 * Получить сообщения
-	 * @return \Application\Orm\MessageCollection
-	 */
-	public function getMessages() {
-		// if (!isset($this->messages)) {
-		// 	$this->messages = $this->getCollection($this->targetClass(), $this->getId());
-		// }
-		return $this->messages;
-	}
+    /**
+     * Задать описание группы
+     * @param $description
+     */
+    public function setDescription($description) {
+        $this->description = $description;
+    }
 
-	/**
-	 * Вставка сообщения
-	 * @param Application\Model\Message $new_message
-	 */
-	public function addMessage(\Application\Model\Message $new_message) {
-		$this->getMessages()->add($new_message);
-		$this->markDirty();
-	}
+    /**
+     * Получить описание группы
+     */
+    public function getDescription() {
+        return $this->description;
+    }
 
-	/**
-	 * Установить статус группы
-	 */
-	public function setStatus($new_status) {
-		$this->status = $new_status;
-		$this->markDirty();
-	}
+    /**
+     * Установить участников группы
+     * @param Application\Orm\AccountCollection $partners
+     */
 
-	/**
-	 * Получить статус группы
-	 * @return integer
-	 */
-	public function getStatus() {
-		return $this->status;
-	}
+    public function setPartners(\Application\Orm\UserCollection $partners) {
+        $this->partners = $partners;
+        $this->markDirty();
+    }
+    /**
+     * Получить участников группы
+     * @return \Application\Model\Account
+     */
 
-	/**
-	 * Тип группы в БД
-	 */
-	abstract function getTypeId();
+    public function getPartners() {
+        if (!isset($this->partners)) {
+            $this->partners = $this->getCollection($this->targetClass(), $this->getId());
+        }
+        return $this->partners;
+    }
 
-	public function targetClass() {
-		return 'MessageGroup';
-	}
+    /**
+     * Задать список сообщений
+     * @param Application\Orm\MessageCollection $messages
+     */
+    public function setMessages(\Application\Orm\MessageCollection $messages) {
+        $this->messages = $messages;
+        $this->markDirty();
+    }
+
+    /**
+     * Получить сообщения
+     * @return \Application\Orm\MessageCollection
+     */
+    public function getMessages() {
+        if (!isset($this->messages)) {
+            $this->messages = $this->getCollection($this->targetClass(), $this->getId());
+        }
+        return $this->messages;
+    }
+
+    /**
+     * Вставка сообщения
+     * @param Application\Model\Message $new_message
+     */
+    public function addMessage(\Application\Model\Message $new_message) {
+        $this->getMessages()->add($new_message);
+        $this->markDirty();
+    }
+
+    /**
+     * Установить статус группы
+     */
+    public function setStatus($new_status) {
+        $this->status = $new_status;
+        $this->markDirty();
+    }
+
+    /**
+     * Получить статус группы
+     * @return integer
+     */
+    public function getStatus() {
+        return $this->status;
+    }
+
+    /**
+     * Тип группы в БД
+     */
+    abstract function getTypeId();
+
+    public function targetClass() {
+        return 'MessageGroup';
+    }
 }
 
 ?>

@@ -5,9 +5,9 @@ namespace Application\Command;
 class MainPageShow extends \System\Core\Command {
 
 	protected function exec() {
-		$session = new \System\Session\Session();
-		$user = $session->get('user');
+	$session = new \System\Session\Session();
+	$user = $session->get('user');
 
-		return $this->render(array("user" => $user, "menu_main" => 1));
+	return $this->render(array("user" => $user));
 	}
 }

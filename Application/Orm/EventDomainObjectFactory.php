@@ -13,7 +13,6 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$obj->setEvent_type($array['event_type']);
 		$obj->setConfirm($array['event_confirm']);
 		$obj->setConfirm_description($array['event_confirm_description']);
-		echo $array['event_userset_id'];
 		$obj->setPartners($this->createCollection($array['event_userset_id'])); //??? может прокатит, не уверен
 		// еще для messagegroup и partners, будут позже
 		$obj->setId($array['event_id']);
@@ -25,11 +24,20 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 	        $factory= \System\Orm\PersistenceFactory::getFactory('User');
 	        $finder= new \System\Orm\DomainObjectAssembler($factory);
 	        $idobj=$factory->getIndentityObject();
-	        $idobj->addJoin('INNER',array('user','user_userset'),array('user_id','user_userset_user_id'));
+		$idobj->addJoin('INNER',array('user','user_userset'),array('user_id','user_userset_user_id'));
+		$idobj->field('user_userset_userset_id')->eq($id);
 	               		
 		return $partners=$finder->find($idobj,'user');
 	}
 
+	public function createPartners($userset_id){
+ 		$factory = \System\Orm\PersistenceFactory::getFactory('User');
+ 		$finder = new \System\Orm\DomainObjectAssembler($factory);
+  		$idobj=$factory->getIndentityObject();
+ 		$idobj->addJoin('INNER',array('user', 'user_userset'), array('user_id', 'user_userset_user_id'));
+  		$idobj->field('user_userset_userset_id')->eq($userset_id);
+  		return $finder->find($idobj, 'user');
+ 	}
 	function targetClass(){
 		return "Event";
 	}

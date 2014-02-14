@@ -1,0 +1,15 @@
+<config>
+	<map>
+		<type name="messagegroup" id="1"/>
+		<type name="event" id="2"/>
+
+		<role name="user" id="1"/>
+		<role name="admin" id="404"/>
+
+		<status name="open" id="1"/>
+		<status name="closed" id="200"/>
+
+		<rule name="pmg_admin" id="5"/>
+		<rule name="pmg_user" id="7"/>
+	</map>
+</config>

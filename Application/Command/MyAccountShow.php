@@ -3,8 +3,7 @@
 namespace Application\Command;
 
 class MyAccountShow extends \System\Core\Command{
-
-	protected function exec() {
+	public function exec() {
 
 		$session = new \System\Session\Session();
 		$user = $session->get("user");

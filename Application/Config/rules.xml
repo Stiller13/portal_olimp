@@ -18,6 +18,21 @@
 			</allow>
 		</group>
 
+		<group name="emg_expert">
+			<allow>
+				<command class="MessageSystemGroupShow"/>
+				<command class="MessageSystemMessageCreate"/>
+				<command class="MSExpertiseGroupOk"/>
+				<command class="MSExpertiseGroupReturn"/>
+			</allow>
+		</group>
+		<group name="emg_author">
+			<allow>
+				<command class="MessageSystemGroupShow"/>
+				<command class="MessageSystemMessageCreate"/>
+				<command class="MSExpertiseGroupStart"/>
+			</allow>
+		</group>
 		<group name="smg_partner">
 			<allow>
 				<command class="MessageSystemGroupShow"/>
@@ -44,33 +59,36 @@
 		</group>
 		<group name="USER" parent="ALL" role="1">
 			<allow>
-				<command class="MSPersonalGroupAddUsers"/>
-				<command class="MSPersonalGroupMessageCreate"/>
-				<command class="MSPersonalGroupShow"/>
-				<command class="MSPersonalGroupCreate"/>
-				<command class="MSPersonalGroupsShow"/>
 				<command class="MainPageShow"/>
-				<command class="MyMessageShow"/>
 				<command class="SignOut"/>
 				<command class="MyProfileShow"/>
 				<command class="MyProfileSave"/>
 				<command class="MyAccountShow"/>
 				<command class="MyAccountSave"/>
-
 				<command class="MessageSystemFileGet"/>
-
+				<command class="MessageSystemGroupsShow"/>
+				<command class="MSExpertiseGroupToCreate"/>
+				<command class="MSPersonalGroupToCreate"/>
+				<command class="MSExpertiseGroupCreate"/>
+				<command class="MSPersonalGroupCreate"/>
+				<command class="MessageSystemShow"/>
+				<command class="MSSystemGroupToCreate"/>
+				<command class="MSSystemGroupCreate"/>
+				<command class="MessageSystemGroupShow">
+					<status name="open"/>
+				</command>
 				<command class="EventCreate"/> <!--Потом убрать отсюда и вообще пересмотреть права -->
 				<command class="EventCreateResult"/>
 				<command class="EventShow"/>
 				<command class="EventChange"/>
 				<command class="EventChangeResult"/>
+				<command class="EventsShow"/>
 			</allow>
 			<deny>
 			</deny>
 		</group>
 		<group name="GUEST" parent="ALL" role="1">
 			<allow>
-				<command class="SignIn"/>
 				<command class="SignInResult"/>
 				<command class="RegistrationResult"/>
 				<command class="Registration"/>

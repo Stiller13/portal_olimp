@@ -3,8 +3,7 @@
 namespace Application\Command;
 
 class MyProfileSave extends \System\Core\Command{
-
-	protected function exec() {
+	public function exec() {
 
 		$session = new \System\Session\Session();
 		$user = $session->get("user");
@@ -17,6 +16,7 @@ class MyProfileSave extends \System\Core\Command{
 		$user->setGender($this->req['gender']);
 		$user->setMail($this->req['mail']);
 		$user->setTelephone($this->req['telephone']);
+
 
 		$factory = \System\Orm\PersistenceFactory::getFactory('User');
 		$finder = new \System\Orm\DomainObjectAssembler($factory);

@@ -57,10 +57,10 @@ abstract class MessageGroupManager {
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
 		$idobj = $factory->getIndentityObject();
 
-		$idobj->field('messagegroup_type')->eq($this->type_group);
-		$idobj->field('messagegroup_id')->eq($group_id);
+		$idobj->field('message_group_type')->eq($this->type_group);
+		$idobj->field('message_group_id')->eq($group_id);
 
-		$group = $finder->findOne($idobj, 'messagegroup');
+		$group = $finder->findOne($idobj, 'message_group');
 
 		// Апдейтим время посещения группы
 		if ($v_update) {
@@ -96,12 +96,12 @@ abstract class MessageGroupManager {
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
 		$idobj = $factory->getIndentityObject();
 
-		$idobj->addWhat(array('messagegroup_id', 'messagegroup_partners', 'messagegroup_type', 'messagegroup_status'));
-		$idobj->addJoin('INNER',array('messagegroup','user_userset'),array('messagegroup_partners','user_userset_userset_id'));
-		$idobj->field('messagegroup_type')->eq($this->type_group);
-		$idobj->field('user_userset_user_id')->eq($user_id);
+		$idobj->addWhat(array('message_group_id', 'message_group_title', 'message_group_description', 'message_group_partners', 'message_group_type', 'message_group_status'));
+		$idobj->addJoin('INNER',array('message_group','user_userset'),array('message_group_partners','userset_id'));
+		$idobj->field('message_group_type')->eq($this->type_group);
+		$idobj->field('user_id')->eq($user_id);
 
-		return $finder->find($idobj, 'messagegroup');
+		return $finder->find($idobj, 'message_group');
 	}
 
 	/**
@@ -109,32 +109,34 @@ abstract class MessageGroupManager {
 	 * @return integer id группы
 	 */
 	public function CreateGroup($data) {
+		$partners = new \Application\Orm\UserCollection();
+
+		if (!is_null($data['users'])) {
+			$visit = new \Application\Model\Visit();
+
+			foreach ($data['users'] as $one_user) {
+				$new_user = new \Application\Model\User();
+
+				$new_user->setId($one_user['id']);
+				$new_user->setRoleInGroup($this->getRole($one_user['role']));
+				$partners->add($new_user);
+
+				$visit->addUserId($one_user['id']);
+			}
+		}
+
 		$class_name = '\Application\Model\\'.$this->group_class_name;
 		$new_mg = new $class_name();
 
+		$new_mg->setTitle($data['title']);
+		$new_mg->setDescription($data['description']);
 		$new_mg->setStatus($data['status']);
+
+		$new_mg->setPartners($partners);
 
 		$factory_group = \System\Orm\PersistenceFactory::getFactory($this->group_class_name);
 		$group_finder = new \System\Orm\DomainObjectAssembler($factory_group);
 		$group_finder->insert($new_mg);
-
-		if (!is_null($data['users'])) {
-			// $visit = new \Application\Model\Visit();
-			$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
-			$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
-
-			foreach ($data['users'] as $one_user) {
-				$ruleobj = new \Application\Model\RuleObj();
-
-				$ruleobj->setUser_id($one_user['id']);
-				$ruleobj->setObj_id($new_mg->getId());
-				$ruleobj->setRule($this->getRole($one_user['role']));
-
-				$ruleobj_finder->insert($ruleobj);
-				// $visit->addUserId($one_user['id']);
-			}
-		}
-/*
 
 		if ($visit) {
 			$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
@@ -142,7 +144,7 @@ abstract class MessageGroupManager {
 
 			$visit->setMessageGroupId($new_mg->getId());
 			$visit_finder->insert($visit);
-		}*/
+		}
 
 		return $new_mg->getId();
 	}
@@ -153,25 +155,22 @@ abstract class MessageGroupManager {
 	public function SendMessage($data) {
 		// Создаем автора
 		$author = new \Application\Model\User();
-		$author->setId($data['user_id']);
+		$author->setId($data['author_id']);
 
-		// if (is_null($data['upload']))
-		// 	$data['upload'] = new \Application\Orm\FileCollection();
+		if (is_null($data['upload']))
+			$data['upload'] = new \Application\Orm\FileCollection();
 
 		$new_message = new \Application\Model\Message();
 		$new_message->setText($data['text']);
 		$new_message->setAuthor($author);
 		$new_message->setGroup($data['group_id']);
-		$new_message->setReMessage($data['id_remessage']);
-		$new_message->setStatus($data['status']);
-		$new_message->setGroup($data['group_id']);
-
-		// $new_message->setFiles($data['upload']);
+		$new_message->setFiles($data['upload']);
 
 		// Производим вставку
 		$message_factory = \System\Orm\PersistenceFactory::getFactory('Message');
 		$message_finder = new \System\Orm\DomainObjectAssembler($message_factory);
 		$message_finder->insert($new_message);
+
 	}
 
 	/**

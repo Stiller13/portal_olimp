@@ -6,6 +6,6 @@
 {$event->getConfirm_description()}
 
 
-{while $event->getPartners()->valid()}
-	{print_r($event->getPartners()->next()->getName())}
-{/while}
+{foreach from=$event->getPartners() item=partner}
+	{$partner->getName()}
+{/foreach}

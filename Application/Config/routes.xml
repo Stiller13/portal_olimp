@@ -2,10 +2,9 @@
 <config>
 	<routes override="1">
 		<route id="MainPageShow" path="/" command="MainPageShow" method="get" />
+		<!--<route id="for_tests" path="/" command="DefaultCommand"/>-->
 
 		<route id="default" path="/default" command="DefaultCommand" />
-
-		<route id="SignIn" path="/SignIn" command="SignIn" method="get" />
 
 		<route id="SignInResult" path="/SignIn" command="SignInResult" method="post" />
 
@@ -16,7 +15,6 @@
 		<route id="SignOut" path="/SignOut" command="SignOut" method="get" />
 
 		<route id="Msg404" path="/Msg404" command="Msg404" method="get" />
-
 
 <!-- кабинет -->
 		<route id="MyCabinet" path="/cabinet" command="MyAccountShow" method="get" />
@@ -31,28 +29,62 @@
 
 
 <!-- система ообщений -->
-		<route id="MyMessageShow" path="/cabinet/message" command="MyMessageShow" method="get" />
+		<route id="message_groups_types" path="/message" command="MessageSystemShow" method="get" />
 
-		<route id="MSPersonalGroupsShow" path="/cabinet/message/personal" command="MSPersonalGroupsShow" method="get" />
-
-		<route id="MSPersonalGroupCreate" path="/cabinet/message/personal/new" command="MSPersonalGroupCreate" method="get" />
-
-		<route id="MSPersonalGroupShow" path="/cabinet/message/personal/{mg_id}" command="MSPersonalGroupShow" method="get">
-			<param name="mg_id" pattern="uid"/>
+		<route id="message_groups_show" path="/message/{mg_type}/groups" command="MessageSystemGroupsShow" method="get">
+			<param name="mg_type" pattern="mg_type"/>
 		</route>
 
-		<route id="MSPersonalGroupMessageCreate" path="/cabinet/message/personal/new_message" command="MSPersonalGroupMessageCreate" method="post" />
+		<route id="to_create_personal_mg" path="/message/personal/group/create" command="MSPersonalGroupToCreate" method="get" />
 
-		<route id="MSPersonalGroupAddUsers" path="/cabinet/message/personal/add_users" command="MSPersonalGroupAddUsers" method="post" />
+		<route id="to_create_expertise_mg" path="/message/expertise/group/create" command="MSExpertiseGroupToCreate" method="get" />
 
+		<route id="to_create_system_mg" path="/message/system/group/create" command="MSSystemGroupToCreate" method="get" />
 
+		<route id="create_personal_mg" path="/message/personal/group/create" command="MSPersonalGroupCreate" method="post" />
+
+		<route id="ecreate_xpertise_mg" path="/message/expertise/group/create" command="MSExpertiseGroupCreate" method="post" />
+
+		<route idcreate_="system_mg" path="/message/system/group/create" command="MSSystemGroupCreate" method="post" />
+
+		<route id="message_group_show" path="/message/{mg_type}/group/{mg_id}" command="MessageSystemGroupShow" method="get">
+			<param name="mg_type" pattern="mg_type"/>
+			<param name="mg_id" pattern="uid"/>
+		</route>
 
 		<route id="unsubcribe_personal_mg" path="/message/personal/group/{mg_id}/unsubcribe" command="MSPersonalGroupUnsubscribe" method="get">
 			<param name="mg_id" pattern="uid"/>
 		</route>
 
+		<route id="create_message" path="/message/{mg_type}/group/{mg_id}/send_message" command="MessageSystemMessageCreate" method="post">
+			<param name="mg_type" pattern="mg_type"/>
+			<param name="mg_id" pattern="uid"/>
+		</route>
+
+		<route id="mg_settings_show" path="/message/{mg_type}/group/{mg_id}/settings" command="MessageSystemGroupSettingsShow" method="get">
+			<param name="mg_type" pattern="mg_type"/>
+			<param name="mg_id" pattern="uid"/>
+		</route>
+
+		<route id="mg_settings_save" path="/message/{mg_type}/group/{mg_id}/settings" command="MessageSystemGroupSettingsSave" method="post">
+			<param name="mg_type" pattern="mg_type"/>
+			<param name="mg_id" pattern="uid"/>
+		</route>
+
 		<route id="get_file" path="/message/get/file/{code}" command="MessageSystemFileGet" method="get">
 			<param name="code">[a-zA-Z0-9]{1,32}</param>
+		</route>
+
+		<route id="ok_expertise" path="/message/expertise/group/{mg_id}/ok" command="MSExpertiseGroupOk" method="get">
+			<param name="mg_id" pattern="uid"/>
+		</route>
+
+		<route id="start_expertise" path="/message/expertise/group/{mg_id}/start" command="MSExpertiseGroupStart" method="post">
+			<param name="mg_id" pattern="uid"/>
+		</route>
+
+		<route id="return_expertise" path="/message/expertise/group/{mg_id}/return" command="MSExpertiseGroupReturn" method="post">
+			<param name="mg_id" pattern="uid"/>
 		</route>
 
 <!-- Мероприятия -->
@@ -65,6 +97,7 @@
 			<param name="e_id">[1-9][0-9]*</param>
 		</route>
 		<route id="EventChangeResult" path="/EventChangeResult" command="EventChangeResult" method="post" />
-
+		<route id="EventsShow" path="/EventsShow" command="EventsShow" method="get" />
+		
 	</routes>
 </config>

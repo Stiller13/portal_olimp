@@ -9,8 +9,7 @@ use System\Orm\IdentityObject;
 use System\Auth\Crypter;
 
 class MyAccountSave extends \System\Core\Command{
-
-	protected function exec() {
+	public function exec() {
 		$session = new Session();
 		$user = $session->get("user");
 
@@ -20,19 +19,17 @@ class MyAccountSave extends \System\Core\Command{
 		$idobj->field('account_id')->eq($user->getId());
 		$acc = $finder->findOne($idobj, 'account');
 
-		$type_message = "alert-danger";
-
 		if ($acc->getPass() == Crypter::genPass($this->req["old_pass"], $acc->getSalt())){
 			$pattern = '/^[a-zA-Z][a-zA-Z0-9\-\_]{2,9}+$/';
 
 			$pass1 = $this->req["new_pass1"];
 			$pass2 = $this->req["new_pass2"];
-
+			
 			preg_match($pattern,$pass1,$found);
-
-			if ($found){
+			
+			if ($found){			
 				if ($pass1 === $pass2){
-
+	
 					$salt = Crypter::genSalt();
 					$pass = Crypter::genPass($pass1, $salt);
 					$acc->setSalt($salt);
@@ -43,10 +40,11 @@ class MyAccountSave extends \System\Core\Command{
 					$finder = new \System\Orm\DomainObjectAssembler($factory);
 					$finder->insert($acc);
 
+
 					$finder->insert($acc);
 
 					$mess = "OK";
-					$type_message = "alert-success";
+	
 				}
 				else {
 					$mess = "Passwords are not equal";
@@ -60,6 +58,6 @@ class MyAccountSave extends \System\Core\Command{
 			$mess = "It's not your password. DENIED.";
 		}
 		xlog("mess".$mess);
-		return $this->render(array("user" => $user, "message" => $mess, "type_message" => $type_message), "MyAccountShow");
+		return $this->redirect("/cabinet/account");
 	}
 }
