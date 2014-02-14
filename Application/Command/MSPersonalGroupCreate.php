@@ -24,8 +24,9 @@ class MSPersonalGroupCreate extends \System\Core\Command {
 		$ruleobj = new \Application\Model\RuleObj();
 
 		$ruleobj->setUser_id($user->getId());
-		$ruleobj->setUserset_id($new_mg->getUserset());
+		$ruleobj->setObj_id($new_mg->getId());
 		$ruleobj->setRule(1);
+		$ruleobj->setObj_type(1);
 
 		$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
 		$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);

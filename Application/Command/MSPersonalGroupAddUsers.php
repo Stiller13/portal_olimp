@@ -17,18 +17,11 @@ class MSPersonalGroupAddUsers extends \System\Core\Command {
 			$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
 
 			foreach ($this->req['users'] as $id_user) {
-				$rule_io = $factory_ruleobj->getIndentityObject();
-				$rule_io->field('user_userset_user_id')->eq($id_user);
-				$rule_io->field('user_userset_userset_id')->eq($mg->getUserset());
-
-				$rule = $ruleobj_finder->findOne($rule_io, 'user_userset');
-				if ($rule)
-					continue;
-
 				$ruleobj = new \Application\Model\RuleObj();
 				$ruleobj->setUser_id($id_user);
-				$ruleobj->setUserset_id($mg->getUserset());
+				$ruleobj->setObj_id($mg->getId());
 				$ruleobj->setRule(1);
+				$ruleobj->setObj_type(1);
 
 				$ruleobj_finder->insert($ruleobj);
 
