@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Фев 13 2014 г., 18:18
+-- Время создания: Фев 14 2014 г., 13:49
 -- Версия сервера: 5.1.40-community
 -- Версия PHP: 5.3.3
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- База данных: `portal_olimp`
 --
-CREATE DATABASE IF NOT EXISTS `portal_olimp` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-USE `portal_olimp`;
 
 DELIMITER $$
 --
@@ -32,6 +30,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `clear_tables`()
 BEGIN
 TRUNCATE account;
 TRUNCATE user;
+TRUNCATE messagegroup;
+TRUNCATE message;
+TRUNCATE userset;
+TRUNCATE user_userset;
+TRUNCATE user_mg_read;
+TRUNCATE event;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_account`(IN `login` VARCHAR(25) CHARSET utf8, IN `password` VARCHAR(40) CHARSET utf8, IN `salt` VARCHAR(255) CHARSET utf8, OUT `id` INT)
@@ -81,10 +85,26 @@ SET id=LAST_INSERT_ID();
 COMMIT;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_user_userset`(IN `id_user` INT, IN `id_userset` INT, IN `id_rule` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_user_userset`(IN `id_user` INT, IN `id_obj` INT, IN `id_rule` INT, IN `obj_type` VARCHAR(10) CHARSET utf8)
     NO SQL
 BEGIN
-    INSERT INTO user_userset (user_userset_user_id, user_userset_userset_id, user_userset_rule_id) VALUES (id_user, id_userset, id_rule);
+	DECLARE userset_id, old_rule int;
+START TRANSACTION;
+	CASE obj_type
+		WHEN 1 THEN
+			SET userset_id = (SELECT messagegroup_partners FROM messagegroup WHERE messagegroup_id = id_obj);
+		WHEN 2 THEN
+			SET userset_id = (SELECT event_userset_id FROM event WHERE event_id = id_obj);
+	END CASE;
+
+	SET old_rule = (SELECT user_userset_rule_id FROM user_userset WHERE user_userset_user_id = id_user AND user_userset_userset_id = userset_id);
+	
+	IF old_rule > 0 THEN
+		UPDATE user_userset SET user_userset_rule_id = id_rule WHERE user_userset_userset_id = userset_id AND user_userset_user_id = id_user;
+	ELSE
+		INSERT INTO user_userset(user_userset_user_id, user_userset_userset_id, user_userset_rule_id) value (id_user, userset_id, id_rule);
+	END IF;
+COMMIT;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_visit`(IN `id_user` INT, IN `id_group` INT)
@@ -243,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `message` (
   `message_message` int(11) NOT NULL,
   `message_status` smallint(6) NOT NULL,
   PRIMARY KEY (`message_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Дамп данных таблицы `message`
@@ -256,7 +276,8 @@ INSERT INTO `message` (`message_id`, `message_text`, `message_date`, `message_us
 (5, 'q', '2014-02-11 05:47:49', 17, 1, 0, 0),
 (6, 'qwwww', '2014-02-11 05:48:04', 17, 1, 0, 0),
 (7, 'wee', '2014-02-11 05:48:59', 17, 1, 0, 0),
-(8, '1', '2014-02-11 05:49:02', 17, 1, 0, 0);
+(8, '1', '2014-02-11 05:49:02', 17, 1, 0, 0),
+(9, '2', '2014-02-13 10:12:44', 17, 8, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -270,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `messagegroup` (
   `messagegroup_type` int(11) NOT NULL,
   `messagegroup_status` int(11) NOT NULL,
   PRIMARY KEY (`messagegroup_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- Дамп данных таблицы `messagegroup`
@@ -284,7 +305,16 @@ INSERT INTO `messagegroup` (`messagegroup_id`, `messagegroup_partners`, `message
 (5, 6, 1, 1),
 (6, 7, 1, 1),
 (7, 8, 1, 1),
-(8, 9, 1, 1);
+(8, 9, 1, 1),
+(9, 10, 1, 1),
+(10, 11, 1, 1),
+(11, 12, 1, 1),
+(12, 13, 1, 1),
+(13, 14, 1, 1),
+(14, 15, 1, 1),
+(15, 16, 1, 1),
+(16, 17, 1, 1),
+(17, 18, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -366,12 +396,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_name`, `user_surname`, `user_patronymic`, `user_date`, `user_gender`, `user_residence`, `user_role`, `user_mail`, `user_telephone`) VALUES
-(15, '1', '', '', '0000-00-00', '', '', 0, '', ''),
-(16, 'kol', '2312', '332', '0000-00-00', '', '', 0, '', ''),
-(17, 'dim', 'zal', 'andr', '2014-02-04', '', '', 0, '', '3434'),
-(18, 'aaaa', '', '', '0000-00-00', '', '', 0, '', ''),
-(19, 'sss', '', '', '0000-00-00', '', '', 0, '', ''),
-(20, 'ddddd', '', '', '0000-00-00', '', '', 0, '', '');
+(15, 'Feed', 'Stret', '', '0000-00-00', '', '', 0, '', ''),
+(16, 'Коля', 'Petrov', '332', '0000-00-00', '', '', 0, '', ''),
+(17, 'Дмитрий', 'Залуцкий', 'andr', '2014-02-04', '', '', 0, '', '3434'),
+(18, 'Алексей', 'Bold', '', '0000-00-00', '', '', 0, '', ''),
+(19, 'Bon', 'Asdf', '', '0000-00-00', '', '', 0, '', ''),
+(20, 'Nil', 'Asdinger', '', '0000-00-00', '', '', 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -382,7 +412,7 @@ INSERT INTO `user` (`user_id`, `user_name`, `user_surname`, `user_patronymic`, `
 CREATE TABLE IF NOT EXISTS `userset` (
   `userset_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`userset_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- Дамп данных таблицы `userset`
@@ -397,7 +427,16 @@ INSERT INTO `userset` (`userset_id`) VALUES
 (6),
 (7),
 (8),
-(9);
+(9),
+(10),
+(11),
+(12),
+(13),
+(14),
+(15),
+(16),
+(17),
+(18);
 
 -- --------------------------------------------------------
 
@@ -438,21 +477,21 @@ CREATE TABLE IF NOT EXISTS `user_mg_read` (
   `user_mg_read_mg` int(11) DEFAULT NULL,
   `user_mg_read_last_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_mg_read_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=49 ;
 
 --
 -- Дамп данных таблицы `user_mg_read`
 --
 
 INSERT INTO `user_mg_read` (`user_mg_read_id`, `user_mg_read_user`, `user_mg_read_mg`, `user_mg_read_last_date`) VALUES
-(1, 17, 1, '2014-02-12 03:05:00'),
+(35, 17, 10, '2014-02-13 13:54:14'),
 (2, 17, 7, '2014-02-12 02:54:26'),
-(3, 17, 3, '2014-02-12 02:53:59'),
+(31, 17, 3, '2014-02-14 04:40:17'),
 (4, 16, 1, '2014-01-11 09:12:58'),
-(5, 17, 4, '2014-02-12 02:54:10'),
-(6, 17, 5, '2014-02-12 02:54:03'),
+(5, 17, 4, '2014-02-13 11:41:01'),
+(6, 17, 5, '2014-02-13 10:51:53'),
 (7, 16, 5, '2014-02-11 09:20:55'),
-(8, 17, 6, '2014-02-12 02:54:07'),
+(8, 17, 6, '2014-02-13 13:31:54'),
 (9, 16, 6, '2014-02-11 09:27:37'),
 (10, 18, 6, '2014-02-11 09:27:37'),
 (11, 19, 6, '2014-02-11 09:27:37'),
@@ -461,9 +500,29 @@ INSERT INTO `user_mg_read` (`user_mg_read_id`, `user_mg_read_user`, `user_mg_rea
 (14, 19, 6, '2014-02-12 02:53:24'),
 (15, 18, 6, '2014-02-12 02:54:07'),
 (16, 19, 6, '2014-02-12 02:54:07'),
-(17, 17, 8, '2014-02-12 02:54:12'),
+(34, 17, 8, '2014-02-13 10:57:07'),
 (18, 18, 7, '2014-02-12 02:54:21'),
-(19, 19, 7, '2014-02-12 02:54:21');
+(19, 19, 7, '2014-02-12 02:54:21'),
+(20, 17, 9, '2014-02-13 09:45:23'),
+(21, 16, 8, '2014-02-13 09:46:44'),
+(22, 16, 8, '2014-02-13 09:46:58'),
+(23, 16, 8, '2014-02-13 09:47:17'),
+(24, 16, 8, '2014-02-13 09:47:38'),
+(25, 16, 8, '2014-02-13 09:48:28'),
+(26, 20, 8, '2014-02-13 09:49:04'),
+(36, 17, 12, '2014-02-13 13:56:49'),
+(37, 17, 13, '2014-02-13 13:56:52'),
+(38, 17, 14, '2014-02-13 13:58:52'),
+(39, 17, 15, '2014-02-13 14:07:08'),
+(40, 18, 15, '2014-02-13 14:02:45'),
+(41, 16, 15, '2014-02-13 14:07:08'),
+(42, 17, 16, '2014-02-14 04:26:48'),
+(43, 17, 17, '2014-02-14 04:26:52'),
+(44, 15, 3, '2014-02-14 04:36:49'),
+(45, 16, 3, '2014-02-14 04:36:49'),
+(46, 16, 3, '2014-02-14 04:37:16'),
+(47, 15, 3, '2014-02-14 04:37:20'),
+(48, 17, 3, '2014-02-14 04:40:17');
 
 -- --------------------------------------------------------
 
@@ -503,7 +562,6 @@ CREATE TABLE IF NOT EXISTS `user_userset` (
 
 INSERT INTO `user_userset` (`user_userset_user_id`, `user_userset_userset_id`, `user_userset_rule_id`) VALUES
 (0, 1, 0),
-(17, 2, 1),
 (17, 4, 1),
 (17, 5, 1),
 (17, 5, 1),
@@ -521,7 +579,17 @@ INSERT INTO `user_userset` (`user_userset_user_id`, `user_userset_userset_id`, `
 (19, 7, 1),
 (17, 8, 1),
 (18, 8, 1),
-(19, 8, 1);
+(19, 8, 1),
+(17, 9, 1),
+(16, 9, 1),
+(20, 9, 1),
+(17, 16, 1),
+(18, 16, 1),
+(16, 16, 1),
+(17, 17, 2),
+(17, 18, 1),
+(16, 4, 1),
+(15, 4, 1);
 
 -- --------------------------------------------------------
 
