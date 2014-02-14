@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<h1>Msg404</h1>
-Page not found
-=======
 {extends file="MainPage.tpl"}
 {block name=title}Главная{/block}
 {block name=content}
@@ -16,4 +12,3 @@ Page not found
 	</div>
 </div>
 {/block}
->>>>>>> 89eb8bd191a9046ada292c7cdab679b5164d3513

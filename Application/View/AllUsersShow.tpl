@@ -4,10 +4,11 @@
 
 {$first = ''}
 {foreach from=$user_list item=one_user}
-{if $first eq ''}
-{$first = $one_user->getName()}
+{$name = $one_user->getName()}
+{if $first neq $name[0]}
+	{$first = $name[0]}
+	{$first}<br>
 {/if}
 {$one_user->getName()} {$one_user->getFamily()}<br>
 {/foreach}
-{$first}
 {/block}
