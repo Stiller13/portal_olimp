@@ -24,16 +24,21 @@ class User extends \System\Orm\DomainObject{
 	function setName($name) {
 		$this->name = $name;
 		$this->markDirty();
+	}
 
+	function getName($letter = null) {
+		if ($letter != null && $letter > -1 && $letter < strlen($this->name))
+			return $this->name[$letter];
+		else
+			return $this->name;
 	}
-	function getName() {
-		return $this->name;
-	}
+
 	function setFamily($family) { 
 		$this->family = $family;
 		$this->markDirty();
 
 	}
+
 	function getFamily() {
 		return $this->family;
 	}
