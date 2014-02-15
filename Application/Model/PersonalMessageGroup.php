@@ -33,10 +33,6 @@ class PersonalMessageGroup extends \System\Msg\MessageGroup {
 		return $this->visit;
 	}
 
-	public function getTypeId() {
-		return \System\Msg\FactoryMGManager::PERSONAL_GROUP;
-	}
-
 	public function targetClass() {
 		return 'PersonalMessageGroup';
 	}

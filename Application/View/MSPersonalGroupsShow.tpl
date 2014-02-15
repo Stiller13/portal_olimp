@@ -1,11 +1,9 @@
-{extends file="MainPage.tpl"}
+{extends file="Main.tpl"}
 {block name=title}Личная переписка{/block}
 {block name=content}
-<div class="row">
-	<div class="col-md-4 col-md-offset-4">
-		<h2>Личный кабинет</h2>
-	</div>
-</div>
+
+<h2 class="text-center">Личный кабинет</h2>
+
 <ul class="nav nav-tabs">
 	<li><a href="/cabinet/account">Аккаунт</a></li>
 	<li><a href="/cabinet/profile">Профиль</a></li>
@@ -31,7 +29,12 @@
 		</ul>
 	</div>
 	<div class="col-md-4 col-md-3-offset">
-		<a href="/cabinet/message/personal/new"><button class="btn btn-success">Новая группа</button></a>
+		<form role="form" action="/cabinet/message/personal/new" method="post">
+			<input type="hidden" name="user_id" value={$user->getId()}>
+			<input type="hidden" name="status" value="0">
+			<input type="hidden" name="secret_param" value='top_secret!'>
+			<input type="submit" class="btn btn-success" value="Новая группа">
+		</form>
 		<ul class="nav nav-pills nav-stacked">
 		{foreach from=$list_group item=one_group}
 			<li>

@@ -1,4 +1,4 @@
-{extends file="MainPage.tpl"}
+{extends file="Main.tpl"}
 {block name=title}Главная{/block}
 {block name=content}
 <div class="col-md-4 col-md-offset-3">

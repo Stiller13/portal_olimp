@@ -36,7 +36,7 @@
 
 		<route id="MSPersonalGroupsShow" path="/cabinet/message/personal" command="MSPersonalGroupsShow" method="get" />
 
-		<route id="MSPersonalGroupCreate" path="/cabinet/message/personal/new" command="MSPersonalGroupCreate" method="get" />
+		<route id="MSPersonalGroupCreate" path="/cabinet/message/personal/new" command="MSPersonalGroupCreate" method="post" />
 
 		<route id="MSPersonalGroupShow" path="/cabinet/message/personal/{mg_id}" command="MSPersonalGroupShow" method="get">
 			<param name="mg_id" pattern="uid"/>
@@ -50,6 +50,14 @@
 
 		<route id="AllUsersShow" path="/allusers" command="AllUsersShow" method="get" />
 
+		<route id="FileGet" path="/file/{code}" command="FileGet" method="get">
+			<param name="code">[a-zA-Z0-9]{1,32}</param>
+		</route>
+
+		<route id="ProfileShow" path="/profile/{uid}" command="ProfileShow" method="get">
+			<param name="uid" pattern="uid" />
+		</route>
+
 
 <!-- Мероприятия -->
 		<route id="EventCreate" path="/EventCreate" command="EventCreate" method="get" />
@@ -61,7 +69,6 @@
 			<param name="e_id">[1-9][0-9]*</param>
 		</route>
 		<route id="EventChangeResult" path="/EventChangeResult" command="EventChangeResult" method="post" />
-		<route id="EventsShow" path="/EventsShow" command="EventsShow" method="get" />
-
+		<route id="EventsShow" path="/event" command="EventsShow" method="get" />
 	</routes>
 </config>

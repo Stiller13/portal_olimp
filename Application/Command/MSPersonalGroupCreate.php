@@ -6,27 +6,23 @@ class MSPersonalGroupCreate extends \System\Core\Command {
 
 	protected function exec() {
 
-		$session = new \System\Session\Session();
+/*		$session = new \System\Session\Session();
 		$user = $session->get('user');
 
 		$new_mg = new \Application\Model\PersonalMessageGroup();
-		$new_mg->setStatus(1);
+		$new_mg->setStatus(0);
 
 		$factory_group = \System\Orm\PersistenceFactory::getFactory('PersonalMessageGroup');
 		$group_finder = new \System\Orm\DomainObjectAssembler($factory_group);
 		$group_finder->insert($new_mg);
-
-		$group_io = $factory_group->getIndentityObject();
-		$group_io->field('messagegroup_id')->eq($new_mg->getId());
-		$new_mg = $group_finder->findOne($group_io, 'messagegroup');
 
 //Вставка в группу пользователей
 		$ruleobj = new \Application\Model\RuleObj();
 
 		$ruleobj->setUser_id($user->getId());
 		$ruleobj->setObj_id($new_mg->getId());
-		$ruleobj->setRule(1);
-		$ruleobj->setObj_type(1);
+		$ruleobj->setRule(\System\Helper\Helper::getId("rule", "pmg_admin"));
+		$ruleobj->setObj_type(\System\Helper\Helper::getId("type", "messagegroup"));
 
 		$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
 		$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
@@ -39,8 +35,15 @@ class MSPersonalGroupCreate extends \System\Core\Command {
 
 		$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
 		$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
-		$visit_finder->insert($visit);
+		$visit_finder->insert($visit);*/
 
-		return $this->redirect("/cabinet/message/personal/".$new_mg->getId());
+		$h[] = array('id' => $this->req['user_id'], 
+			'rule' => 'pmg_admin');
+		$this->req['users'] = $h;
+
+		$manager = \System\Msg\FactoryMGManager::getManager('personal');
+		$new_mg_id = $manager->CreateGroup($this->req);
+
+		return $this->redirect("/cabinet/message/personal/".$new_mg_id);
 	}
 }

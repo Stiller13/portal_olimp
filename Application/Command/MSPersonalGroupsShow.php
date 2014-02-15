@@ -15,7 +15,7 @@ class MSPersonalGroupsShow extends \System\Core\Command {
 
 		$idobj->addWhat(array('messagegroup_id', 'messagegroup_partners', 'messagegroup_type', 'messagegroup_status'));
 		$idobj->addJoin('INNER',array('messagegroup','user_userset'),array('messagegroup_partners','user_userset_userset_id'));
-		$idobj->field('messagegroup_type')->eq(1);
+		$idobj->field('messagegroup_type')->eq(\System\Helper\Helper::getId("type", "messagegroup"));
 		$idobj->field('user_userset_user_id')->eq($user->getId());
 
 		$list_group = $finder->find($idobj, 'messagegroup');

@@ -1,6 +1,7 @@
-{extends file="MainPage.tpl"}
+{extends file="Main.tpl"}
 {block name=title}Регистрация{/block}
 {block name=content}<!DOCTYPE html>
+
 <div class="row">
 	<div class="col-md-3 col-md-offset-4">
 		<form class="form-horizontal" method="post" action="/Registration">
@@ -22,4 +23,5 @@
 		</form>
 	</div>
 </div>
+
 {/block}

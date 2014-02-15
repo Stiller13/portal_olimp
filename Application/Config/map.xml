@@ -3,6 +3,10 @@
 		<type name="messagegroup" id="1"/>
 		<type name="event" id="2"/>
 
+		<typegroup name="personal" id="1"/>
+		<typegroup name="comment" id="2"/>
+		<typegroup name="system" id="3"/>
+
 		<role name="user" id="1"/>
 		<role name="admin" id="404"/>
 

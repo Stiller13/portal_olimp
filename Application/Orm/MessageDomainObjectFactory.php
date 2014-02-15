@@ -12,7 +12,7 @@ class MessageDomainObjectFactory extends \System\Orm\DomainObjectFactory {
 		$obj->setDate($array['message_date']);
 		$obj->setGroup($array['message_group']);
 
-		// $obj->setFiles($this->createFiles($array['message_id']));
+		$obj->setFiles($this->createFiles($array['message_id']));
 
 		$obj->setAuthor($this->createAuthor($array['message_user']));
 

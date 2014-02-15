@@ -12,10 +12,9 @@ class MSPersonalGroupDelMe extends \System\Core\Command {
 			$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
 
 			$ruleobj_idobj->field('obj_id')->eq($this->req['group_id']);
-			$ruleobj_idobj->field('obj_type')->eq(1);
+			$ruleobj_idobj->field('obj_type')->eq(\System\Helper\Helper::getId("type", "messagegroup"));
 
 			$rule = $ruleobj_finder->findOne($ruleobj_idobj, 'rule');
-
 
 			$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
 			$ruleobj_idobj->field('user_userset_user_id')->eq($this->req['user_id']);

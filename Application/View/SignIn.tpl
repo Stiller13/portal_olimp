@@ -1,4 +1,4 @@
-{extends file="MainPage.tpl"}
+{extends file="Main.tpl"}
 {block name=title}Авторизация{/block}
 {block name=content}
 <div class="row">

@@ -1,11 +1,9 @@
-{extends file="MainPage.tpl"}
+{extends file="Main.tpl"}
 {block name=title}Личные сообщения{/block}
 {block name=content}
-<div class="row">
-	<div class="col-md-4 col-md-offset-4">
-		<h2>Личный кабинет</h2>
-	</div>
-</div>
+
+<h2 class="text-center">Личный кабинет</h2>
+
 <ul class="nav nav-tabs">
 	<li><a href="/cabinet/account">Аккаунт</a></li>
 	<li><a href="/cabinet/profile">Профиль</a></li>
@@ -52,24 +50,28 @@
 			</div>
 			<div class="panel-body">
 				{$one_message->getText()}
+				{foreach from=$one_message->getFiles() item=one_file name=foo}
+					{if $smarty.foreach.foo.first}<hr>{/if}
+					<a href="/file/{$one_file->getCode()}">{$one_file->getName()}</a>
+				{/foreach}
 			</div>
 		</div>
 
 		{/foreach}
-		<form role="form" action="/cabinet/message/personal/new_message" method="post">
+		<form role="form" action="/cabinet/message/personal/new_message" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="exampleInputText">Текст сообщения</label>
 				<input type="textarea" class="form-control" id="exampleInputText" name="text">
 			</div>
 			<div class="form-group">
 				<label for="exampleInputFile">Файл</label>
-				<input type="file" id="exampleInputFile">
+				<input type="file" id="exampleInputFile" name="uploadfiles[]" multiple="true">
 				<p class="help-block">Выберите файл для отправки</p>
 			</div>
 			<input type="hidden" name="user_id" value={$user->getId()}>
 			<input type="hidden" name="group_id" value={$group->getId()}>
-			<input type="hidden" name="status" value="0">
 			<input type="hidden" name="id_remessage" value="0">
+			<input type="hidden" name="status" value="0">
 			<input type="hidden" name="secret_param" value='top_secret!'>
 			<input type="submit" class="btn btn-success" value="Отправить">
 		</form>

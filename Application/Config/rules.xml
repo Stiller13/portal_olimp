@@ -44,6 +44,8 @@
 		</group>
 		<group name="USER" parent="ALL" role="1">
 			<allow>
+				<command class="ProfileShow"/>
+				<command class="FileGet"/>
 				<command class="AllUsersShow"/>
 				<command class="MyStatisticShow"/>
 				<command class="MSPersonalGroupDelMe"/>
