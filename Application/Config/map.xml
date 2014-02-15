@@ -14,6 +14,6 @@
 		<status name="closed" id="200"/>
 
 		<rule name="pmg_admin" id="5"/>
-		<rule name="pmg_user" id="7"/>
+		<rule name="pmg_partner" id="6"/>
 	</map>
 </config>

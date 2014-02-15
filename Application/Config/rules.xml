@@ -3,18 +3,15 @@
 	<rules override="1">
 		<group name="pmg_partner">
 			<allow>
-				<command class="MessageSystemGroupShow"/>
-				<command class="MessageSystemMessageCreate"/>
-				<command class="MSPersonalGroupUnsubscribe"/>
+				<command class="MSPersonalGroupDelMe"/>
+				<command class="MSPersonalGroupMessageCreate"/>
+				<command class="MSPersonalGroupShow"/>
+				<command class="MSPersonalGroupsShow"/>
 			</allow>
 		</group>
 		<group name="pmg_admin">
 			<allow>
-				<command class="MessageSystemGroupShow"/>
-				<command class="MessageSystemMessageCreate"/>
-				<command class="MessageSystemGroupSettingsShow"/>
-				<command class="MessageSystemGroupSettingsSave"/>
-				<command class="MSPersonalGroupUnsubscribe"/>
+				<command class="MSPersonalGroupAddUsers"/>
 			</allow>
 		</group>
 
@@ -24,15 +21,6 @@
 			</allow>
 		</group>
 
-		<group name="author">
-			<allow>
-				<command class="DefaultCommand"/>
-			</allow>
-		</group>
-		<group name="MESS">
-			<allow>
-			</allow>
-		</group>
 	</rules>
 
 	<roles>
@@ -51,8 +39,8 @@
 				<command class="MSPersonalGroupDelMe"/>
 				<command class="MSPersonalGroupAddUsers"/>
 				<command class="MSPersonalGroupMessageCreate"/>
-				<command class="MSPersonalGroupShow"/>
 				<command class="MSPersonalGroupCreate"/>
+				<command class="MSPersonalGroupShow"/>
 				<command class="MSPersonalGroupsShow"/>
 				<command class="MainPageShow"/>
 				<command class="MyMessageShow"/>

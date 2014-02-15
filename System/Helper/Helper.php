@@ -9,16 +9,16 @@ class Helper {
 		$app = Application::instance();
 		$config = $app->getData("map");
 		if (!isset(self::$helper[$conf_type])) {
-			self::parse($conf_type);			
+			self::parse($conf_type);
 		}
-		return (string)self::$helper[$conf_type][(string)$id];	
+		return (string)self::$helper[$conf_type][(string)$id];
 	}
 
 	static public function getId($conf_type, $name){
 		$app = Application::instance();
 		$config = $app->getData("map");
 		if (!isset(self::$helper[$conf_type])) {
-			self::parse($conf_type);			
+			self::parse($conf_type);
 		}
 		if (array_search($name, self::$helper[$conf_type])){
 			return (string)array_search($name, self::$helper[$conf_type]);

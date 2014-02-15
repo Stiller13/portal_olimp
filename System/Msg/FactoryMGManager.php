@@ -11,16 +11,6 @@ use Exception;
 
 class FactoryMGManager {
 
-	//Как в БД
-	const PERSONAL_GROUP = 1;
-	const COMMENT_GROUP = 2;
-	const SYSTEM_GROUP = 3;
-
-	static $types = array(
-		'personal' => self::PERSONAL_GROUP,
-		'comment' => self::COMMENT_GROUP,
-		'system' => self::SYSTEM_GROUP);
-
 	static $managers = array(
 		'personal' => 'PersonalMGManager',
 		'comment' => 'CommentMGManager',
@@ -31,20 +21,11 @@ class FactoryMGManager {
 		'comment' => 'CommentMessageGroup',
 		'system' => 'SystemMessageGroup');
 
-	static $roles = array(
-		'personal' => array(
-			'admin' => 1,
-			'partner' => 2),
-
-		'comment' => array(),
-
-		'system' => array(
-			'partner' => 15));
-
 	public static function getManager($type) {
 		$class = '\System\Msg\\'.self::$managers[$type];
+		$type_id = \System\Helper\Helper::getid("typegroup", $type);
 
-		return new $class(self::$types[$type], self::$classes[$type], self::$roles[$type]);
+		return new $class($type_id, self::$classes[$type]);
 	}
 
 }

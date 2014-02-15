@@ -6,10 +6,10 @@ class MSPersonalGroupCreate extends \System\Core\Command {
 
 	protected function exec() {
 
-/*		$session = new \System\Session\Session();
+		$session = new \System\Session\Session();
 		$user = $session->get('user');
 
-		$new_mg = new \Application\Model\PersonalMessageGroup();
+/*		$new_mg = new \Application\Model\PersonalMessageGroup();
 		$new_mg->setStatus(0);
 
 		$factory_group = \System\Orm\PersistenceFactory::getFactory('PersonalMessageGroup');
@@ -37,8 +37,10 @@ class MSPersonalGroupCreate extends \System\Core\Command {
 		$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
 		$visit_finder->insert($visit);*/
 
-		$h[] = array('id' => $this->req['user_id'], 
+		$h[] = array(
+			'id' => $user->getId(),
 			'rule' => 'pmg_admin');
+		
 		$this->req['users'] = $h;
 
 		$manager = \System\Msg\FactoryMGManager::getManager('personal');

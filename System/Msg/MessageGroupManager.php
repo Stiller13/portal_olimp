@@ -15,37 +15,14 @@ abstract class MessageGroupManager {
 	protected $type_group;
 
 	/**
-	 * Тип группы строкой
-	 * @var string
-	 * не помню для чего
-	 */
-	protected $type_group_name;
-
-	/**
 	 * Название класса группы
 	 * @var string
 	 */
 	protected $group_class_name;
 
-	/**
-	 * Роли участников нгруппы
-	 * @var array
-	 */
-	protected $roles_map;
-
-	function __construct($type, $class_name, $roles_map) {
+	function __construct($type, $class_name) {
 		$this->type_group = $type;
 		$this->group_class_name = $class_name;
-		$this->roles_map = $roles_map;
-	}
-
-	/**
-	 * Получить ролеь участника группы
-	 * @return integer
-	 */
-	public function getRole($key){
-
-		return $this->roles_map[$key];
 	}
 
 	/**
@@ -119,30 +96,29 @@ abstract class MessageGroupManager {
 		$group_finder->insert($new_mg);
 
 		if (!is_null($data['users'])) {
-			// $visit = new \Application\Model\Visit();
 			$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
 			$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
+
+			$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
+			$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
 
 			foreach ($data['users'] as $one_user) {
 				$ruleobj = new \Application\Model\RuleObj();
 
 				$ruleobj->setUser_id($one_user['id']);
 				$ruleobj->setObj_id($new_mg->getId());
-				$ruleobj->setRule($this->getRole($one_user['role']));
+				$ruleobj->setRule(\System\Helper\Helper::getId("rule", $one_user["rule"]));
+				$ruleobj->setObj_type(\System\Helper\Helper::getId("type", "messagegroup"));
 
 				$ruleobj_finder->insert($ruleobj);
-				// $visit->addUserId($one_user['id']);
+
+				$visit = new \Application\Model\Visit();
+				$visit->setMessageGroupId($new_mg->getId());
+				$visit->setUserId($one_user['id']);
+
+				$visit_finder->insert($visit);
 			}
 		}
-/*
-
-		if ($visit) {
-			$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
-			$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
-
-			$visit->setMessageGroupId($new_mg->getId());
-			$visit_finder->insert($visit);
-		}*/
 
 		return $new_mg->getId();
 	}
@@ -151,27 +127,36 @@ abstract class MessageGroupManager {
 	 * Отправить сообщение
 	 */
 	public function SendMessage($data) {
-		// Создаем автора
 		$author = new \Application\Model\User();
 		$author->setId($data['user_id']);
 
-		// if (is_null($data['upload']))
-		// 	$data['upload'] = new \Application\Orm\FileCollection();
+		$upload = \System\File\FileManager::upload_files();
+		if (is_null($upload))
+			$upload = new \Application\Orm\FileCollection();
 
 		$new_message = new \Application\Model\Message();
 		$new_message->setText($data['text']);
 		$new_message->setAuthor($author);
-		$new_message->setGroup($data['group_id']);
 		$new_message->setReMessage($data['id_remessage']);
 		$new_message->setStatus($data['status']);
 		$new_message->setGroup($data['group_id']);
+		$new_message->setStatus($data['status']);
 
-		// $new_message->setFiles($data['upload']);
+		$new_message->setFiles($upload);
 
 		// Производим вставку
 		$message_factory = \System\Orm\PersistenceFactory::getFactory('Message');
 		$message_finder = new \System\Orm\DomainObjectAssembler($message_factory);
 		$message_finder->insert($new_message);
+
+		$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
+		$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
+
+		$visit = new \Application\Model\Visit();
+		$visit->setMessageGroupId($data['group_id']);
+		$visit->setUserId($data['user_id']);
+
+		$visit_finder->insert($visit);
 	}
 
 	/**

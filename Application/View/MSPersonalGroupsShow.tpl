@@ -30,7 +30,6 @@
 	</div>
 	<div class="col-md-4 col-md-3-offset">
 		<form role="form" action="/cabinet/message/personal/new" method="post">
-			<input type="hidden" name="user_id" value={$user->getId()}>
 			<input type="hidden" name="status" value="0">
 			<input type="hidden" name="secret_param" value='top_secret!'>
 			<input type="submit" class="btn btn-success" value="Новая группа">

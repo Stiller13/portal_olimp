@@ -63,7 +63,7 @@
 			{block name=content}{/block}
 		<div class="well margtp-25">БГУ 2014</div>
 		</div>
-		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="/Design/js/jquery-1.10.2.min.js"></script>
 		<script src="/Design/js/bootstrap.min.js"></script>
 	</body>
 </html>

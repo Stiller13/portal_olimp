@@ -60,9 +60,9 @@
 
 
 <!-- Мероприятия -->
-		<route id="EventCreate" path="/EventCreate" command="EventCreate" method="get" />
+		<route id="EventCreate" path="/event/create" command="EventCreate" method="get" />
 		<route id="EventCreateResult" path="/EventCreateResult" command="EventCreateResult" method="post" />
-		<route id="EventShow" path="/EventShow/{e_id}" command="EventShow" method="get">
+		<route id="EventShow" path="/event/{e_id}" command="EventShow" method="get">
 			<param name="e_id">[1-9][0-9]*</param>
 		</route>
 		<route id="EventChange" path="/EventChange/{e_id}" command="EventChange" method="get">

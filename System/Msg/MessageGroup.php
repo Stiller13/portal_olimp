@@ -93,11 +93,6 @@ abstract class MessageGroup extends \System\Orm\DomainObject {
 		return $this->status;
 	}
 
-	/**
-	 * Тип группы в БД
-	 */
-	abstract function getTypeId();
-
 	public function targetClass() {
 		return 'MessageGroup';
 	}
