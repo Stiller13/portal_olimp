@@ -37,6 +37,14 @@ class MSPersonalGroupCreate extends \System\Core\Command {
 		$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
 		$visit_finder->insert($visit);*/
 
+		if ($this->req["users"]){
+			foreach ($this->req["users"] as $one_user_id) {
+				$h[] = array(
+					'id' => $one_user_id,
+					'rule' => 'pmg_partner');
+			}
+		}
+
 		$h[] = array(
 			'id' => $user->getId(),
 			'rule' => 'pmg_admin');
