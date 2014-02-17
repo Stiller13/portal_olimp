@@ -115,7 +115,9 @@ class FileManager {
 		$file_dir = DS.self::get_dir($file->getDate());
 
 		$file_path = UPL.$file_dir.DS.$file_code;
-		self::download($file_path, $file->getName());
+		
+		return array("path" => $file_path, "name" => $file->getName());
+		// self::download($file_path, $file->getName());
 	}
 
 	/**

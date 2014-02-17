@@ -191,6 +191,22 @@ class Dispatcher {
 					//Logger::log("Forward to: ".$fwd_cmd);
 					//$this->invokeCommand($route->getCmd(), $fwd_pm);
 				break;
+				case "file":
+					$file_path = $result["file_path"];
+					$file_outname = $result["file_outname"];
+
+					if (!file_exists($file_path)) {
+						throw new \Exception("File not found");
+					}
+					if (!$result["file_outname"]) {
+						$file_outname = basename($file_path);
+					}
+					$fsize = filesize($file_path);
+					$ftime = date("D, d M Y H:i:s T", filemtime($file_path));
+					$fd = @fopen($file_path, "rb");
+
+					$this->res->get($fd, $ftime, $fsize, $file_outname);
+					break;
 				default: 
 					throw new \Exception("Command return value is incorrect");
 					$exit = true;

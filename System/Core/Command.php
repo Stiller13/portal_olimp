@@ -120,6 +120,20 @@ abstract class Command {
 	}
 
 	/**
+	* Команд на отдачу файла
+	* @param array $options Массив с параметрами файла
+	* @return array Массив с соответствующими данными, который отдаётся в диспетчер
+	**/
+	final protected function getfile($path = null, $outname = null){
+		// $options[key]
+		return array(
+			"do"=>"file",
+			"file_path" => $path,
+			"file_outname" => $outname,
+		);
+	}
+
+	/**
 	*
 	*
 	**/

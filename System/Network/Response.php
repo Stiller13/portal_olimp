@@ -36,6 +36,40 @@ class Response {
 	}
 
 	/**
+	* Отдает файл
+	* @param string $str Текст для вывода
+	* @return void
+	**/
+	public function get($fd, $ftime, $fsize, $file_outname){
+		if (!$fd){
+			header ("HTTP/1.0 403 Forbidden");
+			exit;
+		}
+
+		if($HTTP_SERVER_VARS["HTTP_RANGE"]) {
+			$range = $HTTP_SERVER_VARS["HTTP_RANGE"];
+			$range = str_replace("bytes=", "", $range);
+			$range = str_replace("-", "", $range);
+			if ($range)
+				fseek($fd, $range);
+		}
+
+		if($range) {
+			header("HTTP/1.1 206 Partial Content");
+		} else {
+			header("HTTP/1.1 200 OK");
+		}
+		header("Content-Disposition: attachment; filename=$file_outname");
+		header("Last-Modified: $ftime");
+		header("Accept-Ranges: bytes");
+		header("Content-Length: ".($fsize-$range));
+		header("Content-Range: bytes $range-".($fsize - 1)."/".$fsize);
+		header("Content-type: $mimetype");
+
+		fpassthru($fd);
+	}
+
+	/**
 	* Назначает статус http-ответа
 	* @param int $statusCode Http-код ответа
 	* @return void
