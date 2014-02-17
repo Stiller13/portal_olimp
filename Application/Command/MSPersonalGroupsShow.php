@@ -9,16 +9,8 @@ class MSPersonalGroupsShow extends \System\Core\Command {
 		$session = new \System\Session\Session();
 		$user = $session->get('user');
 
-		$factory = \System\Orm\PersistenceFactory::getFactory('PersonalMessageGroup');
-		$finder = new \System\Orm\DomainObjectAssembler($factory);
-		$idobj = $factory->getIndentityObject();
-
-		$idobj->addWhat(array('messagegroup_id', 'messagegroup_partners', 'messagegroup_type', 'messagegroup_status'));
-		$idobj->addJoin('INNER',array('messagegroup','user_userset'),array('messagegroup_partners','user_userset_userset_id'));
-		$idobj->field('messagegroup_type')->eq(\System\Helper\Helper::getId("type", "messagegroup"));
-		$idobj->field('user_userset_user_id')->eq($user->getId());
-
-		$list_group = $finder->find($idobj, 'messagegroup');
+		$manager = \System\Msg\FactoryMGManager::getManager("personal");
+		$list_group = $manager->getGroupsForUser($user->getId());
 
 		$personal_mess = 0;
 		foreach ($list_group as $group) {

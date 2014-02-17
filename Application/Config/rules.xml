@@ -32,6 +32,9 @@
 		</group>
 		<group name="USER" parent="ALL" role="1">
 			<allow>
+				<command class="AdminUsersShow"/>
+
+				<command class="MyMSSystemShow"/>
 				<command class="ProfileShow"/>
 				<command class="FileGet"/>
 				<command class="AllUsersShow"/>
@@ -49,7 +52,6 @@
 				<command class="MyProfileSave"/>
 				<command class="MyAccountShow"/>
 				<command class="MyAccountSave"/>
-
 
 				<command class="EventCreate"/> <!--Потом убрать отсюда и вообще пересмотреть права -->
 				<command class="EventCreateResult"/>

@@ -1,15 +1,7 @@
-{extends file="Main.tpl"}
+{extends file="MyCabinet.tpl"}
 {block name=title}Мой профиль{/block}
-{block name=content}
-
-<h2 class="text-center">Личный кабинет</h2>
-
-<ul class="nav nav-tabs">
-	<li><a href="/cabinet/account">Аккаунт</a></li>
-	<li class="active"><a href="/cabinet/profile">Профиль</a></li>
-	<li><a href="/cabinet/message">Сообщения</a></li>
-	<li><a href="/cabinet/statistic">Статистика</a></li>
-</ul>
+{block name=cab_menu_profile}active{/block}
+{block name=cab_content}
 
 <div class="row">
 	<div class="col-md-4 col-md-offset-4">
@@ -68,4 +60,5 @@
 		</form>
 	</div>
 </div>
+
 {/block}

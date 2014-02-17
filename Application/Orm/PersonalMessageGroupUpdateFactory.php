@@ -13,7 +13,7 @@ class PersonalMessageGroupUpdateFactory extends \System\Orm\UpdateFactory {
 			return $this->buildStatement('update_messagegroup', $values);
 		}
 
-		$values["type_mg"] = \System\Helper\Helper::getId("type", "personal");
+		$values["type_mg"] = \System\Helper\Helper::getId("typegroup", "personal");
 		$values["status_mg"] = $obj->getStatus();
 
 		return $this->buildStatement('insert_messagegroup', $values, 1);

@@ -1,9 +1,9 @@
 {extends file="Main.tpl"}
 {block name=title}Главная{/block}
+{block name=menu_events}active{/block}
 {block name=content}
 
 <h2 class="text-center">Все Мероприятия</h2>
-
 
 <table class="table table-striped">
 	<tr>

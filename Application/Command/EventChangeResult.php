@@ -30,6 +30,6 @@ class EventChangeResult extends \System\Core\Command{
 		$finder = new DomainObjectAssembler($factory);
 		$finder->insert($event);
 
-		return $this->redirect("/EventShow/".$event->getId());	
+		return $this->redirect("/event/".$event->getId());	
 	}
 }

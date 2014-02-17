@@ -45,6 +45,8 @@
 
 		<command class="MSPersonalGroupDelMe" />
 
+		<command class="MyMSSystemShow" view="MyMSSystemShow" />
+
 <!-- общие -->
 		<command class="FileGet">
 			<param name="code" required="1"/>
@@ -57,6 +59,9 @@
 		<command class="ProfileShow" view="ProfileShow">
 			<param name="uid" required="1" />
 		</command>
+
+<!-- админка -->
+		<command class="AdminUsersShow" view="AdminUsersShow" />
 
 <!--Мероприятия -->
 		<command class="EventCreate" view="EventCreate"/>

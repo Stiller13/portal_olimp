@@ -17,7 +17,7 @@ class MSPersonalGroupAddUsers extends \System\Core\Command {
 				$ruleobj = new \Application\Model\RuleObj();
 				$ruleobj->setUser_id($id_user);
 				$ruleobj->setObj_id($this->req['group_id']);
-				$ruleobj->setRule(\System\Helper\Helper::getId("rule", "pmg_user"));
+				$ruleobj->setRule(\System\Helper\Helper::getId("rule", "pmg_partner"));
 				$ruleobj->setObj_type(\System\Helper\Helper::getId("type", "messagegroup"));
 
 				$ruleobj_finder->insert($ruleobj);

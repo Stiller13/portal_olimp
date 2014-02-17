@@ -48,8 +48,8 @@ abstract class MessageGroupManager {
 			$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
 			$visit_idobj = $factory_visit->getIndentityObject();
 
-			$visit_idobj->field('user_id')->eq($user->getId());
-			$visit_idobj->field('visit_message_group_id')->eq($group_id);
+			$visit_idobj->field('visit_user')->eq($user->getId());
+			$visit_idobj->field('visit_group')->eq($group_id);
 
 			$visit = $visit_finder->findOne($visit_idobj, 'visit');
 

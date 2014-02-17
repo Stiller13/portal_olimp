@@ -12,7 +12,7 @@
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
 						{if $user}
-						<li class="dropdown">
+						<li class="dropdown {block name=menu_my}{/block}">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Моё <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="/cabinet">Кабинет</a></li>
@@ -21,9 +21,9 @@
 							</ul>
 						</li>
 						{/if}
-						<li{if $menu_main} class="active"{/if}><a href="/">Главная</a></li>
-						<li{if $menu_news} class="active"{/if}><a href="/news">Новости</a></li>
-						<li{if $menu_events} class="active"{/if}><a href="/event">Мероприятия</a></li>
+						<li class="{block name=menu_main}{/block}"><a href="/">Главная</a></li>
+						<li class="{block name=menu_news}{/block}"><a href="/news">Новости</a></li>
+						<li class="{block name=menu_events}{/block}"><a href="/event">Мероприятия</a></li>
 						<li><a href="#">Курсы</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>

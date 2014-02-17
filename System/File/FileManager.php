@@ -72,33 +72,32 @@ class FileManager {
 			$file_count = count($_FILES["uploadfiles"]['name']);
 
 			for ($i = 0; $i<$file_count; $i++) {
+				$status_result[$i]['name'] = $_FILES['uploadfiles']['name'][$i];
+				$status_result[$i]['size'] = $_FILES['uploadfiles']['size'][$i];
+				$status_result[$i]['type'] = $_FILES['uploadfiles']['type'][$i];
+				$status_result[$i]['error'] = $_FILES['uploadfiles']['error'][$i];
+				// $status_result[$i]['status'] = '';
 
-					$status_result[$i]['name'] = $_FILES['uploadfiles']['name'][$i];
-					$status_result[$i]['size'] = $_FILES['uploadfiles']['size'][$i];
-					$status_result[$i]['type'] = $_FILES['uploadfiles']['type'][$i];
-					$status_result[$i]['error'] = $_FILES['uploadfiles']['error'][$i];
-					// $status_result[$i]['status'] = '';
+				if ($_FILES['uploadfiles']['error'][$i] === UPLOAD_ERR_OK) {
+					if(is_uploaded_file($_FILES['uploadfiles']['tmp_name'][$i])) {
 
-					if ($_FILES['uploadfiles']['error'][$i] === UPLOAD_ERR_OK) {
-						if(is_uploaded_file($_FILES['uploadfiles']['tmp_name'][$i])) {
+						$status_result[$i]['code'] = md5(md5_file($_FILES['uploadfiles']['tmp_name'][$i]).date('YmdHis'));
+						$uploadfile = UPL.DS.self::get_dir();
 
-							$status_result[$i]['code'] = md5(md5_file($_FILES['uploadfiles']['tmp_name'][$i]).date('YmdHis'));
-							$uploadfile = UPL.DS.self::get_dir();
+						if(!is_dir($uploadfile))
+							if (!mkdir($uploadfile)) {
+								$status_result[$i]['status'] = UPLOAD_STAT_DMKD;
+								continue;
+							}
+						$uploadfile .= DS.$status_result[$i]['code'];
 
-							if(!is_dir($uploadfile))
-								if (!mkdir($uploadfile)) {
-									$status_result[$i]['status'] = UPLOAD_STAT_DMKD;
-									continue;
-								}
-							$uploadfile .= DS.$status_result[$i]['code'];
-
-							if (copy($_FILES['uploadfiles']["tmp_name"][$i], $uploadfile))
-								$status_result[$i]['status'] = UPLOAD_STAT_OK;
-							else
-								$status_result[$i]['status'] = UPLOAD_STAT_COPY;
-						}
+						if (copy($_FILES['uploadfiles']["tmp_name"][$i], $uploadfile))
+							$status_result[$i]['status'] = UPLOAD_STAT_OK;
+						else
+							$status_result[$i]['status'] = UPLOAD_STAT_COPY;
 					}
-				 }
+				}
+			}
 		}
 
 		return $status_result;

@@ -58,14 +58,21 @@
 			<param name="uid" pattern="uid" />
 		</route>
 
+		<route id="MyMSSystemShow" path="/cabinet/message/system" command="MyMSSystemShow" method="get" />
+
+<!-- Кабинет админа -->
+		<route id="AdminUsersShow" path="/admin_cabinet/users" command="AdminUsersShow" method="get" />
+
+		<route id="AdminUsersShow" path="/admin_cabinet" command="AdminUsersShow" method="get" />
+
 
 <!-- Мероприятия -->
 		<route id="EventCreate" path="/event/create" command="EventCreate" method="get" />
-		<route id="EventCreateResult" path="/EventCreateResult" command="EventCreateResult" method="post" />
+		<route id="EventCreateResult" path="/event/create" command="EventCreateResult" method="post" />
 		<route id="EventShow" path="/event/{e_id}" command="EventShow" method="get">
 			<param name="e_id">[1-9][0-9]*</param>
 		</route>
-		<route id="EventChange" path="/EventChange/{e_id}" command="EventChange" method="get">
+		<route id="EventChange" path="/event/change/{e_id}" command="EventChange" method="get">
 			<param name="e_id">[1-9][0-9]*</param>
 		</route>
 		<route id="EventChangeResult" path="/EventChangeResult" command="EventChangeResult" method="post" />
