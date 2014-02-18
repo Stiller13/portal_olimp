@@ -2,7 +2,7 @@
 
 namespace Application\Command;
 
-class MSPersonalGroupMessageCreate extends \System\Core\Command {
+class MyMSPersonalGroupMessageCreate extends \System\Core\Command {
 
 	protected function exec() {
 

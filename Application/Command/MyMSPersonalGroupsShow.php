@@ -2,7 +2,7 @@
 
 namespace Application\Command;
 
-class MSPersonalGroupsShow extends \System\Core\Command {
+class MyMSPersonalGroupsShow extends \System\Core\Command {
 
 	protected function exec() {
 

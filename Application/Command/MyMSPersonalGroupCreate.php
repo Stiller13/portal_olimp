@@ -2,7 +2,7 @@
 
 namespace Application\Command;
 
-class MSPersonalGroupCreate extends \System\Core\Command {
+class MyMSPersonalGroupCreate extends \System\Core\Command {
 
 	protected function exec() {
 
@@ -50,6 +50,7 @@ class MSPersonalGroupCreate extends \System\Core\Command {
 			'rule' => 'pmg_admin');
 		
 		$this->req['users'] = $h;
+		$this->req['desc'] = "";
 
 		$manager = \System\Msg\FactoryMGManager::getManager('personal');
 		$new_mg_id = $manager->CreateGroup($this->req);
