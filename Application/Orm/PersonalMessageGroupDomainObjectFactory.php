@@ -8,8 +8,9 @@ class PersonalMessageGroupDomainObjectFactory extends \System\Orm\DomainObjectFa
 		$obj = new \Application\Model\PersonalMessageGroup();
 
 		$obj->setId($array['messagegroup_id']);
-		$obj->setMessages($this->createMessages($obj->getId()));
 		$obj->setStatus($array['messagegroup_status']);
+		$obj->setDescription($array['messagegroup_desc']);
+		$obj->setMessages($this->createMessages($obj->getId()));
 		$obj->setPartners($this->createPartners($array['messagegroup_partners']));
 		$obj->setVisit($this->createVisit($array['messagegroup_id']));
 

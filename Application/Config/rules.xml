@@ -32,6 +32,7 @@
 		</group>
 		<group name="USER" parent="ALL" role="1">
 			<allow>
+				<command class="AdminMSSystemGroupsShow"/>
 				<command class="AdminUsersShow"/>
 
 				<command class="MyMSSystemShow"/>
@@ -39,12 +40,12 @@
 				<command class="FileGet"/>
 				<command class="AllUsersShow"/>
 				<command class="MyStatisticShow"/>
-				<command class="MSPersonalGroupDelMe"/>
-				<command class="MSPersonalGroupAddUsers"/>
-				<command class="MSPersonalGroupMessageCreate"/>
-				<command class="MSPersonalGroupCreate"/>
-				<command class="MSPersonalGroupShow"/>
-				<command class="MSPersonalGroupsShow"/>
+				<command class="MyMSPersonalGroupDelMe"/>
+				<command class="MyMSPersonalGroupAddUsers"/>
+				<command class="MyMSPersonalGroupMessageCreate"/>
+				<command class="MyMSPersonalGroupCreate"/>
+				<command class="MyMSPersonalGroupShow"/>
+				<command class="MyMSPersonalGroupsShow"/>
 				<command class="MainPageShow"/>
 				<command class="MyMessageShow"/>
 				<command class="SignOut"/>

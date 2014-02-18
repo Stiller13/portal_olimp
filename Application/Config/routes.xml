@@ -34,19 +34,19 @@
 <!-- система ообщений -->
 		<route id="MyMessageShow" path="/cabinet/message" command="MyMessageShow" method="get" />
 
-		<route id="MSPersonalGroupsShow" path="/cabinet/message/personal" command="MSPersonalGroupsShow" method="get" />
+		<route id="MyMSPersonalGroupsShow" path="/cabinet/message/personal" command="MyMSPersonalGroupsShow" method="get" />
 
-		<route id="MSPersonalGroupCreate" path="/cabinet/message/personal/new" command="MSPersonalGroupCreate" method="post" />
+		<route id="MyMSPersonalGroupCreate" path="/cabinet/message/personal/new" command="MyMSPersonalGroupCreate" method="post" />
 
-		<route id="MSPersonalGroupShow" path="/cabinet/message/personal/{mg_id}" command="MSPersonalGroupShow" method="get">
+		<route id="MyMSPersonalGroupShow" path="/cabinet/message/personal/{mg_id}" command="MyMSPersonalGroupShow" method="get">
 			<param name="mg_id" pattern="uid"/>
 		</route>
 
-		<route id="MSPersonalGroupMessageCreate" path="/cabinet/message/personal/new_message" command="MSPersonalGroupMessageCreate" method="post" />
+		<route id="MyMSPersonalGroupMessageCreate" path="/cabinet/message/personal/new_message" command="MyMSPersonalGroupMessageCreate" method="post" />
 
-		<route id="MSPersonalGroupAddUsers" path="/cabinet/message/personal/add_users" command="MSPersonalGroupAddUsers" method="post" />
+		<route id="MyMSPersonalGroupAddUsers" path="/cabinet/message/personal/add_users" command="MyMSPersonalGroupAddUsers" method="post" />
 
-		<route id="MSPersonalGroupDelMe" path="/cabinet/message/personal/del_me" command="MSPersonalGroupDelMe" method="post" />
+		<route id="MyMSPersonalGroupDelMe" path="/cabinet/message/personal/del_me" command="MyMSPersonalGroupDelMe" method="post" />
 
 		<route id="AllUsersShow" path="/allusers" command="AllUsersShow" method="get" />
 
@@ -59,6 +59,8 @@
 		</route>
 
 		<route id="MyMSSystemShow" path="/cabinet/message/system" command="MyMSSystemShow" method="get" />
+
+		<route id="AdminMSSystemGroupsShow" path="/admin_cabinet/message" command="AdminMSSystemGroupsShow" method="get" />
 
 <!-- Кабинет админа -->
 		<route id="AdminUsersShow" path="/admin_cabinet/users" command="AdminUsersShow" method="get" />

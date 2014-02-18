@@ -31,21 +31,23 @@
 <!-- система сообшений -->
 		<command class="MyMessageShow" view="MyMessageShow" />
 
-		<command class="MSPersonalGroupsShow" view="MSPersonalGroupsShow" />
+		<command class="MyMSPersonalGroupsShow" view="MyMSPersonalGroupsShow" />
 
-		<command class="MSPersonalGroupCreate" />
+		<command class="MyMSPersonalGroupCreate" />
 
-		<command class="MSPersonalGroupShow" view="MSPersonalGroupShow">
+		<command class="MyMSPersonalGroupShow" view="MyMSPersonalGroupShow">
 				<param name="mg_id" required="1" objId="1"/>
 		</command>
 
-		<command class="MSPersonalGroupMessageCreate" />
+		<command class="MyMSPersonalGroupMessageCreate" />
 
-		<command class="MSPersonalGroupAddUsers" />
+		<command class="MyMSPersonalGroupAddUsers" />
 
-		<command class="MSPersonalGroupDelMe" />
+		<command class="MyMSPersonalGroupDelMe" />
 
 		<command class="MyMSSystemShow" view="MyMSSystemShow" />
+
+		<command class="AdminMSSystemGroupsShow" view="AdminMSSystemGroupsShow" />
 
 <!-- общие -->
 		<command class="FileGet">

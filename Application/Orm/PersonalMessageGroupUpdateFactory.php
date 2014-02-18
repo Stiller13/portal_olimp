@@ -6,6 +6,8 @@ class PersonalMessageGroupUpdateFactory extends \System\Orm\UpdateFactory {
 
 	public function newUpdate(\System\Orm\DomainObject $obj) {
 
+		$values["desc_mg"] = $obj->getDescription();
+
 		if ($obj->getId() >-1) {
 			$values["status_mg"] = $obj->getStatus();
 			$values['id_mg']=$obj->getId();

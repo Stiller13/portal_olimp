@@ -45,13 +45,10 @@
 			<div class="input-group">
 				<span class="input-group-addon">Статус в системе</span>
 				<select class="form-control" name="user_system_status">
-					<option value="">Школьник</option>
-					<option value="">2</option>
-					<option value="">3</option>
-					<option value="">4</option>
-					<option value="">5</option>
+				{foreach from=$list_uss item=value}
+					<option value={$value["id"]}>{$value["name"]}</option>
+				{/foreach}
 				</select>
-				<!-- <input type="text" class="form-control" name="telephone" value={$user->getTelephone()}> -->
 			</div>
 
 			<div class="input-group">
