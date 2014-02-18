@@ -10,6 +10,12 @@ namespace System\Msg;
 
 abstract class MessageGroup extends \System\Orm\DomainObject {
 	/**
+	 * Описание группы
+	 * @var string
+	 */
+	private $description = "";
+
+	/**
 	 * Участники группы
 	 * @var UserCollection
 	 */
@@ -26,6 +32,21 @@ abstract class MessageGroup extends \System\Orm\DomainObject {
 	 * @var integer
 	 */
 	private $status;
+
+	/**
+	 * Задать описание группы
+	 * @param $description
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+
+	/**
+	 * Получить описание группы
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
 
 	/**
 	 * Установить участников группы

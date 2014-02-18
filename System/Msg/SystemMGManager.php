@@ -19,14 +19,17 @@ class SystemMGManager extends \System\Msg\MessageGroupManager {
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
 		$idobj = $factory->getIndentityObject();
 
-		$idobj->addWhat(array('message_group_id', 'message_group_title', 'message_group_description', 'message_group_partners', 'message_group_type', 'message_group_status'));
-		$idobj->addJoin('INNER',array('message_group','user_userset'),array('message_group_partners','userset_id'));
-		$idobj->field('message_group_type')->eq($this->type_group);
-		$idobj->field('user_id')->eq($user_id);
+		$idobj->field('messagegroup_type')->eq(\System\Helper\Helper::getId("typegroup", "system"));
+		$idobj->field('messagegroup_status')->eq(\System\Helper\Helper::getId("status", "open"));
+
+		// $idobj->addWhat(array('message_group_id', 'message_group_title', 'message_group_description', 'message_group_partners', 'message_group_type', 'message_group_status'));
+		// $idobj->addJoin('INNER',array('message_group','user_userset'),array('message_group_partners','userset_id'));
+		// $idobj->field('message_group_type')->eq($this->type_group);
+		// $idobj->field('user_id')->eq($user_id);
 		// $idobj->field('message_group_status')->eq(5);
 		// $idobj->changeLink();
-		$main_list = $finder->find($idobj, 'message_group');
-
+		$main_list = $finder->find($idobj, 'messagegroup');
+/*
 		$factory2 = \System\Orm\PersistenceFactory::getFactory($this->group_class_name);
 		$finder2 = new \System\Orm\DomainObjectAssembler($factory2);
 		$idobj2 = $factory2->getIndentityObject();
@@ -43,9 +46,25 @@ class SystemMGManager extends \System\Msg\MessageGroupManager {
 			if ($i%2 === 0)
 				$main_list->add($value);
 			$i++;
-		}
+		}*/
+
+		// $main_list = new \Application\Orm\SystemMessageGroupCollection();
+
+		// $main_list->add($open_group);
 
 		return $main_list;
+	}
+
+	public function getAllGroups() {
+		$factory = \System\Orm\PersistenceFactory::getFactory($this->group_class_name);
+		$finder = new \System\Orm\DomainObjectAssembler($factory);
+		$idobj = $factory->getIndentityObject();
+
+		$idobj->field('messagegroup_type')->eq(\System\Helper\Helper::getId("typegroup", "system"));
+
+		$list_groups = $finder->find($idobj, 'messagegroup');
+
+		return $list_groups;
 	}
 
 }

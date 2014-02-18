@@ -2,6 +2,8 @@
 
 namespace System\Msg;
 
+use \System\Helper;
+
 /**
  * @author Zalutskii
  * @version 29.01.14
@@ -46,18 +48,11 @@ abstract class MessageGroupManager {
 
 			$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
 			$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
-			$visit_idobj = $factory_visit->getIndentityObject();
 
-			$visit_idobj->field('visit_user')->eq($user->getId());
-			$visit_idobj->field('visit_group')->eq($group_id);
+			$visit = new \Application\Model\Visit();
+			$visit->setUserId($user->getId());
+			$visit->setMessageGroupId($group_id);
 
-			$visit = $visit_finder->findOne($visit_idobj, 'visit');
-
-			if (!$visit) {
-				$visit = new \Application\Model\Visit();
-				$visit->addUserId($user->getId());
-				$visit->setMessageGroupId($group_id);
-			}
 			$visit_finder->insert($visit);
 		}
 
@@ -90,37 +85,76 @@ abstract class MessageGroupManager {
 		$new_mg = new $class_name();
 
 		$new_mg->setStatus($data['status']);
+		$new_mg->setDescription($data['desc']);
 
 		$factory_group = \System\Orm\PersistenceFactory::getFactory($this->group_class_name);
 		$group_finder = new \System\Orm\DomainObjectAssembler($factory_group);
 		$group_finder->insert($new_mg);
 
-		if (!is_null($data['users'])) {
-			$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
-			$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
-
-			$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
-			$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
-
-			foreach ($data['users'] as $one_user) {
-				$ruleobj = new \Application\Model\RuleObj();
-
-				$ruleobj->setUser_id($one_user['id']);
-				$ruleobj->setObj_id($new_mg->getId());
-				$ruleobj->setRule(\System\Helper\Helper::getId("rule", $one_user["rule"]));
-				$ruleobj->setObj_type(\System\Helper\Helper::getId("type", "messagegroup"));
-
-				$ruleobj_finder->insert($ruleobj);
-
-				$visit = new \Application\Model\Visit();
-				$visit->setMessageGroupId($new_mg->getId());
-				$visit->setUserId($one_user['id']);
-
-				$visit_finder->insert($visit);
+		if (!is_null($data["users"])) {
+			foreach ($data["users"] as $one_user) {
+				$this->addUser($new_mg->getId(), $one_user["id"], $one_user["rule"]);
 			}
 		}
 
 		return $new_mg->getId();
+	}
+
+	/**
+	 * Добавить пользователя в группу
+	 */
+	public function addUser($group_id, $user_id, $rule) {
+		$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
+		$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
+
+		$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
+		$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
+
+		$ruleobj = new \Application\Model\RuleObj();
+
+		$ruleobj->setUser_id($user_id);
+		$ruleobj->setObj_id($group_id);
+		$ruleobj->setRule(\System\Helper\Helper::getId("rule", $rule));
+		$ruleobj->setObj_type(\System\Helper\Helper::getId("type", "messagegroup"));
+
+		$ruleobj_finder->insert($ruleobj);
+
+		$visit = new \Application\Model\Visit();
+		$visit->setMessageGroupId($group_id);
+		$visit->setUserId($user_id);
+
+		$visit_finder->insert($visit);
+	}
+
+	/**
+	 * Удалить пользователя из группы
+	 */
+	public function delUser($group_id, $user_id) {
+		$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
+		$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
+		$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
+
+		$ruleobj_idobj->field('obj_id')->eq($group_id);
+		$ruleobj_idobj->field('obj_type')->eq(\System\Helper\Helper::getId("type", "messagegroup"));
+
+		$rule = $ruleobj_finder->findOne($ruleobj_idobj, 'rule');
+
+		$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
+		$ruleobj_idobj->field('user_userset_user_id')->eq($user_id);
+		$ruleobj_idobj->field('user_userset_userset_id')->eq($rule->getUserset_id());
+
+		$ruleobj_finder->delete($ruleobj_idobj, 'user_userset');
+
+
+		$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
+		$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
+		$visit_idobj = $factory_visit->getIndentityObject();
+
+		$visit_idobj->field('user_mg_read_user')->eq($user_id);
+		$visit_idobj->field('user_mg_read_mg')->eq($group_id);
+
+		$visit_finder->delete($visit_idobj, 'user_mg_read');
+
 	}
 
 	/**
