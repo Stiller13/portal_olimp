@@ -14,6 +14,7 @@ class UserIdentityObject extends \System\Orm\IdentityObject{
 			'user_date',
 			'user_gender',
 			'user_residence',
+			'user_status',
 			'user_mail',
 			'user_telephone'));
 	}

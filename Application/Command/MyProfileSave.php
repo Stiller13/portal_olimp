@@ -15,6 +15,7 @@ class MyProfileSave extends \System\Core\Command{
 		$user->setBirthday($this->req['birthday']);
 		$user->setResidence($this->req['residence']);
 		$user->setGender($this->req['gender']);
+		$user->setStatusSys($this->req['user_system_status']);
 		$user->setMail($this->req['mail']);
 		$user->setTelephone($this->req['telephone']);
 

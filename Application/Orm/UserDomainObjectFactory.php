@@ -14,6 +14,7 @@ class UserDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$obj->setBirthday($array['user_date']);
 		$obj->setResidence($array['user_residence']);
 		$obj->setGender($array['user_gender']);
+		$obj->setStatusSys($array['user_status']);
 		$obj->setMail($array['user_mail']);
 		$obj->setTelephone($array['user_telephone']);
 		$obj->setRoleInGroup($array['user_userset_status_map_id']);

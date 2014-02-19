@@ -19,6 +19,8 @@ class User extends \System\Orm\DomainObject{
 
 	private $telephone;
 
+	private $status_system;
+
 	private $role_in_group;
 
 	function setName($name) {
@@ -104,6 +106,15 @@ class User extends \System\Orm\DomainObject{
 
 	function getRoleInGroup() {
 		return $this->role_in_group;
+	}
+
+	function setStatusSys($new_status) {
+		$this->status_system = $new_status;
+		$this->markDirty();
+	}
+
+	function getStatusSys() {
+		return $this->status_system;
 	}
 
 	function targetClass() {

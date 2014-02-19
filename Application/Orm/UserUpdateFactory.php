@@ -13,6 +13,7 @@ class UserUpdateFactory extends \System\Orm\UpdateFactory{
 		$values['gender']=$obj->getGender();
 		$values['mail']=$obj->getMail();
 		$values['telephone']=$obj->getTelephone();
+		$values['status']=$obj->getStatusSys();
 		$values['id']=$obj->getId();
 
 		return $this->buildStatement('update_user',$values);
