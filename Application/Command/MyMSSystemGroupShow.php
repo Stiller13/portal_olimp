@@ -2,12 +2,15 @@
 
 namespace Application\Command;
 
-class MyMSPersonalGroupsShow extends \System\Core\Command {
+class MyMSSystemGroupShow extends \System\Core\Command {
 
 	protected function exec() {
 
 		$session = new \System\Session\Session();
 		$user = $session->get('user');
+
+		$manager = \System\Msg\FactoryMGManager::getManager("system");
+		$group = $manager->getGroup($this->data['mg_id']);
 
 		$manager = \System\Msg\FactoryMGManager::getManager("personal");
 		$list_personal_group = $manager->getGroupsForUser($user->getId());
@@ -25,6 +28,6 @@ class MyMSPersonalGroupsShow extends \System\Core\Command {
 			$system_mess += $group->getVisit()->getCountMessage();
 		}
 
-		return $this->render(array("user" => $user, "list_group" => $list_personal_group, "personal_mess" => $personal_mess, "system_mess" => $system_mess));
+		return $this->render(array("user" => $user, "group" => $group, "personal_mess" => $personal_mess, "system_mess" => $system_mess));
 	}
 }

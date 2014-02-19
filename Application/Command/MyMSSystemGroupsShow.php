@@ -2,7 +2,7 @@
 
 namespace Application\Command;
 
-class MyMSPersonalGroupsShow extends \System\Core\Command {
+class MyMSSystemGroupsShow extends \System\Core\Command {
 
 	protected function exec() {
 
@@ -25,6 +25,6 @@ class MyMSPersonalGroupsShow extends \System\Core\Command {
 			$system_mess += $group->getVisit()->getCountMessage();
 		}
 
-		return $this->render(array("user" => $user, "list_group" => $list_personal_group, "personal_mess" => $personal_mess, "system_mess" => $system_mess));
+		return $this->render(array("user" => $user, "list_groups" => $list_system_group, "personal_mess" => $personal_mess, "system_mess" => $system_mess));
 	}
 }

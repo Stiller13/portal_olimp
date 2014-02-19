@@ -1,20 +1,24 @@
-{extends file="AdminCabinet.tpl"}
-{block name=admin_cab_menu_message}active{/block}
-{block name=admin_cab_content}
+{extends file="AdminMessage.tpl"}
+{block name=admin_message_content}
 
-<div class="row margtp-25">
-	<div class="col-md-4 col-md-offset-3">
-		<ul class="nav nav-pills nav-stacked">
-		{foreach from=$list_group item=one_group}
-			<li>
-				<a href="/cabinet/message/personal/{$one_group->getId()}">
-					{$one_group->getDescription()}
-					<span class="badge pull-right"></span>
-				</a>
-			</li>
-		{/foreach}
-		</ul>
-	</div>
+<div class="col-md-4">
+	{if $to_init}
+	<form role="form" action="/admin_cabinet/message/system/init" method="post">
+		<input type="hidden" name="secret_param" value='top_secret!'>
+		<input type="submit" class="btn btn-success" value="Провести инициализацию">
+	</form>
+	{/if}
+
+	<ul class="nav nav-pills nav-stacked">
+	{foreach from=$list_group item=one_group}
+		<li>
+			<a href="/admin_cabinet/message/system/{$one_group->getId()}">
+				{$one_group->getDescription()}
+				<span class="badge pull-right"></span>
+			</a>
+		</li>
+	{/foreach}
+	</ul>
 </div>
-{/block}
 
+{/block}

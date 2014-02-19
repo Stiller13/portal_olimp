@@ -1,18 +1,8 @@
-{extends file="MyMessage.tpl"}
-{block name=title}Личная переписка{/block}
-{block name=message_content}
+{extends file="AdminMessage.tpl"}
+{block name=title}{$group->getDescription()}{/block}
+{block name=admin_message_content}
 
 <div class="col-md-4">
-	Участники : 
-	{foreach from=$group->getPartners() item=partner}
-	{if $user->getId() eq $partner->getId()}
-	Вы 
-	{else}
-	{$partner->getName()} {$partner->getFamily()} 
-	{/if}
-	{/foreach}
-	<hr>
-
 	{foreach from=$group->getMessages() item=one_message}
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -30,9 +20,9 @@
 			{/foreach}
 		</div>
 	</div>
-	{/foreach}
 
-	<form role="form" action="/cabinet/message/personal/new_message" method="post" enctype="multipart/form-data">
+	{/foreach}
+	<form role="form" action="/admin_cabinet/message/system/new_message" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="exampleInputText">Текст сообщения</label>
 			<input type="textarea" class="form-control" id="exampleInputText" name="text">
@@ -46,11 +36,10 @@
 		<input type="hidden" name="group_id" value={$group->getId()}>
 		<input type="hidden" name="id_remessage" value="0">
 		<input type="hidden" name="status" value="0">
-		<input type="hidden" name="secret_param" value='top_secret!'>
 		<input type="submit" class="btn btn-success" value="Отправить">
 	</form>
 </div>
-<div class="col-md-3">
+<!-- <div class="col-md-3">
 	<p>Пригласите участников из списка</p>
 	<form role="form" action="/cabinet/message/personal/add_users" method="post">
 		<div class="form-group">
@@ -73,6 +62,6 @@
 		<input type="hidden" name="user_id" value={$user->getId()}>
 		<input type="submit" class="btn btn-danger" value="Покинуть группу">
 	</form>
-</div>
+</div> -->
 
 {/block}

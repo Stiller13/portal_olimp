@@ -10,7 +10,7 @@
 			<a href="/cabinet/message/system/{$one_group->getId()}">
 				{$one_group->getDescription()}
 				{if $one_group->getVisit()}
-				<span class="badge pull-right">{$one_group->getVisit()->getCountMessage()}</span>
+				<span class="badge pull-right">{if $one_group->getVisit()->getCountMessage() > 0}{$one_group->getVisit()->getCountMessage()}{/if}</span>
 				{/if}
 			</a>
 		</li>

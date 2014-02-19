@@ -68,7 +68,7 @@ abstract class MessageGroupManager {
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
 		$idobj = $factory->getIndentityObject();
 
-		$idobj->addWhat(array('messagegroup_id', 'messagegroup_partners', 'messagegroup_type', 'messagegroup_status'));
+		$idobj->addWhat(array('messagegroup_id', 'messagegroup_partners', 'messagegroup_type', 'messagegroup_status', 'messagegroup_desc'));
 		$idobj->addJoin('INNER',array('messagegroup','user_userset'),array('messagegroup_partners','user_userset_userset_id'));
 		$idobj->field('messagegroup_type')->eq($this->type_group);
 		$idobj->field('user_userset_user_id')->eq($user_id);

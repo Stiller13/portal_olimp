@@ -29,7 +29,7 @@
 
 
 <!-- система сообшений -->
-		<command class="MyMessageShow" view="MyMessageShow" />
+		<command class="MyMessageShow" view="MyMessage" />
 
 		<command class="MyMSPersonalGroupsShow" view="MyMSPersonalGroupsShow" />
 
@@ -45,9 +45,21 @@
 
 		<command class="MyMSPersonalGroupDelMe" />
 
-		<command class="MyMSSystemShow" view="MyMSSystemShow" />
+		<command class="MyMSSystemGroupsShow" view="MyMSSystemGroupsShow" />
+
+		<command class="MyMSSystemGroupShow" view="MyMSSystemGroupShow" />
+
+		<command class="AdminMessageShow" view="AdminMessage" />
+
+		<command class="AdminMSSystemGroupMessageCreate" />
+
+		<command class="AdminMSSystemGroupShow" view="AdminMSSystemGroupShow">
+				<param name="mg_id" required="1" objId="1"/>
+		</command>
 
 		<command class="AdminMSSystemGroupsShow" view="AdminMSSystemGroupsShow" />
+
+		<command class="AdminMSSystemInit" />
 
 <!-- общие -->
 		<command class="FileGet">

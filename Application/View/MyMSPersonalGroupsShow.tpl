@@ -2,7 +2,7 @@
 {block name=title}Личная переписка{/block}
 {block name=message_content}
 
-<div class="col-md-4 col-md-3-offset">
+<div class="col-md-4">
 	<form role="form" action="/cabinet/message/personal/new" method="post">
 		<input type="hidden" name="status" value="0">
 		<input type="hidden" name="secret_param" value='top_secret!'>

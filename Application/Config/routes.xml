@@ -31,7 +31,6 @@
 
 		<route id="MyStatisticShow" path="/cabinet/statistic" command="MyStatisticShow" method="get" />
 
-<!-- система ообщений -->
 		<route id="MyMessageShow" path="/cabinet/message" command="MyMessageShow" method="get" />
 
 		<route id="MyMSPersonalGroupsShow" path="/cabinet/message/personal" command="MyMSPersonalGroupsShow" method="get" />
@@ -48,6 +47,14 @@
 
 		<route id="MyMSPersonalGroupDelMe" path="/cabinet/message/personal/del_me" command="MyMSPersonalGroupDelMe" method="post" />
 
+		<route id="MyMSSystemGroupsShow" path="/cabinet/message/system" command="MyMSSystemGroupsShow" method="get" />
+
+		<route id="MyMSSystemGroupShow" path="/cabinet/message/system/{mg_id}" command="MyMSSystemGroupShow" method="get">
+			<param name="mg_id" pattern="uid"/>
+		</route>
+
+
+
 		<route id="AllUsersShow" path="/allusers" command="AllUsersShow" method="get" />
 
 		<route id="FileGet" path="/file/{code}" command="FileGet" method="get">
@@ -58,14 +65,23 @@
 			<param name="uid" pattern="uid" />
 		</route>
 
-		<route id="MyMSSystemShow" path="/cabinet/message/system" command="MyMSSystemShow" method="get" />
-
-		<route id="AdminMSSystemGroupsShow" path="/admin_cabinet/message" command="AdminMSSystemGroupsShow" method="get" />
-
 <!-- Кабинет админа -->
+		<route id="AdminMSSystemGroupsShow" path="/admin_cabinet/message/system" command="AdminMSSystemGroupsShow" method="get" />
+
+		<route id="AdminMSSystemGroupShow" path="/admin_cabinet/message/system/{mg_id}" command="AdminMSSystemGroupShow" method="get">
+			<param name="mg_id" pattern="uid"/>
+		</route>
+
+		<route id="AdminMessageShow" path="/admin_cabinet/message" command="AdminMessageShow" method="get" />
+
+		<route id="AdminMSSystemInit" path="/admin_cabinet/message/system/init" command="AdminMSSystemInit" method="post" />
+
 		<route id="AdminUsersShow" path="/admin_cabinet/users" command="AdminUsersShow" method="get" />
 
 		<route id="AdminUsersShow" path="/admin_cabinet" command="AdminUsersShow" method="get" />
+
+
+		<route id="AdminMSSystemGroupMessageCreate" path="/admin_cabinet/message/system/new_message" command="AdminMSSystemGroupMessageCreate" method="post" />
 
 
 <!-- Мероприятия -->

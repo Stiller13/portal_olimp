@@ -32,10 +32,15 @@
 		</group>
 		<group name="USER" parent="ALL" role="1">
 			<allow>
+				<command class="AdminMessageShow"/>
+				<command class="AdminMSSystemInit"/>
+				<command class="AdminMSSystemGroupShow"/>
 				<command class="AdminMSSystemGroupsShow"/>
 				<command class="AdminUsersShow"/>
+				<command class="AdminMSSystemGroupMessageCreate"/>
 
-				<command class="MyMSSystemShow"/>
+				<command class="MyMSSystemGroupShow"/>
+				<command class="MyMSSystemGroupsShow"/>
 				<command class="ProfileShow"/>
 				<command class="FileGet"/>
 				<command class="AllUsersShow"/>

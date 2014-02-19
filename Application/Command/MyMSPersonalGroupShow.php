@@ -18,15 +18,22 @@ class MyMSPersonalGroupShow extends \System\Core\Command {
 		$idobj = $factory_user->getIndentityObject();
 		$user_list = $finder_user->find($idobj, 'user');
 
-		//Количество непрочитанных
 		$manager = \System\Msg\FactoryMGManager::getManager("personal");
-		$list_group = $manager->getGroupsForUser($user->getId());
+		$list_personal_group = $manager->getGroupsForUser($user->getId());
 
 		$personal_mess = 0;
-		foreach ($list_group as $one_group) {
-			$personal_mess += $one_group->getVisit()->getCountMessage();
+		foreach ($list_personal_group as $group) {
+			$personal_mess += $group->getVisit()->getCountMessage();
 		}
 
-		return $this->render(array("user" => $user, "group" => $group, "user_list" => $user_list, "personal_mess" => $personal_mess));
+		$manager = \System\Msg\FactoryMGManager::getManager("system");
+		$list_system_group = $manager->getGroupsForUser($user->getId());
+
+		$system_mess = 0;
+		foreach ($list_system_group as $group) {
+			$system_mess += $group->getVisit()->getCountMessage();
+		}
+
+		return $this->render(array("user" => $user, "group" => $group, "user_list" => $user_list, "personal_mess" => $personal_mess, "system_mess" => $system_mess));
 	}
 }

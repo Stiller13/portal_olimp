@@ -17,5 +17,6 @@
 
 		<rule name="pmg_admin" id="5"/>
 		<rule name="pmg_partner" id="6"/>
+		<rule name="smg_partner" id="7"/>
 	</map>
 </config>
