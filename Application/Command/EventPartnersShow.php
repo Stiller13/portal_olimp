@@ -50,6 +50,6 @@ class EventPartnersShow extends \System\Core\Command {
 
 		$users = $user_finder->find($user_idobj, "user");
 
-		return $this->render(array("user" => $user, "event" => $event, "rule" => 2, "partners" => $partners, "users" => $users));
+		return $this->render(array("user" => $user, "event" => $event, "rule" => "e_admin", "partners" => $partners, "users" => $users));
 	}
 }

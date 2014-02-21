@@ -103,7 +103,7 @@
 
 		<route id="EventsShow" path="/event" command="EventsShow" method="get" />
 
-		<route id="EventAddUsers" path="/event/{e_id}/adduser" command="EventAddUsers" method="get" />
+		<route id="EventAddUsers" path="/event/{e_id}/add_users" command="EventAddUsers" method="post" >
 			<param name="e_id">[1-9][0-9]*</param>
 		</route>
 	</routes>

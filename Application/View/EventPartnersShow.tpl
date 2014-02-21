@@ -6,9 +6,9 @@
 {block name=epanel_content}
 <div class="row">
 	<div class="col-md-3">
-		Заявители:
+		Заявленные:<br>
 		{foreach from=$users item=one_user}
-			{$one_user->getName()}
+			{$one_user->getName()}<br>
 		{/foreach}
 	</div>
 	<div class="col-md-3">

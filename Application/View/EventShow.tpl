@@ -12,10 +12,10 @@
 	<div class="well">
 		{$event->getDescription_private()}
 	</div>
-{elseif $rule eq "e_user"}
-	{$event->getDescription_public()}
-{else}
+{elseif $rule eq "e_partner"}
 	{$event->getDescription_private()}
+{else}
+	{$event->getDescription_public()}
 {/if}
 
 
@@ -37,13 +37,20 @@
 		</div>
 	</div>
 </div>
+
 {/if}
-<!-- Если чувак не подтвержден как участник -->
 {if $rule}
 Участники :<br>
 	{foreach from=$event->getPartners() item=partner}
 		{$partner->getName()}
 	{/foreach}
+{else}
+<form class="from" action="/event/{$event->getId()}/add_users" method="post">
+	<div class="form-group">
+		<input type="hidden" name="users[]" value={$user->getId()}>
+		<input type="submit" class="btn btn-success" value="Хочу учавствовать" />
+	</div>
+</form>
 {/if}
 
 {/block}
