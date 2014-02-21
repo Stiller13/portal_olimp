@@ -2,7 +2,7 @@
 {block name=title}{$group->getDescription()}{/block}
 {block name=admin_message_content}
 
-<div class="col-md-4">
+<div class="col-md-5">
 	{foreach from=$group->getMessages() item=one_message}
 	<div class="panel panel-default">
 		<div class="panel-heading">

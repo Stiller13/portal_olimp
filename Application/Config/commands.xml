@@ -27,8 +27,6 @@
 
 		<command class="MyStatisticShow" view="MyStatisticShow"/>
 
-
-<!-- система сообшений -->
 		<command class="MyMessageShow" view="MyMessage" />
 
 		<command class="MyMSPersonalGroupsShow" view="MyMSPersonalGroupsShow" />
@@ -49,17 +47,6 @@
 
 		<command class="MyMSSystemGroupShow" view="MyMSSystemGroupShow" />
 
-		<command class="AdminMessageShow" view="AdminMessage" />
-
-		<command class="AdminMSSystemGroupMessageCreate" />
-
-		<command class="AdminMSSystemGroupShow" view="AdminMSSystemGroupShow">
-				<param name="mg_id" required="1" objId="1"/>
-		</command>
-
-		<command class="AdminMSSystemGroupsShow" view="AdminMSSystemGroupsShow" />
-
-		<command class="AdminMSSystemInit" />
 
 <!-- общие -->
 		<command class="FileGet">
@@ -75,19 +62,41 @@
 		</command>
 
 <!-- админка -->
+		<command class="AdminMessageShow" view="AdminMessage" />
+
+		<command class="AdminMSSystemGroupMessageCreate" />
+
+		<command class="AdminMSSystemGroupShow" view="AdminMSSystemGroupShow">
+				<param name="mg_id" required="1" objId="1"/>
+		</command>
+
+		<command class="AdminMSSystemGroupsShow" view="AdminMSSystemGroupsShow" />
+
+		<command class="AdminMSSystemInit" />
+
 		<command class="AdminUsersShow" view="AdminUsersShow" />
 
 <!--Мероприятия -->
-		<command class="EventCreate" view="EventCreate"/>
-		<command class="EventCreateResult"/>
-		<command class="EventShow" view="EventShow">
-			<param name="e_id" required="1"/>
-		</command>
-		<command class="EventChange" view="EventChange">
-			<param name="e_id" required="1"/>
-		</command>
-		<command class="EventChangeResult"/>
-		<command class="EventsShow" view="EventsShow"/>
+		<command class="EventCreate" view="EventCreate" />
 
+		<command class="EventSave" />
+
+		<command class="EventShow" view="EventShow" >
+			<param name="e_id" required="1" />
+		</command>
+
+		<command class="EventChange" view="EventChange" >
+			<param name="e_id" required="1" />
+		</command>
+
+		<command class="EventsShow" view="EventsShow" />
+
+		<command class="EventPartnersShow" view="EventPartnersShow" >
+			<param name="e_id" required="1"/>
+		</command>
+
+		<command class="EventAddUsers" >
+			<param name="e_id" required="1"/>
+		</command>
 	</commands>
 </config>

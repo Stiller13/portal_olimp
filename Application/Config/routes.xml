@@ -86,14 +86,25 @@
 
 <!-- Мероприятия -->
 		<route id="EventCreate" path="/event/create" command="EventCreate" method="get" />
-		<route id="EventCreateResult" path="/event/create" command="EventCreateResult" method="post" />
+
+		<route id="EventSave" path="/event/save" command="EventSave" method="post" />
+
 		<route id="EventShow" path="/event/{e_id}" command="EventShow" method="get">
 			<param name="e_id">[1-9][0-9]*</param>
 		</route>
-		<route id="EventChange" path="/event/change/{e_id}" command="EventChange" method="get">
+
+		<route id="EventChange" path="/event/{e_id}/change" command="EventChange" method="get">
 			<param name="e_id">[1-9][0-9]*</param>
 		</route>
-		<route id="EventChangeResult" path="/EventChangeResult" command="EventChangeResult" method="post" />
+
+		<route id="EventPartnersShow" path="/event/{e_id}/partners" command="EventPartnersShow" method="get">
+			<param name="e_id">[1-9][0-9]*</param>
+		</route>
+
 		<route id="EventsShow" path="/event" command="EventsShow" method="get" />
+
+		<route id="EventAddUsers" path="/event/{e_id}/adduser" command="EventAddUsers" method="get" />
+			<param name="e_id">[1-9][0-9]*</param>
+		</route>
 	</routes>
 </config>

@@ -21,23 +21,27 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 	}
 
 	function createCollection($id){
-	        $factory= \System\Orm\PersistenceFactory::getFactory('User');
-	        $finder= new \System\Orm\DomainObjectAssembler($factory);
-	        $idobj=$factory->getIndentityObject();
+		$factory= \System\Orm\PersistenceFactory::getFactory('User');
+		$finder= new \System\Orm\DomainObjectAssembler($factory);
+		$idobj=$factory->getIndentityObject();
+
 		$idobj->addJoin('INNER',array('user','user_userset'),array('user_id','user_userset_user_id'));
 		$idobj->field('user_userset_userset_id')->eq($id);
-	               		
+
 		return $partners=$finder->find($idobj,'user');
 	}
 
 	public function createPartners($userset_id){
- 		$factory = \System\Orm\PersistenceFactory::getFactory('User');
- 		$finder = new \System\Orm\DomainObjectAssembler($factory);
-  		$idobj=$factory->getIndentityObject();
- 		$idobj->addJoin('INNER',array('user', 'user_userset'), array('user_id', 'user_userset_user_id'));
-  		$idobj->field('user_userset_userset_id')->eq($userset_id);
-  		return $finder->find($idobj, 'user');
- 	}
+		$factory = \System\Orm\PersistenceFactory::getFactory('User');
+		$finder = new \System\Orm\DomainObjectAssembler($factory);
+		$idobj=$factory->getIndentityObject();
+
+		$idobj->addJoin('INNER',array('user', 'user_userset'), array('user_id', 'user_userset_user_id'));
+		$idobj->field('user_userset_userset_id')->eq($userset_id);
+
+		return $finder->find($idobj, 'user');
+	}
+
 	function targetClass(){
 		return "Event";
 	}

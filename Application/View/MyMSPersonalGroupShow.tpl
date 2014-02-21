@@ -2,7 +2,7 @@
 {block name=title}Личная переписка{/block}
 {block name=message_content}
 
-<div class="col-md-4">
+<div class="col-md-5">
 	Участники : 
 	{foreach from=$group->getPartners() item=partner}
 	{if $user->getId() eq $partner->getId()}
@@ -13,7 +13,25 @@
 	{/foreach}
 	<hr>
 
+	<!-- <ul class="media-list"> -->
 	{foreach from=$group->getMessages() item=one_message}
+		<!-- <li class="media">
+			<a class="pull-left" href="#">
+				<img class="media-object" src="/Design/Images/noavatar92.jpg" alt="...">
+			</a>
+			<div class="media-body">
+				<h4 class="media-heading">
+					{$one_message->getAuthor()->getName()} 
+					{$one_message->getAuthor()->getFamily()}
+					<p class="pull-right"><small>{$one_message->getDate()}</small></p>
+				</h4>
+				{$one_message->getText()}
+				{foreach from=$one_message->getFiles() item=one_file name=foo}
+				{if $smarty.foreach.foo.first}<hr>{/if}
+				<a href="/file/{$one_file->getCode()}">{$one_file->getName()}</a>
+				{/foreach}
+			</div>
+		</li> -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">
@@ -31,6 +49,7 @@
 		</div>
 	</div>
 	{/foreach}
+	<!-- </ul> -->
 
 	<form role="form" action="/cabinet/message/personal/new_message" method="post" enctype="multipart/form-data">
 		<div class="form-group">

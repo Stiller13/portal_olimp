@@ -60,17 +60,20 @@
 				<command class="MyAccountSave"/>
 
 				<command class="EventCreate"/> <!--Потом убрать отсюда и вообще пересмотреть права -->
-				<command class="EventCreateResult"/>
-				<command class="EventShow"/>
+				<command class="EventSave"/>
 				<command class="EventChange"/>
-				<command class="EventChangeResult"/>
+				<command class="EventShow"/>
+				<command class="EventPartnersShow"/>
 				<command class="EventsShow"/>
+				<command class="EventAddUsers"/>
 			</allow>
 			<deny>
 			</deny>
 		</group>
 		<group name="GUEST" parent="ALL" role="1">
 			<allow>
+				<command class="EventShow"/>
+				<command class="EventsShow"/>
 				<command class="SignIn"/>
 				<command class="SignInResult"/>
 				<command class="RegistrationResult"/>

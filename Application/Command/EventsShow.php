@@ -10,12 +10,16 @@ class EventsShow extends \System\Core\Command {
 	protected function exec() {
 		$session = new \System\Session\Session();
 		$user = $session->get('user'); 
+
 		$factory = PersistenceFactory::getFactory('Event');
 		$finder = new DomainObjectAssembler($factory);
+
 		$idobj = $factory->getIndentityObject();
-		
+
 		$events = $finder->find($idobj, 'event');
-	
-		return $this->render(array("events" => $events, "user" => $user));
+
+		$can_create = 1;//По так 
+
+		return $this->render(array("user" => $user, "events" => $events, "can_create" => $can_create));
 	}
 }

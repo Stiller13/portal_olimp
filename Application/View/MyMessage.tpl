@@ -4,7 +4,7 @@
 {block name=cab_content}
 
 <div class="row margtp-25">
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<ul class="nav nav-pills nav-stacked">
 			<li>
 				<a href="/cabinet/message/personal">

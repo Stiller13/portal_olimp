@@ -61,9 +61,23 @@
 			{if $message}<div class="alert {$type_message}"><p class="text-center">{$message}</p></div>{/if}
 
 			{block name=content}{/block}
-		<div class="well margtp-25">БГУ 2014</div>
+			<div class="well margtp-25">БГУ 2014</div>
 		</div>
 		<script src="/Design/js/jquery-1.10.2.min.js"></script>
 		<script src="/Design/js/bootstrap.min.js"></script>
+		<script src="/Design/TinyMCE/tiny_mce.js"></script>
+		<script type="text/javascript">
+		tinyMCE.init({
+			mode:"textareas",
+			language : "ru",
+			plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+			theme : "advanced",
+			theme_advanced_buttons1 : "bold,italic,underline,strikethrough,formatselect,forecolor,backcolor,link,unlink,justifyleft,justifycenter,justifyright,bullist,numlist,|,pasteword,pastetext,table,image,|,undo,redo,|,code,fullscreen",
+			theme_advanced_buttons2 : "",
+			theme_advanced_buttons3 : "",
+			theme_advanced_toolbar_align : "left",
+			relative_urls : false
+		});
+		</script>
 	</body>
 </html>

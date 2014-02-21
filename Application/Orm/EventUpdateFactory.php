@@ -11,7 +11,6 @@ class EventUpdateFactory extends \System\Orm\UpdateFactory{
 		$values["type"]=$obj->getEvent_type();
 		$values["confirm"]=$obj->getConfirm();
 		$values["confirm_description"]=$obj->getConfirm_description();
-		// еще partners и messagegroup
 
 		if($obj->getId() > -1){
 			$values["e_id"] = $obj->getId();
