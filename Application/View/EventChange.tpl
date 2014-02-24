@@ -21,8 +21,8 @@
 	Тип<br>
 	<div class="form-group">
 		<select name="event_type">
-			<option value="1" {if $event}{if $event->getEvent_type() eq "1"}selected{/if}{/if}>Открытое</option>
-			<option value="0" {if $event}{if $event->getEvent_type() eq "0"}selected{/if}{/if}>Закрытое</option>
+			<option value="open" {if $event}{if $event->getEvent_type() eq "open"}selected{/if}{/if}>Открытое</option>
+			<option value="close" {if $event}{if $event->getEvent_type() eq "close"}selected{/if}{/if}>Закрытое</option>
 		</select>
 	</div>
 	Требуется ли подтверждающий документ<br>

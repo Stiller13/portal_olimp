@@ -2,8 +2,8 @@
 {block name=menu_events}active{/block}
 {block name=content}
 
-<div class="row">
-	<div class="col-md-10 col-md-offset-1">
+<!-- <div class="row">
+	<div class="col-md-10 col-md-offset-1"> -->
 		<h1 class="text-center">{block name=panel_title}{/block}</h1>
 		{if $rule eq "e_admin"}
 		<ul class="nav nav-tabs">
@@ -18,7 +18,7 @@
 		{/if}
 
 		{block name=epanel_content}{/block}
-	</div>
+<!-- 	</div>
 </div>
-
+ -->
 {/block}

@@ -19,7 +19,7 @@
 		{foreach from=$events item=event}
 			<tr>
 				<td><a href="/event/{$event->getId()}">{$event->getTitle()}</a></td>
-				<td>{if $event->getEvent_type() eq "1"}открытое{else}закрытое{/if}</td>
+				<td>{if $event->getEvent_type() eq "open"}открытое{else}закрытое{/if}</td>
 				<td>{if $event->getConfirm() eq "1"}требуется{else}не требуется{/if}</td>
 			</tr>
 		{/foreach}

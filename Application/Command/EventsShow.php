@@ -18,7 +18,7 @@ class EventsShow extends \System\Core\Command {
 
 		$events = $finder->find($idobj, 'event');
 
-		$can_create = 1;//По так 
+		$can_create = 1;//Пока так(На создание пероприятия)
 
 		return $this->render(array("user" => $user, "events" => $events, "can_create" => $can_create));
 	}

@@ -34,8 +34,8 @@ class EventSave extends \System\Core\Command{
 
 			$ruleobj->setUser_id($user->getId());
 			$ruleobj->setObj_id($event->getId());
-			$ruleobj->setRule(\System\Helper\Helper::getId("rule", "e_admin"));
-			$ruleobj->setObj_type(\System\Helper\Helper::getId("type", "event"));
+			$ruleobj->setRule("e_admin");
+			$ruleobj->setObj_type("event");
 
 			$ruleobj_finder->insert($ruleobj);
 

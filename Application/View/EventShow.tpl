@@ -26,9 +26,9 @@
 	</div>
 </div>
 {/if}
-{if $event->getConfirm() eq "0"}
+{if $event->getConfirm() eq "1"}
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-5">
 		<div class="panel panel-default">
 			<div class="panel-heading">Условие подачи заявки на участие</div>
 			<div class="panel-body">
@@ -37,18 +37,21 @@
 		</div>
 	</div>
 </div>
-
 {/if}
-{if $rule}
+
+{if $rule eq "e_partner"}
 Участники :<br>
 	{foreach from=$event->getPartners() item=partner}
 		{$partner->getName()}
 	{/foreach}
-{else}
-<form class="from" action="/event/{$event->getId()}/add_users" method="post">
+{/if}
+{if $rule}
+{elseif $user}
+<form class="from" action="/event/{$event->getId()}/change_partners" method="post">
 	<div class="form-group">
 		<input type="hidden" name="users[]" value={$user->getId()}>
-		<input type="submit" class="btn btn-success" value="Хочу учавствовать" />
+		<input type="hidden" name="redirect" value="/event/{$user->getId()}">
+		<button type="submit" class="btn btn-success" name="do" value="add">Хочу учавствовать</button>
 	</div>
 </form>
 {/if}

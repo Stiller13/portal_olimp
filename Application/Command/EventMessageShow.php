@@ -1,11 +1,8 @@
 <?php
 
 namespace Application\Command;
-use Application\Model\Event;
-use System\Orm\PersistenceFactory;
-use System\Orm\DomainObjectAssembler;
 
-class EventPartnersShow extends \System\Core\Command {
+class EventMessageShow extends \System\Core\Command {
 
 	protected function exec() {
 		$session = new \System\Session\Session();
@@ -32,7 +29,7 @@ class EventPartnersShow extends \System\Core\Command {
 
 		$rule = $ruleobj_finder->findOne($ruleobj_idobj, "rule");
 
-		$factory_user = \System\Orm\PersistenceFactory::getFactory("User");
+/*		$factory_user = \System\Orm\PersistenceFactory::getFactory("User");
 		$user_finder = new \System\Orm\DomainObjectAssembler($factory_user);
 		$user_idobj = $factory_user->getIndentityObject();
 
@@ -48,12 +45,8 @@ class EventPartnersShow extends \System\Core\Command {
 		$user_idobj->field('user_userset_userset_id')->eq($rule->getUserset_id());
 		$user_idobj->field('user_userset_rule_id')->eq(\System\Helper\Helper::getId("rule", "e_user"));
 
-		$users = $user_finder->find($user_idobj, "user");
+		$users = $user_finder->find($user_idobj, "user");*/
 
-		//Для добавления участников
-		$idobj = $factory_user->getIndentityObject();
-		$user_list = $user_finder->find($idobj, 'user');
-
-		return $this->render(array("user" => $user, "event" => $event, "rule" => "e_admin", "partners" => $partners, "users" => $users, "user_list" => $user_list));
+		return $this->render(array("user" => $user, "event" => $event, "rule" => "e_admin"));
 	}
 }
