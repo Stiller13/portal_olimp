@@ -24,8 +24,8 @@
 						<li class="{block name=menu_main}{/block}"><a href="/">Главная</a></li>
 						<li class="{block name=menu_news}{/block}"><a href="/news">Новости</a></li>
 						<li class="{block name=menu_events}{/block}"><a href="/event">Мероприятия</a></li>
-						<li><a href="#">Курсы</a></li>
-						<li class="dropdown">
+						<!-- <li><a href="#">Курсы</a></li> -->
+						<!-- <li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="#">Action</a></li>
@@ -34,14 +34,14 @@
 								<li><a href="#">Separated link</a></li>
 								<li><a href="#">One more separated link</a></li>
 							</ul>
-						</li>
+						</li> -->
 					</ul>
 
 					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search">
+						<input type="text" class="form-control" placeholder="Поиск">
 						</div>
-						<button type="submit" class="btn btn-success">Submit</button>
+						<button type="submit" class="btn btn-primary">Найти</button>
 					</form>
 
 					{if $user}

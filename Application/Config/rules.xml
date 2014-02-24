@@ -65,7 +65,8 @@
 				<command class="EventShow"/>
 				<command class="EventPartnersShow"/>
 				<command class="EventsShow"/>
-				<command class="EventAddUsers"/>
+				<command class="EventChangePartners"/>
+				<command class="EventMessageShow"/>
 			</allow>
 			<deny>
 			</deny>

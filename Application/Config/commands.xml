@@ -95,7 +95,11 @@
 			<param name="e_id" required="1"/>
 		</command>
 
-		<command class="EventAddUsers" >
+		<command class="EventChangePartners" >
+			<param name="e_id" required="1"/>
+		</command>
+
+		<command class="EventMessageShow" view="EventMessageShow">
 			<param name="e_id" required="1"/>
 		</command>
 	</commands>

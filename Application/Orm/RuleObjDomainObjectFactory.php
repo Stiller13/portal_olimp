@@ -9,8 +9,8 @@ class RuleObjDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 
 		$obj->setObj_id($array['obj_id']);
 		$obj->setUser_id($array['user_id']);
-		$obj->setRule($array['rule_id']);
-		$obj->setObj_type($array['obj_type']);
+		$obj->setRule(\System\Helper\Helper::getName("rule", $array['rule_id']));
+		$obj->setObj_type(\System\Helper\Helper::getName("type", $array['obj_type']));
 		$obj->setUserset_id($array['userset_id']);
 
 		return $obj;

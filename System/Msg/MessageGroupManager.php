@@ -114,8 +114,8 @@ abstract class MessageGroupManager {
 
 		$ruleobj->setUser_id($user_id);
 		$ruleobj->setObj_id($group_id);
-		$ruleobj->setRule(\System\Helper\Helper::getId("rule", $rule));
-		$ruleobj->setObj_type(\System\Helper\Helper::getId("type", "messagegroup"));
+		$ruleobj->setRule($rule);
+		$ruleobj->setObj_type("messagegroup");
 
 		$ruleobj_finder->insert($ruleobj);
 

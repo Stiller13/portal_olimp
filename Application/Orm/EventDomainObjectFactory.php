@@ -10,7 +10,7 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$obj->setTitle($array['event_title']);
 		$obj->setDescription_public($array['event_description_public']);
 		$obj->setDescription_private($array['event_description_private']);
-		$obj->setEvent_type($array['event_type']);
+		$obj->setEvent_type(\System\Helper\Helper::getName("type_event", $array['event_type']));
 		$obj->setConfirm($array['event_confirm']);
 		$obj->setConfirm_description($array['event_confirm_description']);
 		$obj->setPartners($this->createCollection($array['event_userset_id'])); //??? может прокатит, не уверен

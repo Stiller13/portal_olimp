@@ -1,5 +1,5 @@
 {extends file="MyMessage.tpl"}
-{block name=title}Личная переписка{/block}
+{block name=title}Системные сообщения{/block}
 {block name=message_content}
 
 <div class="col-md-4 col-md-3-offset">

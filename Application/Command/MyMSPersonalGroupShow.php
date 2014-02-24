@@ -11,6 +11,7 @@ class MyMSPersonalGroupShow extends \System\Core\Command {
 
 		$manager = \System\Msg\FactoryMGManager::getManager("personal");
 		$group = $manager->getGroup($this->data['mg_id']);
+		// print_r($this->data['mg_id']);
 
 		//Для добавления участников
 		$factory_user = \System\Orm\PersistenceFactory::getFactory('User');
@@ -22,16 +23,16 @@ class MyMSPersonalGroupShow extends \System\Core\Command {
 		$list_personal_group = $manager->getGroupsForUser($user->getId());
 
 		$personal_mess = 0;
-		foreach ($list_personal_group as $group) {
-			$personal_mess += $group->getVisit()->getCountMessage();
+		foreach ($list_personal_group as $personal_group) {
+			$personal_mess += $personal_group->getVisit()->getCountMessage();
 		}
 
 		$manager = \System\Msg\FactoryMGManager::getManager("system");
 		$list_system_group = $manager->getGroupsForUser($user->getId());
 
 		$system_mess = 0;
-		foreach ($list_system_group as $group) {
-			$system_mess += $group->getVisit()->getCountMessage();
+		foreach ($list_system_group as $system_group) {
+			$system_mess += $system_group->getVisit()->getCountMessage();
 		}
 
 		return $this->render(array("user" => $user, "group" => $group, "user_list" => $user_list, "personal_mess" => $personal_mess, "system_mess" => $system_mess));
