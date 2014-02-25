@@ -11,7 +11,8 @@ class Event extends \System\Orm\DomainObject{
 	private $confirm;           //требуется ли подтверждение
 	private $confirm_description; //описание этого подтверждения
 	private $partners;
-	private $messagegroups; 		// как таковой пока нет, но обязательно появится
+	private $comment_group;
+	private $notice_groups; 		// как таковой пока нет, но обязательно появится
 
 
 	public function setTitle($text) {
@@ -80,19 +81,28 @@ class Event extends \System\Orm\DomainObject{
 		return $this->partners;
 	}
 
-	public function setMessageGroups($mgs) {
+	public function getComments() {
+		return $this->comment_group;
+	}
+
+	public function setComments($mg) {
+		$this->comment_group = $mg;
+		$this->markDirty();
+	}
+
+	public function setNoticeGroups($mgs) {
 		$this->messagegroups = $mgs;
 		$this->markDirty();
 	}
 
-	public function getMessageGroups() {
-		if (!isset($this->messagegroups)) {
-			$this->messagegroups = $this->getCollection($this->targetClass(), $this->getId());
+	public function getNoticeGroups() {
+		if (!isset($this->notice_groups)) {
+			$this->notice_groups = $this->getCollection($this->targetClass(), $this->getId());
 		}
-		return $this->messagegroups;
+		return $this->notice_groups;
 	}
 
-	public function addMessageGroup($mg) {
+	public function addNoticeGroup($mg) {
 		$this->getMessageGroups()->add($mg);
 		$this->markDirty();
 	}

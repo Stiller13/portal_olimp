@@ -77,7 +77,9 @@
 		<command class="AdminUsersShow" view="AdminUsersShow" />
 
 <!--Мероприятия -->
-		<command class="EventCreate" view="EventCreate" />
+		<command class="EventCreateShow" view="EventCreateShow" />
+
+		<command class="EventCreate" />
 
 		<command class="EventSave" />
 
@@ -100,6 +102,10 @@
 		</command>
 
 		<command class="EventMessageShow" view="EventMessageShow">
+			<param name="e_id" required="1"/>
+		</command>
+
+		<command class="EventNewComment" view="EventNewComment">
 			<param name="e_id" required="1"/>
 		</command>
 	</commands>

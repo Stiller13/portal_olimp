@@ -83,9 +83,9 @@ abstract class MessageGroup extends \System\Orm\DomainObject {
 	 * @return \Application\Orm\MessageCollection
 	 */
 	public function getMessages() {
-		// if (!isset($this->messages)) {
-		// 	$this->messages = $this->getCollection($this->targetClass(), $this->getId());
-		// }
+		if (!isset($this->messages)) {
+			$this->messages = $this->getCollection($this->targetClass(), $this->getId());
+		}
 		return $this->messages;
 	}
 

@@ -6,6 +6,7 @@
 		<typegroup name="personal" id="1"/>
 		<typegroup name="comment" id="2"/>
 		<typegroup name="system" id="3"/>
+		<typegroup name="notice" id="4"/>
 
 		<type_event name="open" id="1"/>
 		<type_event name="close" id="2"/>

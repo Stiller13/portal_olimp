@@ -59,7 +59,8 @@
 				<command class="MyAccountShow"/>
 				<command class="MyAccountSave"/>
 
-				<command class="EventCreate"/> <!--Потом убрать отсюда и вообще пересмотреть права -->
+				<command class="EventCreateShow"/>
+				<command class="EventCreate"/>
 				<command class="EventSave"/>
 				<command class="EventChange"/>
 				<command class="EventShow"/>
@@ -67,6 +68,7 @@
 				<command class="EventsShow"/>
 				<command class="EventChangePartners"/>
 				<command class="EventMessageShow"/>
+				<command class="EventNewComment"/>
 			</allow>
 			<deny>
 			</deny>

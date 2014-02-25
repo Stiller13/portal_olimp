@@ -7,6 +7,7 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 	function doCreateObject(array $array) {
 		$obj= new \Application\Model\Event();
 
+		$obj->setId($array['event_id']);
 		$obj->setTitle($array['event_title']);
 		$obj->setDescription_public($array['event_description_public']);
 		$obj->setDescription_private($array['event_description_private']);
@@ -14,8 +15,8 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$obj->setConfirm($array['event_confirm']);
 		$obj->setConfirm_description($array['event_confirm_description']);
 		$obj->setPartners($this->createCollection($array['event_userset_id'])); //??? может прокатит, не уверен
-		// еще для messagegroup и partners, будут позже
-		$obj->setId($array['event_id']);
+		$obj->setComments($this->createComments($array['event_id']));
+		$obj->setNoticeGroups($this->createNoticeGroups($array['event_id']));
 
 		return $obj;
 	}
@@ -40,6 +41,30 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$idobj->field('user_userset_userset_id')->eq($userset_id);
 
 		return $finder->find($idobj, 'user');
+	}
+
+	public function createComments($event_id) {
+		$factory = \System\Orm\PersistenceFactory::getFactory('CommentMessageGroup');
+		$finder = new \System\Orm\DomainObjectAssembler($factory);
+		$idobj=$factory->getIndentityObject();
+
+		$idobj->addJoin('INNER',array('messagegroup', 'event_mg'), array('messagegroup_id', 'event_mg_group'));
+		$idobj->field('event_mg_event')->eq($event_id);
+		$idobj->field('messagegroup_type')->eq(\System\Helper\Helper::getId("typegroup", "comment"));
+
+		return $finder->findOne($idobj, 'messagegroup');
+	}
+
+	public function createNoticeGroups() {
+		$factory = \System\Orm\PersistenceFactory::getFactory('NoticeMessageGroup');
+		$finder = new \System\Orm\DomainObjectAssembler($factory);
+		$idobj=$factory->getIndentityObject();
+
+		$idobj->addJoin('INNER',array('messagegroup', 'event_mg'), array('messagegroup_id', 'event_mg_group'));
+		$idobj->field('event_mg_event')->eq($event_id);
+		$idobj->field('messagegroup_type')->eq(\System\Helper\Helper::getId("typegroup", "notice"));
+
+		return $finder->find($idobj, 'messagegroup');
 	}
 
 	function targetClass(){

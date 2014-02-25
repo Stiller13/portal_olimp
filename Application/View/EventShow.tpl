@@ -39,12 +39,48 @@
 </div>
 {/if}
 
-{if $rule eq "e_partner"}
+{if $rule}
+{if $rule neq "e_user"}
 Участники :<br>
 	{foreach from=$event->getPartners() item=partner}
 		{$partner->getName()}
 	{/foreach}
+<hr>
+
+{if $event->getComments()}
+<ul class="media-list">
+	{foreach from=$event->getComments()->getMessages() item=message}
+	<li class="media">
+		<a class="pull-left" href="#">
+			<img class="media-object" src="..." alt="...">
+		</a>
+		<div class="media-body">
+			<h4 class="media-heading">{$message->getAuthor()->getName()} {$message->getAuthor()->GetFamily()}</h4>
+			{$message->getText()}
+		</div>
+	</li>
+	{/foreach}
+</ul>
+<div class="row">
+	<div class="col-md-4">
+		<form role="form" action="/event/{$event->getId()}/new_comment" method="post">
+			<div class="form-group">
+				<label for="exampleInputText">Комментировать</label>
+				<input type="text" class="form-control" id="exampleInputText" name="text">
+			</div>
+
+			<input type="hidden" name="user_id" value={$user->getId()}>
+			<input type="hidden" name="group_id" value={$event->getComments()->getId()}>
+			<input type="hidden" name="id_remessage" value="0">
+			<input type="hidden" name="status" value="0">
+			<button type="submit" class="btn btn-success">Отправить</button>
+		</form>
+	</div>
+</div>
 {/if}
+{/if}
+{/if}
+
 {if $rule}
 {elseif $user}
 <form class="from" action="/event/{$event->getId()}/change_partners" method="post">

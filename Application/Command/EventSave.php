@@ -11,33 +11,26 @@ class EventSave extends \System\Core\Command{
 		$session = new \System\Session\Session();
 		$user = $session->get("user");
 
-		$event = new Event();
+		if ($this->req["e_id"]) {
+			$factory = PersistenceFactory::getFactory('Event');
+			$finder = new DomainObjectAssembler($factory);
+			$idobj = $factory->getIndentityObject();
 
-		$event->setId($this->req["e_id"]);
-		$event->setTitle($this->req["title"]);
-		$event->setDescription_public($this->req["description_public"]);
-		$event->setDescription_private($this->req["description_private"]);
-		$event->setEvent_type($this->req["event_type"]);
-		$event->setConfirm($this->req["confirm"]);
-		$event->setConfirm_description($this->req["confirm_description"]);
+			$idobj->field('event_id')->eq($this->req['e_id']);
 
-		$factory = PersistenceFactory::getFactory('Event');
-		$finder = new DomainObjectAssembler($factory);
+			$event = $finder->findOne($idobj, 'event');
+		}
 
-		$finder->insert($event);
+		if ($event) {
+			$event->setId($this->req["e_id"]);
+			$event->setTitle($this->req["title"]);
+			$event->setDescription_public($this->req["description_public"]);
+			$event->setDescription_private($this->req["description_private"]);
+			$event->setEvent_type($this->req["event_type"]);
+			$event->setConfirm($this->req["confirm"]);
+			$event->setConfirm_description($this->req["confirm_description"]);
 
-		if ($event->getId() > 0) {
-			$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
-			$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
-
-			$ruleobj = new \Application\Model\RuleObj();
-
-			$ruleobj->setUser_id($user->getId());
-			$ruleobj->setObj_id($event->getId());
-			$ruleobj->setRule("e_admin");
-			$ruleobj->setObj_type("event");
-
-			$ruleobj_finder->insert($ruleobj);
+			$finder->insert($event);
 
 			return $this->redirect("/event/".$event->getId());
 		} else {
