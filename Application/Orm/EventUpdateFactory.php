@@ -19,6 +19,12 @@ class EventUpdateFactory extends \System\Orm\UpdateFactory{
 		}
 		$values['groups'] = implode(',', $list_group);
 
+		$list_file = array();
+		foreach ($obj->getFiles() as $one_file) {
+			$list_file[] = $one_file->getId();
+		}
+		$values['files'] = implode(',', $list_file);
+
 		if($obj->getId() > -1){
 			$values["e_id"] = $obj->getId();
 			return $this->buildStatement('update_event',$values);

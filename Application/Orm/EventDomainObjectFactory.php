@@ -17,6 +17,7 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$obj->setPartners($this->createCollection($array['event_userset_id'])); //??? может прокатит, не уверен
 		$obj->setComments($this->createComments($array['event_id']));
 		$obj->setNoticeGroups($this->createNoticeGroups($array['event_id']));
+		$obj->setFiles($this->createFiles($array['event_id']));
 
 		return $obj;
 	}
@@ -65,6 +66,17 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$idobj->field('messagegroup_type')->eq(\System\Helper\Helper::getId("typegroup", "notice"));
 
 		return $finder->find($idobj, 'messagegroup');
+	}
+
+	public function createFiles($event_id) {
+		$factory = \System\Orm\PersistenceFactory::getFactory('File');
+		$finder = new \System\Orm\DomainObjectAssembler($factory);
+		$idobj=$factory->getIndentityObject();
+
+		$idobj->addJoin('INNER', array('file', 'event_file'), array('file_id', 'event_file_file'));
+		$idobj->field('event_file_event')->eq($event_id);
+
+		return $finder->find($idobj, 'file');
 	}
 
 	function targetClass(){

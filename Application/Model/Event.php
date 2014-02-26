@@ -13,6 +13,7 @@ class Event extends \System\Orm\DomainObject{
 	private $partners;
 	private $comment_group;
 	private $notice_groups; 		// как таковой пока нет, но обязательно появится
+	private $files;
 
 
 	public function setTitle($text) {
@@ -99,11 +100,30 @@ class Event extends \System\Orm\DomainObject{
 		if (!isset($this->notice_groups)) {
 			$this->notice_groups = $this->getCollection($this->targetClass(), $this->getId());
 		}
+
 		return $this->notice_groups;
 	}
 
 	public function addNoticeGroup($mg) {
 		$this->getMessageGroups()->add($mg);
+		$this->markDirty();
+	}
+
+	public function setFiles(\Application\Orm\FileCollection $list_file) {
+		$this->files = $list_file;
+		$this->markDirty();
+	}
+
+	public function getFiles() {
+		if (!isset($this->files)) {
+			$this->files = $this->getCollection($this->targetClass(), $this->getId());
+		}
+
+		return $this->files;
+	}
+
+	public function addFile(\Application\Model\File $file) {
+		$this->files->add($file);
 		$this->markDirty();
 	}
 

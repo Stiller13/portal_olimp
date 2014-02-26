@@ -17,7 +17,7 @@ class UserDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$obj->setStatusSys($array['user_status']);
 		$obj->setMail($array['user_mail']);
 		$obj->setTelephone($array['user_telephone']);
-		$obj->setRoleInGroup($array['user_userset_rule_id']);
+		$obj->setRoleInGroup(\System\Helper\Helper::getName("rule", $array['user_userset_rule_id']));
 
 		return $obj;
 	}

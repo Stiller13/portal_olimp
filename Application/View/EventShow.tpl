@@ -14,6 +14,12 @@
 	</div>
 {elseif $rule eq "e_partner"}
 	{$event->getDescription_private()}
+	{if $event->getFiles()}
+	Прикрепленные файлы<br>
+		{foreach from=$event->getFiles() item=one_file}
+			<a href="/file/{$one_file->getCode()}">{$one_file->getName()}</a><br>
+		{/foreach}
+	{/if}
 {else}
 	{$event->getDescription_public()}
 {/if}
@@ -43,7 +49,9 @@
 {if $rule neq "e_user"}
 Участники :<br>
 	{foreach from=$event->getPartners() item=partner}
-		{$partner->getName()}
+		{if $partner->getRoleInGroup() eq "e_partner"}
+			{$partner->getName()}
+		{/if}
 	{/foreach}
 <hr>
 
@@ -62,8 +70,6 @@
 				<small>{$message->getDate()}</small>
 			</h5>
 			{$message->getText()}
-			<br>
-			<br>
 
 			<div class="form-group">
 				<button type="submit" class="btn btn-primary btn-xs" name="id_remessage" value="{$message->getId()}">Ответить</button>
@@ -113,7 +119,8 @@
 	<div class="col-md-4">
 			<div class="form-group">
 				<label for="exampleInputText">Комментировать</label>
-				<input type="text" class="form-control" id="exampleInputText" name="text">
+				<!-- <input type="text" class="form-control" id="exampleInputText" name="text"> -->
+				<textarea class="form-control" id="exampleInputText" name="text"  rows="3"></textarea>
 			</div>
 
 			<input type="hidden" name="user_id" value={$user->getId()}>
