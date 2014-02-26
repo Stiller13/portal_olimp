@@ -23,6 +23,7 @@ class CommentMessageGroupDomainObjectFactory extends \System\Orm\DomainObjectFac
 		$idobj = $factory->getIndentityObject();
 
 		$idobj->field('message_group')->eq($group_id);
+		$idobj->field('message_message')->eq(0);
 
 		return $finder->find($idobj, 'message');
 	}

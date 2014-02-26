@@ -160,7 +160,7 @@ abstract class MessageGroupManager {
 	/**
 	 * Отправить сообщение
 	 */
-	public function SendMessage($data) {
+	public function SendMessage($data, $v_update = true) {
 		$author = new \Application\Model\User();
 		$author->setId($data['user_id']);
 
@@ -168,14 +168,18 @@ abstract class MessageGroupManager {
 		if (is_null($upload))
 			$upload = new \Application\Orm\FileCollection();
 
+		if (!$data['status'])
+			$data['status'] = 0;
+
+		if (!$data['id_remessage'])
+			$data['id_remessage'] = 0;
+
 		$new_message = new \Application\Model\Message();
 		$new_message->setText($data['text']);
 		$new_message->setAuthor($author);
 		$new_message->setReMessage($data['id_remessage']);
 		$new_message->setStatus($data['status']);
 		$new_message->setGroup($data['group_id']);
-		$new_message->setStatus($data['status']);
-
 		$new_message->setFiles($upload);
 
 		// Производим вставку
@@ -183,14 +187,16 @@ abstract class MessageGroupManager {
 		$message_finder = new \System\Orm\DomainObjectAssembler($message_factory);
 		$message_finder->insert($new_message);
 
-		$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
-		$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
+		if ($v_update) {
+			$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
+			$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
 
-		$visit = new \Application\Model\Visit();
-		$visit->setMessageGroupId($data['group_id']);
-		$visit->setUserId($data['user_id']);
+			$visit = new \Application\Model\Visit();
+			$visit->setMessageGroupId($data['group_id']);
+			$visit->setUserId($data['user_id']);
 
-		$visit_finder->insert($visit);
+			$visit_finder->insert($visit);
+		}
 	}
 
 	/**

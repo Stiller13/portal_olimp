@@ -68,7 +68,8 @@
 		<script src="/Design/TinyMCE/tiny_mce.js"></script>
 		<script type="text/javascript">
 		tinyMCE.init({
-			mode:"textareas",
+			mode:"specific_textareas",
+			editor_selector: "edit",
 			language : "ru",
 			plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 			theme : "advanced",

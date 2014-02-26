@@ -11,11 +11,11 @@
 	</div>
 	<div class="form-group">
 		<label class="control-label" for="inputdpub">Описание для всех</label>
-		<textarea class="form-control" name="description_public" rows="10" cols="40" id="inputdpub"> {if $event}{$event->getDescription_public()}{/if}</textarea>
+		<textarea class="form-control edit" name="description_public" rows="10" cols="40" id="inputdpub"> {if $event}{$event->getDescription_public()}{/if}</textarea>
 	</div>
 	<div class="form-group">
 		<label class="control-label" for="inputdpriv">Описание для участников</label>
-		<textarea class="form-control" name="description_private" rows="10" cols="40" id="inputdpriv">{if $event}{$event->getDescription_private()}{/if}
+		<textarea class="form-control edit" name="description_private" rows="10" cols="40" id="inputdpriv">{if $event}{$event->getDescription_private()}{/if}
 		</textarea>
 	</div>
 	Тип<br>
@@ -34,7 +34,7 @@
 	</div>
 	<div class="form-group">
 		<label class="control-label" for="inputсd">Описание подтверждющего документа</label>
-		<textarea class="form-control" name="confirm_description" rows="10" cols="40" id="inputсd"> {if $event}{$event->getConfirm_description()}{/if}</textarea>
+		<textarea class="form-control edit" name="confirm_description" rows="10" cols="40" id="inputсd"> {if $event}{$event->getConfirm_description()}{/if}</textarea>
 	</div>
 	{if $event}<input type="hidden" name="e_id" value={$event->getId()}>{/if}
 	<div class="form-group">
