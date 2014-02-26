@@ -35,7 +35,7 @@
 				{/foreach}
 				</select>
 			</div>
-			<button type="submit" class="btn btn-primary" name="do" value="add">Пригласить</button>
+			<button type="submit" class="btn btn-primary" name="do" value="ok">Пригласить</button>
 		</div>
 	</div>
 	<button type="submit" class="btn btn-success" name="do" value="ok">Подтвердить</button>

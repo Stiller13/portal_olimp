@@ -17,42 +17,41 @@ class EventChangePartners extends \System\Core\Command{
 
 		$rule = $ruleobj_finder->findOne($ruleobj_idobj, 'rule');
 
-		switch ($this->req["do"]) {
-			case 'add':
-				foreach ($this->req["users"] as $user_id) {
-					$ruleobj = new \Application\Model\RuleObj();
+		foreach ($this->req["users"] as $user_id) {
+			if ($user_id === $user->getId()){
+				continue;
+			}
+			switch ($this->req["do"]) {
+				case 'add':
+						$ruleobj = new \Application\Model\RuleObj();
 
-					$ruleobj->setUser_id($user_id);
-					$ruleobj->setObj_id($this->data["e_id"]);
-					$ruleobj->setRule("e_user");
-					$ruleobj->setObj_type("event");
+						$ruleobj->setUser_id($user_id);
+						$ruleobj->setObj_id($this->data["e_id"]);
+						$ruleobj->setRule("e_user");
+						$ruleobj->setObj_type("event");
 
-					$ruleobj_finder->insert($ruleobj);
-				}
-				break;
+						$ruleobj_finder->insert($ruleobj);
+					break;
 
-			case 'del':
-				foreach ($this->req["users"] as $user_id) {
-					$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
-					$ruleobj_idobj->field('user_userset_user_id')->eq($user_id);
-					$ruleobj_idobj->field('user_userset_userset_id')->eq($rule->getUserset_id());
+				case 'del':
+						$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
+						$ruleobj_idobj->field('user_userset_user_id')->eq($user_id);
+						$ruleobj_idobj->field('user_userset_userset_id')->eq($rule->getUserset_id());
 
-					$ruleobj_finder->delete($ruleobj_idobj, 'user_userset');
-				}
-				break;
+						$ruleobj_finder->delete($ruleobj_idobj, 'user_userset');
+					break;
 
-			case 'ok':
-				foreach ($this->req["users"] as $user_id) {
-					$ruleobj = new \Application\Model\RuleObj();
+				case 'ok':
+						$ruleobj = new \Application\Model\RuleObj();
 
-					$ruleobj->setUser_id($user_id);
-					$ruleobj->setObj_id($this->data["e_id"]);
-					$ruleobj->setRule("e_partner");
-					$ruleobj->setObj_type("event");
+						$ruleobj->setUser_id($user_id);
+						$ruleobj->setObj_id($this->data["e_id"]);
+						$ruleobj->setRule("e_partner");
+						$ruleobj->setObj_type("event");
 
-					$ruleobj_finder->insert($ruleobj);
-				}
-				break;
+						$ruleobj_finder->insert($ruleobj);
+					break;
+			}
 		}
 
 		return $this->redirect($this->req["redirect"]);
