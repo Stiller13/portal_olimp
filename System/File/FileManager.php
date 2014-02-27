@@ -25,7 +25,9 @@ class FileManager {
 	public function upload_files(){
 		$files = new \Application\Orm\FileCollection();
 
-		foreach (Uploader::upload() as $one_upload) {
+		$dir = UPL.DS.FileManager::get_dir();
+
+		foreach (Uploader::upload($dir) as $one_upload) {
 			if ($one_upload['status'] == 0) {
 				$new_file = new \Application\Model\File();
 				$new_file->setName($one_upload['name']);

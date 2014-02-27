@@ -26,7 +26,7 @@ class Uploader {
 	* @todo Запилить ограничения по размеру, по расширению
 	* @return array()
 	*/
-	public static function upload() {
+	public static function upload($uploadfile) {
 		$status_result = array();
 
 		if(isset($_FILES['uploadfiles'])) {
@@ -43,7 +43,6 @@ class Uploader {
 					if(is_uploaded_file($_FILES['uploadfiles']['tmp_name'][$i])) {
 
 						$status_result[$i]['code'] = md5(md5_file($_FILES['uploadfiles']['tmp_name'][$i]).date('YmdHis'));
-						$uploadfile = UPL.DS.FileManager::get_dir();
 
 						if(!is_dir($uploadfile))
 							if (!mkdir($uploadfile)) {
