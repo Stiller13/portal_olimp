@@ -139,22 +139,23 @@ abstract class MessageGroupManager {
 
 		$rule = $ruleobj_finder->findOne($ruleobj_idobj, 'rule');
 
-		$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
-		$ruleobj_idobj->field('user_userset_user_id')->eq($user_id);
-		$ruleobj_idobj->field('user_userset_userset_id')->eq($rule->getUserset_id());
+		if ($rule) {
+			$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
+			$ruleobj_idobj->field('user_userset_user_id')->eq($user_id);
+			$ruleobj_idobj->field('user_userset_userset_id')->eq($rule->getUserset_id());
 
-		$ruleobj_finder->delete($ruleobj_idobj, 'user_userset');
+			$ruleobj_finder->delete($ruleobj_idobj, 'user_userset');
 
 
-		$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
-		$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
-		$visit_idobj = $factory_visit->getIndentityObject();
+			$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
+			$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
+			$visit_idobj = $factory_visit->getIndentityObject();
 
-		$visit_idobj->field('user_mg_read_user')->eq($user_id);
-		$visit_idobj->field('user_mg_read_mg')->eq($group_id);
+			$visit_idobj->field('user_mg_read_user')->eq($user_id);
+			$visit_idobj->field('user_mg_read_mg')->eq($group_id);
 
-		$visit_finder->delete($visit_idobj, 'user_mg_read');
-
+			$visit_finder->delete($visit_idobj, 'user_mg_read');
+		}
 	}
 
 	/**

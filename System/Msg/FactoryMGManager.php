@@ -14,12 +14,14 @@ class FactoryMGManager {
 	static $managers = array(
 		'personal' => 'PersonalMGManager',
 		'comment' => 'CommentMGManager',
-		'system' => 'SystemMGManager');
+		'system' => 'SystemMGManager',
+		'notice' => 'NoticeMGManager');
 
 	static $classes = array(
 		'personal' => 'PersonalMessageGroup',
 		'comment' => 'CommentMessageGroup',
-		'system' => 'SystemMessageGroup');
+		'system' => 'SystemMessageGroup',
+		'notice' => 'NoticeMessageGroup');
 
 	public static function getManager($type) {
 		$class = '\System\Msg\\'.self::$managers[$type];
