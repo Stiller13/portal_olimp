@@ -8,7 +8,7 @@ class NoticeMessageGroupDomainObjectFactory extends \System\Orm\DomainObjectFact
 		$obj = new \Application\Model\NoticeMessageGroup();
 
 		$obj->setId($array['messagegroup_id']);
-		$obj->setStatus($array['messagegroup_status']);
+		$obj->setStatus(\System\Helper\Helper::getName("status", $array['messagegroup_status']));
 		$obj->setDescription($array['messagegroup_desc']);
 		$obj->setMessages($this->createMessages($obj->getId()));
 		$obj->setPartners(new \Application\Orm\UserCollection());

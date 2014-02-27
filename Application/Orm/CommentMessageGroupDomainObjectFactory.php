@@ -31,13 +31,18 @@ class CommentMessageGroupDomainObjectFactory extends \System\Orm\DomainObjectFac
 	public function createVisit($group_id) {
 		$session = new \System\Session\Session();
 		$user = $session->get('user');
+		if ($user){
+			$user_id = $user->getId();
+		} else {
+			$user_id = 0;
+		}
 
 		$factory = \System\Orm\PersistenceFactory::getFactory('Visit');
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
 		$idobj = $factory->getIndentityObject();
 
 		$idobj->field('visit_group')->eq($group_id);
-		$idobj->field('visit_user')->eq($user->getId());
+		$idobj->field('visit_user')->eq($user_id);
 
 		$visit = $finder->findOne($idobj, 'visit');
 		if (!$visit)

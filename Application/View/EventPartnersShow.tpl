@@ -1,7 +1,7 @@
 {extends file="EventPanel.tpl"}
 {block name=title}Мероприятие{/block}
 {block name=epanel_partners}active{/block}
-{block name=panel_title}Участники{/block}
+{block name=panel_title}{$event->getTitle()}{/block}
 
 {block name=epanel_content}
 
@@ -13,7 +13,7 @@
 			{foreach from=$users item=one_user}
 				<label>
 					<input name="users[]" type="checkbox" value="{$one_user->getId()}">
-					{$one_user->getName()} {$one_user->getFamily()}
+					<a href="/profile/{$one_user->getId()}">{$one_user->getName()} {$one_user->getFamily()}</a>
 				</label><br>
 			{/foreach}
 		</div>
@@ -22,7 +22,7 @@
 			{foreach from=$partners item=one_partner}
 				<label>
 					<input name="users[]" type="checkbox" value="{$one_partner->getId()}">
-					{$one_partner->getName()} {$one_partner->getFamily()}
+					<a href="/profile/{$one_partner->getId()}">{$one_partner->getName()} {$one_partner->getFamily()}</a>
 				</label><br>
 			{/foreach}
 		</div>

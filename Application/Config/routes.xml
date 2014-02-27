@@ -47,11 +47,7 @@
 
 		<route id="MyMSPersonalGroupDelMe" path="/cabinet/message/personal/del_me" command="MyMSPersonalGroupDelMe" method="post" />
 
-		<route id="MyMSSystemGroupsShow" path="/cabinet/message/system" command="MyMSSystemGroupsShow" method="get" />
-
-		<route id="MyMSSystemGroupShow" path="/cabinet/message/system/{mg_id}" command="MyMSSystemGroupShow" method="get">
-			<param name="mg_id" pattern="uid"/>
-		</route>
+		<route id="MyMSSystemShow" path="/cabinet/message/system" command="MyMSSystemShow" method="get" />
 
 
 
@@ -109,7 +105,16 @@
 			<param name="e_id">[1-9][0-9]*</param>
 		</route>
 
-		<route id="EventMessageShow" path="/event/{e_id}/message" command="EventMessageShow" method="get" >
+		<route id="EventMessageShowDeafault" path="/event/{e_id}/message" command="EventMessageShow" method="get" >
+			<param name="e_id">[1-9][0-9]*</param>
+		</route>
+
+		<route id="EventMessageShow" path="/event/{e_id}/message/{mode}" command="EventMessageShow" method="get" >
+			<param name="e_id">[1-9][0-9]*</param>
+			<param name="mode">all|partners|users</param>
+		</route>
+
+		<route id="EventNewNotice" path="/event/{e_id}/new_notice" command="EventNewNotice" method="post" >
 			<param name="e_id">[1-9][0-9]*</param>
 		</route>
 

@@ -1,7 +1,7 @@
 {extends file="EventPanel.tpl"}
 {block name=title}Настройки мероприятия{/block}
 {block name=epanel_change}active{/block}
-{block name=panel_title}Настройки мероприятия{/block}
+{block name=panel_title}{$event->getTitle()}{/block}
 {block name=epanel_content}
 
 <form class="form" action="/event/save" method="post" enctype="multipart/form-data">
@@ -19,11 +19,13 @@
 		</textarea>
 	</div>
 
+	{if $event}
 	{if $event->getFiles()}
 	Прикрепленные файлы<br>
 		{foreach from=$event->getFiles() item=one_file}
 			<a href="/file/{$one_file->getCode()}">{$one_file->getName()}</a><br>
 		{/foreach}
+	{/if}
 	{/if}
 	<div class="form-group">
 			<label for="exampleInputFile">Добавить файлы</label>

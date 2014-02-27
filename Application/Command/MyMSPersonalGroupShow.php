@@ -17,6 +17,7 @@ class MyMSPersonalGroupShow extends \System\Core\Command {
 		$factory_user = \System\Orm\PersistenceFactory::getFactory('User');
 		$finder_user = new \System\Orm\DomainObjectAssembler($factory_user);
 		$idobj = $factory_user->getIndentityObject();
+		$idobj->addOrder(array('user_name'=>'ASC'));
 		$user_list = $finder_user->find($idobj, 'user');
 
 		$manager = \System\Msg\FactoryMGManager::getManager("personal");

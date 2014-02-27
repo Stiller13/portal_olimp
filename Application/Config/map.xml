@@ -21,12 +21,14 @@
 		<user_status name="Преподаватель" id="4"/>
 
 		<status name="open" id="1"/>
+		<status name="all" id="2"/>
+		<status name="users" id="3"/>
+		<status name="partners" id="4"/>
 		<status name="closed" id="200"/>
 
 		<rule name="e_admin" id="1"/>
 		<rule name="e_partner" id="2"/>
 		<rule name="e_user" id="3"/>
-
 		<rule name="pmg_admin" id="5"/>
 		<rule name="pmg_partner" id="6"/>
 		<rule name="smg_partner" id="7"/>

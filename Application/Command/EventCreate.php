@@ -11,11 +11,37 @@ class EventCreate extends \System\Core\Command {
 
 		$new_cmg = new \Application\Model\CommentMessageGroup();
 
-		$new_cmg->setStatus(0);
-		$new_cmg->setDescription('');
+		$new_cmg->setStatus("open");
+		$new_cmg->setDescription('Комментарии');
 		$factory_group = \System\Orm\PersistenceFactory::getFactory('CommentMessageGroup');
 		$group_finder = new \System\Orm\DomainObjectAssembler($factory_group);
 		$group_finder->insert($new_cmg);
+
+		$new_nmg1 = new \Application\Model\NoticeMessageGroup();
+
+		$new_nmg1->setStatus("partners");
+		$new_nmg1->setDescription('Для участников');
+		$factory_group = \System\Orm\PersistenceFactory::getFactory('NoticeMessageGroup');
+		$group_finder = new \System\Orm\DomainObjectAssembler($factory_group);
+		$group_finder->insert($new_nmg1);
+
+		$new_nmg2 = new \Application\Model\NoticeMessageGroup();
+
+		$new_nmg2->setStatus("users");
+		$new_nmg2->setDescription('Для заявителей');
+		$group_finder->insert($new_nmg2);
+
+		$new_nmg3 = new \Application\Model\NoticeMessageGroup();
+
+		$new_nmg3->setStatus("all");
+		$new_nmg3->setDescription('Для всех');
+		$group_finder->insert($new_nmg3);
+
+		$list_noticegroup = new \Application\Orm\NoticeMessageGroupCollection();
+		$list_noticegroup->add($new_nmg1);
+		$list_noticegroup->add($new_nmg2);
+		$list_noticegroup->add($new_nmg3);
+
 
 		$event = new \Application\Model\Event();
 
@@ -26,6 +52,7 @@ class EventCreate extends \System\Core\Command {
 		$event->setConfirm($this->req["confirm"]);
 		$event->setConfirm_description($this->req["confirm_description"]);
 		$event->setComments($new_cmg);
+		$event->setNoticeGroups($list_noticegroup);
 
 		$factory = \System\Orm\PersistenceFactory::getFactory('Event');
 		$finder = new \System\Orm\DomainObjectAssembler($factory);

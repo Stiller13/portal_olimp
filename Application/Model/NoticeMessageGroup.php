@@ -8,7 +8,7 @@ namespace Application\Model;
  * Класс оповещений
  */
 
-class NoticeMessageGroup extends \System\Msg\MessageGroup {
+class NoticeMessageGroup extends \Application\Model\PersonalMessageGroup {
 
 	public function targetClass() {
 		return 'NoticeMessageGroup';

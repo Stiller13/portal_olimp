@@ -16,7 +16,7 @@ class NoticeMessageGroupUpdateFactory extends \System\Orm\UpdateFactory {
 		}
 
 		$values["type_mg"] = \System\Helper\Helper::getId("typegroup", "notice");
-		$values["status_mg"] = $obj->getStatus();
+		$values["status_mg"] = \System\Helper\Helper::getId("status", $obj->getStatus());
 
 		return $this->buildStatement('insert_messagegroup', $values, 1);
 	}

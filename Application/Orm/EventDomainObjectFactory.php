@@ -56,7 +56,7 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		return $finder->findOne($idobj, 'messagegroup');
 	}
 
-	public function createNoticeGroups() {
+	public function createNoticeGroups($event_id) {
 		$factory = \System\Orm\PersistenceFactory::getFactory('NoticeMessageGroup');
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
 		$idobj=$factory->getIndentityObject();

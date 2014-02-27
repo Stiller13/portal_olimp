@@ -92,7 +92,7 @@ class Event extends \System\Orm\DomainObject{
 	}
 
 	public function setNoticeGroups($mgs) {
-		$this->messagegroups = $mgs;
+		$this->notice_groups = $mgs;
 		$this->markDirty();
 	}
 
@@ -104,8 +104,17 @@ class Event extends \System\Orm\DomainObject{
 		return $this->notice_groups;
 	}
 
+	public function getNoticeGroup($status) {
+		foreach ($this->getNoticeGroups() as $one_group) {
+			if ($one_group->getStatus() === $status) {
+				return $one_group;
+			}
+		}
+		return null;
+	}
+
 	public function addNoticeGroup($mg) {
-		$this->getMessageGroups()->add($mg);
+		$this->getNoticeGroups()->add($mg);
 		$this->markDirty();
 	}
 

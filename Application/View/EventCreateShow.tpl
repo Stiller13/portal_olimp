@@ -1,10 +1,11 @@
 {extends file="Main.tpl"}
 {block name=title}Создание мероприятия{/block}
+{block name=menu_events}active{/block}
 {block name=content}
 
 <h1 class="text-center">Создание мероприятия</h1>
 
-<form class="form" action="/event/save" method="post" enctype="multipart/form-data">
+<form class="form" action="/event/create" method="post" enctype="multipart/form-data">
 	<div class="form-group">
 		<label class="control-label" for="inputTitle">Название</label>
 		<input type="text" name="title" class="form-control" id="inputTitle" {if $event}value={$event->getTitle()}{/if}>
@@ -19,11 +20,13 @@
 		</textarea>
 	</div>
 
+	{if $event}
 	{if $event->getFiles()}
 	Прикрепленные файлы<br>
 		{foreach from=$event->getFiles() item=one_file}
 			<a href="/file/{$one_file->getCode()}">{$one_file->getName()}</a><br>
 		{/foreach}
+	{/if}
 	{/if}
 	<div class="form-group">
 			<label for="exampleInputFile">Добавить файлы</label>
@@ -38,7 +41,7 @@
 	</div>
 	<div class="form-group">
 		<label class="control-label">
-			<input type="radio" name="event_type" value="close" {if $event}{if $event->getEvent_type() eq "close"}checked{/if}{/if}>
+			<input type="radio" name="event_type" value="close" {if $event}{if $event->getEvent_type() eq "close"}checked{/if}{else}checked{/if}>
 			Закрытое
 		</label>
 	</div>
@@ -52,7 +55,7 @@
 	</div>
 	<div class="form-group">
 		<label class="control-label">
-			<input type="radio" name="confirm" value="0" {if $event}{if $event->getConfirm() eq "0"}checked{/if}{/if}>
+			<input type="radio" name="confirm" value="0" {if $event}{if $event->getConfirm() eq "0"}checked{/if}{else}checked{/if}>
 			Нет
 		</label>
 	</div>

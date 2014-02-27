@@ -43,9 +43,7 @@
 
 		<command class="MyMSPersonalGroupDelMe" />
 
-		<command class="MyMSSystemGroupsShow" view="MyMSSystemGroupsShow" />
-
-		<command class="MyMSSystemGroupShow" view="MyMSSystemGroupShow" />
+		<command class="MyMSSystemShow" view="MyMSSystemShow" />
 
 
 <!-- общие -->
@@ -102,6 +100,11 @@
 		</command>
 
 		<command class="EventMessageShow" view="EventMessageShow">
+			<param name="e_id" required="1"/>
+			<param name="mode" />
+		</command>
+
+		<command class="EventNewNotice">
 			<param name="e_id" required="1"/>
 		</command>
 

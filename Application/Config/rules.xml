@@ -39,8 +39,7 @@
 				<command class="AdminUsersShow"/>
 				<command class="AdminMSSystemGroupMessageCreate"/>
 
-				<command class="MyMSSystemGroupShow"/>
-				<command class="MyMSSystemGroupsShow"/>
+				<command class="MyMSSystemShow"/>
 				<command class="ProfileShow"/>
 				<command class="FileGet"/>
 				<command class="AllUsersShow"/>
@@ -69,6 +68,7 @@
 				<command class="EventChangePartners"/>
 				<command class="EventMessageShow"/>
 				<command class="EventNewComment"/>
+				<command class="EventNewNotice"/>
 			</allow>
 			<deny>
 			</deny>

@@ -11,17 +11,13 @@ class EventPartnersShow extends \System\Core\Command {
 		$session = new \System\Session\Session();
 		$user = $session->get("user");
 
-/*		$factory = PersistenceFactory::getFactory("Event");
+		$factory = PersistenceFactory::getFactory("Event");
 		$finder = new DomainObjectAssembler($factory);
 		$idobj = $factory->getIndentityObject();
 
 		$idobj->field("event_id")->eq($this->data["e_id"]);
 
-		$event = $finder->findOne($idobj, "event");*/
-
-		//Для ссылок в меню
-		$event = new \Application\Model\Event();
-		$event->setId($this->data["e_id"]);
+		$event = $finder->findOne($idobj, "event");
 
 		$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory("RuleObj");
 		$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
@@ -52,6 +48,7 @@ class EventPartnersShow extends \System\Core\Command {
 
 		//Для добавления участников
 		$idobj = $factory_user->getIndentityObject();
+		$idobj->addOrder(array('user_name'=>'ASC'));
 		$user_list = $user_finder->find($idobj, 'user');
 
 		return $this->render(array("user" => $user, "event" => $event, "rule" => "e_admin", "partners" => $partners, "users" => $users, "user_list" => $user_list));
