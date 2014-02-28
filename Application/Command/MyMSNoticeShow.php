@@ -2,7 +2,7 @@
 
 namespace Application\Command;
 
-class MyMSSystemShow extends \System\Core\Command {
+class MyMSNoticeShow extends \System\Core\Command {
 
 	protected function exec() {
 
@@ -17,7 +17,7 @@ class MyMSSystemShow extends \System\Core\Command {
 			$personal_mess += $pgroup->getVisit()->getCountMessage();
 		}
 
-		$manager = \System\Msg\FactoryMGManager::getManager("system");
+		$manager = \System\Msg\FactoryMGManager::getManager("notice");
 		$list_system_group = $manager->getGroupsForUser($user->getId());
 
 		$factory = \System\Orm\PersistenceFactory::getFactory('Message');

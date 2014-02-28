@@ -49,6 +49,8 @@
 
 		<route id="MyMSSystemShow" path="/cabinet/message/system" command="MyMSSystemShow" method="get" />
 
+		<route id="MyMSNoticeShow" path="/cabinet/message/notice" command="MyMSNoticeShow" method="get" />
+
 
 
 		<route id="AllUsersShow" path="/allusers" command="AllUsersShow" method="get" />

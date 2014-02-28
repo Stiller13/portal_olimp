@@ -45,6 +45,8 @@
 
 		<command class="MyMSSystemShow" view="MyMSSystemShow" />
 
+		<command class="MyMSNoticeShow" view="MyMSNoticeShow" />
+
 
 <!-- общие -->
 		<command class="FileGet">
