@@ -25,16 +25,16 @@ class FileManager {
 	public function upload_files(){
 		$files = new \Application\Orm\FileCollection();
 
-		$dir = UPL.DS.FileManager::get_dir();
+		$dir = UPL.self::get_dir();
+		$file_factory = \System\Orm\PersistenceFactory::getFactory('File');
+		$file_finder = new \System\Orm\DomainObjectAssembler($file_factory);
 
 		foreach (Uploader::upload($dir) as $one_upload) {
-			if ($one_upload['status'] == 0) {
+			if ($one_upload['status'] === Uploader::UPLOAD_STAT_OK) {
 				$new_file = new \Application\Model\File();
 				$new_file->setName($one_upload['name']);
 				$new_file->setCode($one_upload['code']);
 
-				$file_factory = \System\Orm\PersistenceFactory::getFactory('File');
-				$file_finder = new \System\Orm\DomainObjectAssembler($file_factory);
 				$file_finder->insert($new_file);
 
 				$files->add($new_file);

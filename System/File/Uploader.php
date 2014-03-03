@@ -7,6 +7,7 @@ class Uploader {
 	const UPLOAD_STAT_OK = 0;
 	const UPLOAD_STAT_COPY = 1;
 	const UPLOAD_STAT_DMKD = 2;
+	const UPLOAD_STAT_ERR = 3;
 
 	public static function getError($num) {
 		switch($num) {
@@ -26,7 +27,7 @@ class Uploader {
 	* @todo Запилить ограничения по размеру, по расширению
 	* @return array()
 	*/
-	public static function upload($uploadfile) {
+	public static function upload($dir) {
 		$status_result = array();
 
 		if(isset($_FILES['uploadfiles'])) {
@@ -37,24 +38,27 @@ class Uploader {
 				$status_result[$i]['size'] = $_FILES['uploadfiles']['size'][$i];
 				$status_result[$i]['type'] = $_FILES['uploadfiles']['type'][$i];
 				$status_result[$i]['error'] = $_FILES['uploadfiles']['error'][$i];
-				// $status_result[$i]['status'] = '';
+				$status_result[$i]['status'] = self::UPLOAD_STAT_ERR;
 
 				if ($_FILES['uploadfiles']['error'][$i] === UPLOAD_ERR_OK) {
 					if(is_uploaded_file($_FILES['uploadfiles']['tmp_name'][$i])) {
 
 						$status_result[$i]['code'] = md5(md5_file($_FILES['uploadfiles']['tmp_name'][$i]).date('YmdHis'));
 
-						if(!is_dir($uploadfile))
-							if (!mkdir($uploadfile)) {
-								$status_result[$i]['status'] = UPLOAD_STAT_DMKD;
+						if(!is_dir($dir))
+							if (!mkdir($dir)) {
+								$status_result[$i]['status'] = self::UPLOAD_STAT_DMKD;
 								continue;
 							}
-						$uploadfile .= DS.$status_result[$i]['code'];
+						$dir .= DS.$status_result[$i]['code'];
 
-						if (copy($_FILES['uploadfiles']["tmp_name"][$i], $uploadfile))
-							$status_result[$i]['status'] = UPLOAD_STAT_OK;
-						else
-							$status_result[$i]['status'] = UPLOAD_STAT_COPY;
+						if (copy($_FILES['uploadfiles']["tmp_name"][$i], $dir)) {
+							$status_result[$i]['status'] = self::UPLOAD_STAT_OK;
+							echo "copy";
+						}
+						else {
+							$status_result[$i]['status'] = self::UPLOAD_STAT_COPY;
+						}
 					}
 				}
 			}
