@@ -9,72 +9,72 @@ namespace Application\Model;
  */
 
 class File extends \System\Orm\DomainObject {
-    /**
-    * Название файла
-    */
-    private $name;
+	/**
+	* Название файла
+	*/
+	private $name;
 
-    /**
-    * Уникальный код файла
-    */
-    private $code;
+	/**
+	* Уникальный код файла
+	*/
+	private $code;
 
-    /**
-     * Дата загрузки файла
-     * @var date
-     */
-    private $date;
+	/**
+	 * Дата загрузки файла
+	 * @var date
+	 */
+	private $date;
 
-    /**
-    * Задать имя файла
-    */
-    public function setName($name) {
-        $this->name = $name;
-        $this->markDirty();
-    }
+	/**
+	* Задать имя файла
+	*/
+	public function setName($name) {
+		$this->name = $name;
+		$this->markDirty();
+	}
 
-    /**
-    * Полуить имя файла
-    */
-    public function getName() {
-        return $this->name;
-    }
+	/**
+	* Полуить имя файла
+	*/
+	public function getName() {
+		return $this->name;
+	}
 
-    /**
-    * Задать код файла
-    */
-    public function setCode($code) {
-        $this->code = $code;
-        $this->markDirty();
-    }
+	/**
+	* Задать код файла
+	*/
+	public function setCode($code) {
+		$this->code = $code;
+		$this->markDirty();
+	}
 
-    /**
-    * Полуить код файла
-    */
-    public function getCode() {
-        return $this->code;
-    }
+	/**
+	* Полуить код файла
+	*/
+	public function getCode() {
+		return $this->code;
+	}
 
-    /**
-     * Установить дату
-     * @param date $new_date
-     */
-    public function setDate($date) {
-        $this->date = $date;
-        $this->markDirty();
-    }
+	/**
+	 * Установить дату
+	 * @param date $new_date
+	 */
+	public function setDate($date) {
+		$this->date = $date;
+		$this->markDirty();
+	}
 
-    /**
-     * Получить дату загрузки файла
-     * @return date
-     */
-    public function getDate() {
-        return $this->date;
-    }
+	/**
+	 * Получить дату загрузки файла
+	 * @return date
+	 */
+	public function getDate() {
+		return $this->date;
+	}
 
-    public function targetClass() {
-        return 'File';
-    }
+	public function targetClass() {
+		return 'File';
+	}
 }
 
 ?>

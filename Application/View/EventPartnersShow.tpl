@@ -10,20 +10,30 @@
 	<div class="row">
 		<div class="col-md-4">
 			Заявленные:<br>
-			{foreach from=$users item=one_user}
+			{foreach from=$event->getPartners() item=one_user}
+				{if $one_user->getRule() eq "e_user"}
 				<label>
 					<input name="users[]" type="checkbox" value="{$one_user->getId()}">
-					<a href="/profile/{$one_user->getId()}">{$one_user->getName()} {$one_user->getFamily()}</a>
+					<a href="/profile/{$one_user->getId()}">
+					{$one_user->getName()} 
+					{$one_user->getFamily()}</a>
+					{if $one_user->getFile()} !{/if}
 				</label><br>
+				{/if}
 			{/foreach}
 		</div>
 		<div class="col-md-4">
 			Участники: <br>
-			{foreach from=$partners item=one_partner}
+			{foreach from=$event->getPartners() item=one_user}
+				{if $one_user->getRule() eq "e_partner"}
 				<label>
-					<input name="users[]" type="checkbox" value="{$one_partner->getId()}">
-					<a href="/profile/{$one_partner->getId()}">{$one_partner->getName()} {$one_partner->getFamily()}</a>
+					<input name="users[]" type="checkbox" value="{$one_user->getId()}">
+					<a href="/profile/{$one_user->getId()}">
+					{$one_user->getName()} 
+					{$one_user->getFamily()}</a>
+					{if $one_user->getFile()} !{/if}
 				</label><br>
+				{/if}
 			{/foreach}
 		</div>
 		<div class="col-md-4">
@@ -35,7 +45,7 @@
 				{/foreach}
 				</select>
 			</div>
-			<button type="submit" class="btn btn-primary" name="do" value="ok">Пригласить</button>
+			<button type="submit" class="btn btn-primary" name="do" value="invit">Пригласить</button>
 		</div>
 	</div>
 	<button type="submit" class="btn btn-success" name="do" value="ok">Подтвердить</button>

@@ -23,59 +23,93 @@ class EventChangePartners extends \System\Core\Command{
 		$mg_type = 'notice';
 		$manager = \System\Msg\FactoryMGManager::getManager($mg_type);
 
-		$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory("RuleObj");
-		$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
-		$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
+		$factory_euser = \System\Orm\PersistenceFactory::getFactory("EUser");
+		$finder_euser = new \System\Orm\DomainObjectAssembler($factory_euser);
+		$idobj_euser = $factory_euser->getIndentityObject();
 
-		$ruleobj_idobj->field('obj_id')->eq($event->getId());
-		$ruleobj_idobj->field('rule_id')->eq(\System\Helper\Helper::getId("rule", "e_admin"));
-		$ruleobj_idobj->field('obj_type')->eq(\System\Helper\Helper::getId("type", "event"));
+		$idobj_euser->field("event_user_rule")->eq(\System\Helper\Helper::getId("rule", "e_admin"));
+		$idobj_euser->field("event_user_event")->eq($event->getId());
 
-		$rule = $ruleobj_finder->findOne($ruleobj_idobj, 'rule');
+		$rule = $finder_euser->findOne($idobj_euser, 'event_user');
 
 		foreach ($this->req["users"] as $user_id) {
-			if ($rule->getUser_id() === $user_id){
+			if ($rule && ($rule->getId() === $user_id)) {
 				continue;
 			}
 			switch ($this->req["do"]) {
 				case 'add':
-						$ruleobj = new \Application\Model\RuleObj();
+					if ($event->getConfirm() === "1") {
+						$upload = \System\File\FileManager::upload_files();//есть метод только на загрузку нескольких файлов
+						print_r($upload);
+						foreach ($upload as $one_file) {
+							$file = $one_file;
+						}
+						if ($file) {
+							$factory = \System\Orm\PersistenceFactory::getFactory("UserFile");
+							$finder = new \System\Orm\DomainObjectAssembler($factory);
 
-						$ruleobj->setUser_id($user_id);
-						$ruleobj->setObj_id($event->getId());
-						$ruleobj->setRule("e_user");
-						$ruleobj->setObj_type("event");
+							$userfile = new \Application\Model\UserFile();
+							$userfile->setUser($user_id);
+							$userfile->setFile($file->getId());
 
-						$ruleobj_finder->insert($ruleobj);
+							$finder->insert($userfile);
+						}
+					}
+					if (!$file) {
+						$file = new \Application\Model\File();
+					}
 
-						$manager->addUser($group_all_id, $user_id, "e_user");
-						$manager->addUser($group_users_id, $user_id, "e_user");
+					$euser = new \Application\Model\EUser();
+
+					$euser->setId($user_id);
+					$euser->setEvent($event->getId());
+					$euser->setRule("e_user");
+					$euser->setFile($file);
+
+					$finder_euser->insert($euser);
+
+					$manager->addUser($group_all_id, $user_id, "e_user");
+					$manager->addUser($group_users_id, $user_id, "e_user");
 					break;
 
 				case 'del':
-						$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
-						$ruleobj_idobj->field('user_userset_user_id')->eq($user_id);
-						$ruleobj_idobj->field('user_userset_userset_id')->eq($rule->getUserset_id());
+					$idobj_euser = $factory_euser->getIndentityObject();
+					$idobj_euser->field("event_user_user")->eq($user_id);
+					$idobj_euser->field("event_user_event")->eq($event->getId());
 
-						$ruleobj_finder->delete($ruleobj_idobj, 'user_userset');
+					$finder_euser->delete($idobj_euser, "event_user");
 
-						$manager->delUser($group_all_id, $user_id);
-						$manager->delUser($group_users_id, $user_id);
-						$manager->delUser($group_partners_id, $user_id);
+					$manager->delUser($group_all_id, $user_id);
+					$manager->delUser($group_users_id, $user_id);
+					$manager->delUser($group_partners_id, $user_id);
 					break;
 
 				case 'ok':
-						$ruleobj = new \Application\Model\RuleObj();
+					$euser = new \Application\Model\EUser();
 
-						$ruleobj->setUser_id($user_id);
-						$ruleobj->setObj_id($event->getId());
-						$ruleobj->setRule("e_partner");
-						$ruleobj->setObj_type("event");
+					$euser->setId($user_id);
+					$euser->setEvent($event->getId());
+					$euser->setRule("e_partner");
+					$euser->setFile(new \Application\Model\File());
 
-						$ruleobj_finder->insert($ruleobj);
+					$finder_euser->insert($euser);
 
-						$manager->delUser($group_users_id, $user_id);
-						$manager->addUser($group_partners_id, $user_id, "e_user");
+					$manager->delUser($group_users_id, $user_id);
+					$manager->addUser($group_partners_id, $user_id, "e_user");
+					break;
+
+				case 'invit':
+					$euser = new \Application\Model\EUser();
+
+					$euser->setId($user_id);
+					$euser->setEvent($event->getId());
+					$euser->setRule("e_partner");
+					$euser->setFile(new \Application\Model\File());
+
+					$finder_euser->insert($euser);
+
+					$manager->addUser($group_all_id, $user_id, "e_user");
+					$manager->addUser($group_partners_id, $user_id, "e_user");
 					break;
 			}
 		}

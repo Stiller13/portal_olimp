@@ -25,7 +25,7 @@
 				<button type="submit" class="btn btn-success" name="mode" value="{$mode}">Отправить</button>
 			</div>
 		</div>
-		<div class="col-md-4 col-md-offset-1">
+		<div class="col-md-5 col-md-offset-1">
 			<ul class="nav nav-tabs">
 				<li {if $mode eq 'all'}class="active"{/if}><a href="/event/{$event->getId()}/message/all">Всем</a></li>
 				<li {if $mode eq 'partners'}class="active"{/if}><a href="/event/{$event->getId()}/message/partners">Участникам</a></li>

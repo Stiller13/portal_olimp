@@ -19,7 +19,7 @@ class Visit extends \System\Orm\DomainObject {
 	 * id группы
 	 * @var integer
 	 */
-	private $message_group_id;
+	private $mg_id;
 
 	/**
 	 * Дата последнего посещения
@@ -42,13 +42,13 @@ class Visit extends \System\Orm\DomainObject {
 		return $this->user_id;
 	}
 
-	public function setMessageGroupId($message_group_id) {
-		$this->message_group_id = $message_group_id;
+	public function setMessageGroupId($mg_id) {
+		$this->mg_id = $mg_id;
 		$this->markDirty();
 	}
 
 	public function getMessageGroupId() {
-		return $this->message_group_id;
+		return $this->mg_id;
 	}
 
 	public function setDate($date) {

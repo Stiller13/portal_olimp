@@ -12,7 +12,8 @@ class FileIdentityObject extends \System\Orm\IdentityObject {
 			'file_date',
 			'message_id',
 			'messageset_id',
-			'event_file_event'));
+			'event_file_event',
+			'user_file_user'));
 	}
 }
 

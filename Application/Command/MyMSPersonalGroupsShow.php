@@ -12,19 +12,15 @@ class MyMSPersonalGroupsShow extends \System\Core\Command {
 		$manager = \System\Msg\FactoryMGManager::getManager("personal");
 		$list_personal_group = $manager->getGroupsForUser($user->getId());
 
-		$personal_mess = 0;
-		foreach ($list_personal_group as $group) {
-			$personal_mess += $group->getVisit()->getCountMessage();
-		}
+		$type = \System\Helper\Helper::getId("typegroup", "personal");
+		$personal_mess = \System\Msg\VisitManager::getCountMess(array("for" => "type_group", "user_id" => $user->getId(), "group_type_id" => $type));
 
-		$manager = \System\Msg\FactoryMGManager::getManager("system");
-		$list_system_group = $manager->getGroupsForUser($user->getId());
+		$type = \System\Helper\Helper::getId("typegroup", "system");
+		$system_mess = \System\Msg\VisitManager::getCountMess(array("for" => "type_group", "user_id" => $user->getId(), "group_type_id" => $type));;
 
-		$system_mess = 0;
-		foreach ($list_system_group as $group) {
-			$system_mess += $group->getVisit()->getCountMessage();
-		}
+		$type = \System\Helper\Helper::getId("typegroup", "notice");
+		$notice_mess = \System\Msg\VisitManager::getCountMess(array("for" => "type_group", "user_id" => $user->getId(), "group_type_id" => $type));
 
-		return $this->render(array("user" => $user, "list_group" => $list_personal_group, "personal_mess" => $personal_mess, "system_mess" => $system_mess));
+		return $this->render(array("user" => $user, "list_group" => $list_personal_group, "personal_mess" => $personal_mess, "system_mess" => $system_mess, "notice_mess" => $notice_mess));
 	}
 }

@@ -1,8 +1,9 @@
 {extends file="MyMessage.tpl"}
 {block name=title}Системные сообщения{/block}
+{block name=system_mg}active{/block}
 {block name=message_content}
 
-<div class="col-md-4">
+<div class="col-md-5">
 	{foreach from=$messages item=one_message}
 	<div class="panel panel-default">
 		<div class="panel-heading">

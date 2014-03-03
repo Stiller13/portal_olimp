@@ -4,7 +4,7 @@ namespace Application\Orm;
 
 class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 
-	function doCreateObject(array $array) {
+	public function doCreateObject(array $array) {
 		$obj= new \Application\Model\Event();
 
 		$obj->setId($array['event_id']);
@@ -14,7 +14,7 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$obj->setEvent_type(\System\Helper\Helper::getName("type_event", $array['event_type']));
 		$obj->setConfirm($array['event_confirm']);
 		$obj->setConfirm_description($array['event_confirm_description']);
-		$obj->setPartners($this->createCollection($array['event_userset_id'])); //??? может прокатит, не уверен
+		$obj->setPartners($this->createPartners($array['event_id']));
 		$obj->setComments($this->createComments($array['event_id']));
 		$obj->setNoticeGroups($this->createNoticeGroups($array['event_id']));
 		$obj->setFiles($this->createFiles($array['event_id']));
@@ -22,24 +22,13 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		return $obj;
 	}
 
-	function createCollection($id){
-		$factory= \System\Orm\PersistenceFactory::getFactory('User');
-		$finder= new \System\Orm\DomainObjectAssembler($factory);
-		$idobj=$factory->getIndentityObject();
-
-		$idobj->addJoin('INNER',array('user','user_userset'),array('user_id','user_userset_user_id'));
-		$idobj->field('user_userset_userset_id')->eq($id);
-
-		return $partners=$finder->find($idobj,'user');
-	}
-
-	public function createPartners($userset_id){
-		$factory = \System\Orm\PersistenceFactory::getFactory('User');
+	public function createPartners($event_id){
+		$factory = \System\Orm\PersistenceFactory::getFactory('EUser');
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
-		$idobj=$factory->getIndentityObject();
+		$idobj = $factory->getIndentityObject();
 
-		$idobj->addJoin('INNER',array('user', 'user_userset'), array('user_id', 'user_userset_user_id'));
-		$idobj->field('user_userset_userset_id')->eq($userset_id);
+		$idobj->addJoin('INNER',array('user', 'event_user'), array('user_id', 'event_user_user'));
+		$idobj->field('event_user_event')->eq($event_id);
 
 		return $finder->find($idobj, 'user');
 	}
@@ -47,7 +36,7 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 	public function createComments($event_id) {
 		$factory = \System\Orm\PersistenceFactory::getFactory('CommentMessageGroup');
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
-		$idobj=$factory->getIndentityObject();
+		$idobj = $factory->getIndentityObject();
 
 		$idobj->addJoin('INNER',array('messagegroup', 'event_mg'), array('messagegroup_id', 'event_mg_group'));
 		$idobj->field('event_mg_event')->eq($event_id);

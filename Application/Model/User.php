@@ -3,6 +3,7 @@
 namespace Application\Model;
 
 class User extends \System\Orm\DomainObject{
+
 	private $name;
 
 	private $family;
@@ -20,8 +21,6 @@ class User extends \System\Orm\DomainObject{
 	private $telephone;
 
 	private $status_system;
-
-	private $role_in_group;
 
 	function setName($name) {
 		$this->name = $name;
@@ -97,15 +96,6 @@ class User extends \System\Orm\DomainObject{
 
 	function getTelephone() {
 		return $this->telephone;
-	}
-
-	function setRoleInGroup($role) {
-		$this->role_in_group = $role;
-		$this->markDirty();
-	}
-
-	function getRoleInGroup() {
-		return $this->role_in_group;
 	}
 
 	function setStatusSys($new_status) {

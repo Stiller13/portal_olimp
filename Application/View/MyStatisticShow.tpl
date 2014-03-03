@@ -4,5 +4,6 @@
 {block name=cab_content}
 
 <p>Пока ничего нет</p>
+<p>Тут будет статистика</p>
 
 {/block}

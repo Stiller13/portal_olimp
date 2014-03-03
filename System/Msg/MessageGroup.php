@@ -53,7 +53,7 @@ abstract class MessageGroup extends \System\Orm\DomainObject {
 	 * @param Application\Orm\AccountCollection $partners
 	 */
 
-	public function setPartners(\Application\Orm\UserCollection $partners) {
+	public function setPartners(\Application\Orm\MGUserCollection $partners) {
 		$this->partners = $partners;
 		$this->markDirty();
 	}

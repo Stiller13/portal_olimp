@@ -27,8 +27,6 @@
 
 		<command class="MyStatisticShow" view="MyStatisticShow"/>
 
-		<command class="MyMessageShow" view="MyMessage" />
-
 		<command class="MyMSPersonalGroupsShow" view="MyMSPersonalGroupsShow" />
 
 		<command class="MyMSPersonalGroupCreate" />
@@ -46,6 +44,8 @@
 		<command class="MyMSSystemShow" view="MyMSSystemShow" />
 
 		<command class="MyMSNoticeShow" view="MyMSNoticeShow" />
+
+		<command class="MyFilesShow" view="MyFilesShow" />
 
 
 <!-- общие -->

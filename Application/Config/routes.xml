@@ -31,8 +31,6 @@
 
 		<route id="MyStatisticShow" path="/cabinet/statistic" command="MyStatisticShow" method="get" />
 
-		<route id="MyMessageShow" path="/cabinet/message" command="MyMessageShow" method="get" />
-
 		<route id="MyMSPersonalGroupsShow" path="/cabinet/message/personal" command="MyMSPersonalGroupsShow" method="get" />
 
 		<route id="MyMSPersonalGroupCreate" path="/cabinet/message/personal/new" command="MyMSPersonalGroupCreate" method="post" />
@@ -50,6 +48,8 @@
 		<route id="MyMSSystemShow" path="/cabinet/message/system" command="MyMSSystemShow" method="get" />
 
 		<route id="MyMSNoticeShow" path="/cabinet/message/notice" command="MyMSNoticeShow" method="get" />
+
+		<route id="MyFilesShow" path="/cabinet/file" command="MyFilesShow" method="get" />
 
 
 

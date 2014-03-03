@@ -46,14 +46,7 @@ abstract class MessageGroupManager {
 			$session = new \System\Session\Session();
 			$user = $session->get('user');
 
-			$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
-			$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
-
-			$visit = new \Application\Model\Visit();
-			$visit->setUserId($user->getId());
-			$visit->setMessageGroupId($group_id);
-
-			$visit_finder->insert($visit);
+			VisitManager::updateVisit(array("user_id" => $user->getId(), "group_id" => $group_id));
 		}
 
 		return $group;
@@ -68,10 +61,10 @@ abstract class MessageGroupManager {
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
 		$idobj = $factory->getIndentityObject();
 
-		$idobj->addWhat(array('messagegroup_id', 'messagegroup_partners', 'messagegroup_type', 'messagegroup_status', 'messagegroup_desc'));
-		$idobj->addJoin('INNER',array('messagegroup','user_userset'),array('messagegroup_partners','user_userset_userset_id'));
+		// $idobj->addWhat(array('messagegroup_id', 'messagegroup_partners', 'messagegroup_type', 'messagegroup_status', 'messagegroup_desc'));
+		$idobj->addJoin('INNER',array('messagegroup','messagegroup_user'),array('messagegroup_id','messagegroup_user_group'));
 		$idobj->field('messagegroup_type')->eq($this->type_group);
-		$idobj->field('user_userset_user_id')->eq($user_id);
+		$idobj->field('messagegroup_user_user')->eq($user_id);
 
 		return $finder->find($idobj, 'messagegroup');
 	}
@@ -104,58 +97,30 @@ abstract class MessageGroupManager {
 	 * Добавить пользователя в группу
 	 */
 	public function addUser($group_id, $user_id, $rule) {
-		$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
-		$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
+		$factory = \System\Orm\PersistenceFactory::getFactory('MGUser');
+		$finder = new \System\Orm\DomainObjectAssembler($factory);
 
-		$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
-		$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
+		$mguser = new \Application\Model\MGUser();
 
-		$ruleobj = new \Application\Model\RuleObj();
+		$mguser->setID($user_id);
+		$mguser->setGroup($group_id);
+		$mguser->setRule($rule);
 
-		$ruleobj->setUser_id($user_id);
-		$ruleobj->setObj_id($group_id);
-		$ruleobj->setRule($rule);
-		$ruleobj->setObj_type("messagegroup");
-
-		$ruleobj_finder->insert($ruleobj);
-
-		$visit = new \Application\Model\Visit();
-		$visit->setMessageGroupId($group_id);
-		$visit->setUserId($user_id);
-
-		$visit_finder->insert($visit);
+		$finder->insert($mguser);
 	}
 
 	/**
 	 * Удалить пользователя из группы
 	 */
 	public function delUser($group_id, $user_id) {
-		$factory_ruleobj = \System\Orm\PersistenceFactory::getFactory('RuleObj');
-		$ruleobj_finder = new \System\Orm\DomainObjectAssembler($factory_ruleobj);
-		$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
+		$factory = \System\Orm\PersistenceFactory::getFactory('MGUser');
+		$finder = new \System\Orm\DomainObjectAssembler($factory);
+		$idobj = $factory->getIndentityObject();
 
-		$ruleobj_idobj->field('obj_id')->eq($group_id);
-		$ruleobj_idobj->field('obj_type')->eq(\System\Helper\Helper::getId("type", "messagegroup"));
+		$idobj->field('messagegroup_user_group')->eq($group_id);
+		$idobj->field('messagegroup_user_user')->eq($user_id);
 
-		$rule = $ruleobj_finder->findOne($ruleobj_idobj, 'rule');
-
-		if ($rule) {
-			$ruleobj_idobj = $factory_ruleobj->getIndentityObject();
-			$ruleobj_idobj->field('user_userset_user_id')->eq($user_id);
-			$ruleobj_idobj->field('user_userset_userset_id')->eq($rule->getUserset_id());
-
-			$ruleobj_finder->delete($ruleobj_idobj, 'user_userset');
-
-
-			$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
-			$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
-			$visit_idobj = $factory_visit->getIndentityObject();
-
-			$visit_idobj->field('user_mg_read_user')->eq($user_id);
-			$visit_idobj->field('user_mg_read_mg')->eq($group_id);
-
-			$visit_finder->delete($visit_idobj, 'user_mg_read');
-		}
+		$finder->delete($idobj, 'messagegroup_user');
 	}
 
 	/**
@@ -189,14 +154,7 @@ abstract class MessageGroupManager {
 		$message_finder->insert($new_message);
 
 		if ($v_update) {
-			$factory_visit = \System\Orm\PersistenceFactory::getFactory('Visit');
-			$visit_finder = new \System\Orm\DomainObjectAssembler($factory_visit);
-
-			$visit = new \Application\Model\Visit();
-			$visit->setMessageGroupId($data['group_id']);
-			$visit->setUserId($data['user_id']);
-
-			$visit_finder->insert($visit);
+			VisitManager::updateVisit(array("user_id" => $data['user_id'], "group_id" => $data['group_id']));
 		}
 	}
 

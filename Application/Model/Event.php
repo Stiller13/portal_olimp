@@ -70,7 +70,7 @@ class Event extends \System\Orm\DomainObject{
 		return $this->confirm_description;
 	}
 
-	public function setPartners(\Application\Orm\UserCollection $partners) {
+	public function setPartners(\Application\Orm\EUserCollection $partners) {
 		$this->partners = $partners;
 		$this->markDirty();
 	}

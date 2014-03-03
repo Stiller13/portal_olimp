@@ -1,5 +1,6 @@
 {extends file="MyMessage.tpl"}
 {block name=title}Личная переписка{/block}
+{block name=personal_mg}active{/block}
 {block name=message_content}
 
 <div class="col-md-4">
@@ -13,16 +14,15 @@
 		<li>
 			<a href="/cabinet/message/personal/{$one_group->getId()}">
 				{foreach from=$one_group->getPartners() item=one_partner name=foo}
-
+					{if $smarty.foreach.foo.first}{else},{/if}
 					{if $user->getId() eq $one_partner->getId()}
 						Вы
 					{else}
 						{$one_partner->getName()}
 					{/if}
 				{/foreach}
-				{if $one_group->getVisit()}
-				<span class="badge pull-right">{if $one_group->getVisit()->getCountMessage() > 0}{$one_group->getVisit()->getCountMessage()}{/if}</span>
-				{/if}
+				{$count_mess = $one_group->getCountNewMessage()}
+				<span class="badge pull-right">{if $count_mess > 0}{$count_mess}{/if}</span>
 			</a>
 		</li>
 	{/foreach}

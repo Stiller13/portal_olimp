@@ -11,20 +11,19 @@ class SystemMessageGroupDomainObjectFactory extends \System\Orm\DomainObjectFact
 		$obj->setStatus($array['messagegroup_status']);
 		$obj->setDescription($array['messagegroup_desc']);
 		$obj->setMessages($this->createMessages($obj->getId()));
-		$obj->setPartners($this->createPartners($array['messagegroup_partners']));
-		$obj->setVisit($this->createVisit($array['messagegroup_id']));
+		$obj->setPartners($this->createPartners($array['messagegroup_id']));
 
 		return $obj;
 	}
 
 
 	public function createPartners($userset_id){
-		$factory = \System\Orm\PersistenceFactory::getFactory('User');
+		$factory = \System\Orm\PersistenceFactory::getFactory('MGUser');
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
 		$idobj=$factory->getIndentityObject();
 
-		$idobj->addJoin('INNER',array('user', 'user_userset'), array('user_id', 'user_userset_user_id'));
-		$idobj->field('user_userset_userset_id')->eq($userset_id);
+		$idobj->addJoin('INNER',array('user', 'messagegroup_user'), array('user_id', 'messagegroup_user_user'));
+		$idobj->field('messagegroup_user_group')->eq($group_id);
 
 		return $finder->find($idobj, 'user');
 	}
@@ -36,25 +35,6 @@ class SystemMessageGroupDomainObjectFactory extends \System\Orm\DomainObjectFact
 		$idobj->field('message_group')->eq($group_id);
 
 		return $finder->find($idobj, 'message');
-	}
-
-	public function createVisit($group_id) {
-		//Берем текущего пользователя системы
-		$session = new \System\Session\Session();
-		$user = $session->get('user');
-
-		$factory = \System\Orm\PersistenceFactory::getFactory('Visit');
-		$finder = new \System\Orm\DomainObjectAssembler($factory);
-		$idobj = $factory->getIndentityObject();
-
-		$idobj->field('visit_group')->eq($group_id);
-		$idobj->field('visit_user')->eq($user->getId());
-
-		$visit = $finder->findOne($idobj, 'visit');
-		if (!$visit)
-			$visit = new \Application\Model\Visit();
-
-		return $visit;
 	}
 
 	public  function targetClass() {

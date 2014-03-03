@@ -9,7 +9,7 @@ class VisitUpdateFactory extends \System\Orm\UpdateFactory {
 		$values['id_user'] = $obj->getUserId();
 		$values['id_group'] = $obj->getMessageGroupId();
 
-		return $this->buildStatement('insert_visit', $values);
+		return $this->buildStatement('update_messagegroup_user', $values);
 	}
 }
 

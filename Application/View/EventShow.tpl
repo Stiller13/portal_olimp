@@ -15,8 +15,8 @@
 {elseif $rule eq "e_partner"}
 	{$event->getDescription_private()}
 	{if $event->getFiles()}
-	Прикрепленные файлы<br>
-		{foreach from=$event->getFiles() item=one_file}
+		{foreach from=$event->getFiles() item=one_file name=foo1}
+			{if $smarty.foreach.foo1.first}Прикрепленные файлы<br>{/if}
 			<a href="/file/{$one_file->getCode()}">{$one_file->getName()}</a><br>
 		{/foreach}
 	{/if}
@@ -49,7 +49,7 @@
 {if $rule neq "e_user"}
 Участники :<br>
 	{foreach from=$event->getPartners() item=partner}
-		{if $partner->getRoleInGroup() eq "e_partner"}
+		{if $partner->getRule() eq "e_partner"}
 			{$partner->getName()}
 		{/if}
 	{/foreach}
@@ -120,7 +120,7 @@
 				<div class="form-group">
 					<label for="exampleInputText">Комментировать</label>
 					<!-- <input type="text" class="form-control" id="exampleInputText" name="text"> -->
-					<textarea class="form-control" id="exampleInputText" name="text"  rows="3"></textarea>
+					<textarea class="form-control" id="exampleInputText" name="text" rows="3"></textarea>
 				</div>
 
 				<input type="hidden" name="user_id" value={$user->getId()}>
@@ -132,17 +132,24 @@
 </form>
 {/if}
 {/if}
-{/if}
-
-{if $rule}
 {elseif $user}
-<form class="from" action="/event/{$event->getId()}/change_partners" method="post">
-	<div class="form-group">
-		<input type="hidden" name="users[]" value="{$user->getId()}">
-		<input type="hidden" name="redirect" value="/event/{$event->getId()}">
-		<button type="submit" class="btn btn-success" name="do" value="add">Хочу учавствовать</button>
+<div class="row">
+	<div class="col-md-3 col-md-offset-5">
+		<form class="from" action="/event/{$event->getId()}/change_partners" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="users[]" value="{$user->getId()}">
+			<input type="hidden" name="redirect" value="/event/{$event->getId()}">
+			{if $event->getConfirm() eq "1"}
+			<div class="form-group">
+				<input type="file" id="exampleInputFile" name="uploadfiles[]" multiple="true">
+				<p class="help-block">Выберите файл для отправки</p>
+			</div>
+			{/if}
+			<div class="form-group">
+				<button type="submit" class="btn btn-success" name="do" value="add">Хочу учавствовать</button>
+			</div>
+		</form>
 	</div>
-</form>
+</div>
 {/if}
 
 {/block}

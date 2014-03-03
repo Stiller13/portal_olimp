@@ -9,13 +9,14 @@ class MyMSSystemShow extends \System\Core\Command {
 		$session = new \System\Session\Session();
 		$user = $session->get('user');
 
-		$manager = \System\Msg\FactoryMGManager::getManager("personal");
-		$list_personal_group = $manager->getGroupsForUser($user->getId());
+		$type = \System\Helper\Helper::getId("typegroup", "personal");
+		$personal_mess = \System\Msg\VisitManager::getCountMess(array("for" => "type_group", "user_id" => $user->getId(), "group_type_id" => $type));
 
-		$personal_mess = 0;
-		foreach ($list_personal_group as $pgroup) {
-			$personal_mess += $pgroup->getVisit()->getCountMessage();
-		}
+		$type = \System\Helper\Helper::getId("typegroup", "system");
+		$system_mess = \System\Msg\VisitManager::getCountMess(array("for" => "type_group", "user_id" => $user->getId(), "group_type_id" => $type));;
+
+		$type = \System\Helper\Helper::getId("typegroup", "notice");
+		$notice_mess = \System\Msg\VisitManager::getCountMess(array("for" => "type_group", "user_id" => $user->getId(), "group_type_id" => $type));
 
 		$manager = \System\Msg\FactoryMGManager::getManager("system");
 		$list_system_group = $manager->getGroupsForUser($user->getId());
@@ -24,9 +25,7 @@ class MyMSSystemShow extends \System\Core\Command {
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
 		$idobj = $factory->getIndentityObject();
 
-		$system_mess = 0;
 		foreach ($list_system_group as $group) {
-			$system_mess += $group->getVisit()->getCountMessage();
 			$idobj->field('message_group')->eq($group->getId());
 		}
 
@@ -37,6 +36,6 @@ class MyMSSystemShow extends \System\Core\Command {
 			$messages = null;
 		}
 
-		return $this->render(array("user" => $user, "messages" => $messages, "personal_mess" => $personal_mess, "system_mess" => $system_mess));
+		return $this->render(array("user" => $user, "messages" => $messages, "personal_mess" => $personal_mess, "system_mess" => $system_mess, "notice_mess" => $notice_mess));
 	}
 }

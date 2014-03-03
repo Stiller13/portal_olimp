@@ -52,12 +52,12 @@
 				<command class="MyMSPersonalGroupShow"/>
 				<command class="MyMSPersonalGroupsShow"/>
 				<command class="MainPageShow"/>
-				<command class="MyMessageShow"/>
 				<command class="SignOut"/>
 				<command class="MyProfileShow"/>
 				<command class="MyProfileSave"/>
 				<command class="MyAccountShow"/>
 				<command class="MyAccountSave"/>
+				<command class="MyFilesShow"/>
 
 				<command class="EventCreateShow"/>
 				<command class="EventCreate"/>

@@ -1,10 +1,12 @@
 {extends file="MyMessage.tpl"}
 {block name=title}Личная переписка{/block}
+{block name=personal_mg}active{/block}
 {block name=message_content}
 
 <div class="col-md-5">
 	Участники : 
-	{foreach from=$group->getPartners() item=partner}
+	{foreach from=$group->getPartners() item=partner name=foo}
+	{if $smarty.foreach.foo.first}{else},{/if}
 	{if $user->getId() eq $partner->getId()}
 	Вы 
 	{else}
@@ -54,10 +56,9 @@
 	<form role="form" action="/cabinet/message/personal/new_message" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 			<label for="exampleInputText">Текст сообщения</label>
-			<input type="textarea" class="form-control" id="exampleInputText" name="text">
+			<textarea class="form-control" id="exampleInputText" name="text" rows="3"></textarea>
 		</div>
 		<div class="form-group">
-			<label for="exampleInputFile">Файл</label>
 			<input type="file" id="exampleInputFile" name="uploadfiles[]" multiple="true">
 			<p class="help-block">Выберите файл для отправки</p>
 		</div>

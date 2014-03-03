@@ -1,5 +1,5 @@
 {extends file="Main.tpl"}
-{block name=title}Главная{/block}
+{block name=title}Все Мероприятия{/block}
 {block name=menu_events}active{/block}
 {block name=content}
 
@@ -12,15 +12,15 @@
 		{/if}
 		<table class="table table-striped margtp-25">
 			<tr>
-				<th>Название</th>
-				<th>Тип</th>
-				<th>Подтверждающий документ</th>
+				<th><p class="text-center">Название</p></th>
+				<th><p class="text-center">Тип</p></th>
+				<th><p class="text-center">Подтверждающий документ</p></th>
 			</tr>
 		{foreach from=$events item=event}
 			<tr>
-				<td><a href="/event/{$event->getId()}">{$event->getTitle()}</a></td>
-				<td>{if $event->getEvent_type() eq "open"}открытое{else}закрытое{/if}</td>
-				<td>{if $event->getConfirm() eq "1"}требуется{else}не требуется{/if}</td>
+				<td><p class="text-center"><a href="/event/{$event->getId()}">{$event->getTitle()}</a></p></td>
+				<td><p class="text-center">{if $event->getEvent_type() eq "open"}открытое{else}закрытое{/if}</p></td>
+				<td><p class="text-center">{if $event->getConfirm() eq "1"}требуется{else}не требуется{/if}</p></td>
 			</tr>
 		{/foreach}
 		</table>
