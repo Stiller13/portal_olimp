@@ -11,7 +11,7 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$obj->setTitle($array['event_title']);
 		$obj->setDescription_public($array['event_description_public']);
 		$obj->setDescription_private($array['event_description_private']);
-		$obj->setEvent_type(\System\Helper\Helper::getName("type_event", $array['event_type']));
+		$obj->setEvent_type(\System\Helper\Helper::getName("type", $array['event_type']));
 		$obj->setConfirm($array['event_confirm']);
 		$obj->setConfirm_description($array['event_confirm_description']);
 		$obj->setPartners($this->createPartners($array['event_id']));
@@ -40,7 +40,7 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 
 		$idobj->addJoin('INNER',array('messagegroup', 'event_mg'), array('messagegroup_id', 'event_mg_group'));
 		$idobj->field('event_mg_event')->eq($event_id);
-		$idobj->field('messagegroup_type')->eq(\System\Helper\Helper::getId("typegroup", "comment"));
+		$idobj->field('messagegroup_type')->eq(\System\Helper\Helper::getId("type", "comment"));
 
 		return $finder->findOne($idobj, 'messagegroup');
 	}
@@ -52,7 +52,7 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 
 		$idobj->addJoin('INNER',array('messagegroup', 'event_mg'), array('messagegroup_id', 'event_mg_group'));
 		$idobj->field('event_mg_event')->eq($event_id);
-		$idobj->field('messagegroup_type')->eq(\System\Helper\Helper::getId("typegroup", "notice"));
+		$idobj->field('messagegroup_type')->eq(\System\Helper\Helper::getId("type", "notice"));
 
 		return $finder->find($idobj, 'messagegroup');
 	}

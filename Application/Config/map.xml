@@ -3,13 +3,13 @@
 		<type name="messagegroup" id="1"/>
 		<type name="event" id="2"/>
 
-		<typegroup name="personal" id="1"/>
-		<typegroup name="comment" id="2"/>
-		<typegroup name="system" id="3"/>
-		<typegroup name="notice" id="4"/>
+		<type name="personal" id="3"/>
+		<type name="comment" id="4"/>
+		<type name="system" id="5"/>
+		<type name="notice" id="6"/>
 
-		<type_event name="open" id="1"/>
-		<type_event name="close" id="2"/>
+		<type name="public" id="7"/>
+		<type name="private" id="8"/>
 
 		<role name="user" id="1"/>
 		<role name="admin" id="404"/>

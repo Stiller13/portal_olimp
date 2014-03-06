@@ -34,13 +34,13 @@
 	Тип<br>
 	<div class="form-group">
 		<label class="control-label">
-			<input type="radio" name="event_type" value="open" {if $event}{if $event->getEvent_type() eq "open"}checked{/if}{/if}>
+			<input type="radio" name="event_type" value="public" {if $event}{if $event->getEvent_type() eq "public"}checked{/if}{/if}>
 			Открытое
 		</label>
 	</div>
 	<div class="form-group">
 		<label class="control-label">
-			<input type="radio" name="event_type" value="close" {if $event}{if $event->getEvent_type() eq "close"}checked{/if}{/if}>
+			<input type="radio" name="event_type" value="private" {if $event}{if $event->getEvent_type() eq "private"}checked{/if}{/if}>
 			Закрытое
 		</label>
 	</div>

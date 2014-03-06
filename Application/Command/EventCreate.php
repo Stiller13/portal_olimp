@@ -12,10 +12,6 @@ class EventCreate extends \System\Core\Command {
 			return $this->render(array("user" => $user, "message" => "Не заполнено название мероприятия", "type_message" => "alert-danger"), "EventCreateShow");
 		}
 
-		if ($this->req["description_public"] === "") {
-			return $this->render(array("user" => $user, "message" => "Не заполнено публичное описание мероприятия", "type_message" => "alert-danger"), "EventCreateShow");
-		}
-
 		$new_cmg = new \Application\Model\CommentMessageGroup();
 
 		$new_cmg->setStatus("open");
@@ -53,18 +49,16 @@ class EventCreate extends \System\Core\Command {
 		$list_noticegroup->add($new_nmg2);
 		$list_noticegroup->add($new_nmg3);
 
-		$upload = \System\File\FileManager::upload_files();
-		if (is_null($upload))
-			$upload = new \Application\Orm\FileCollection();
+		$upload = new \Application\Orm\FileCollection();
 
 
 		$event = new \Application\Model\Event();
 		$event->setTitle($this->req["title"]);
-		$event->setDescription_public($this->req["description_public"]);
-		$event->setDescription_private($this->req["description_private"]);
-		$event->setEvent_type($this->req["event_type"]);
-		$event->setConfirm($this->req["confirm"]);
-		$event->setConfirm_description($this->req["confirm_description"]);
+		$event->setDescription_public("");
+		$event->setDescription_private("");
+		$event->setEvent_type("private");
+		$event->setConfirm(0);
+		$event->setConfirm_description("");
 		$event->setComments($new_cmg);
 		$event->setNoticeGroups($list_noticegroup);
 		$event->setFiles($upload);
@@ -87,7 +81,7 @@ class EventCreate extends \System\Core\Command {
 
 			$finder_euser->insert($euser);
 
-			return $this->redirect("/event/".$event->getId());
+			return $this->redirect("/event/".$event->getId()."/change");
 		} else {
 			return $this->redirect("/event");
 		}

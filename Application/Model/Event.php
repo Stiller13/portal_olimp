@@ -2,19 +2,78 @@
 
 namespace Application\Model;
 
+/**
+ * Класс мероприятия
+ * @author Zalutskii
+ */
+
 class Event extends \System\Orm\DomainObject{
 
+/**
+ * Название мероприятия
+ * @var string 
+ */
 	private $title;
+
+/**
+ * Публичное описание мероприятия
+ * @var string
+ */
 	private $description_public;
+
+/**
+ * Описание, доступное только участникам мероприятия
+ * @var string
+ */
 	private $description_private;
+
+/**
+ * Тип мероприятия
+ * @var string
+ */
 	private $event_type;
-	private $confirm;           //требуется ли подтверждение
+
+/**
+ * Требуется ли документ при подаче заявки на участие
+ * @var bool
+ */
+	private $confirm;
+
+/**
+ * Описание требуемого документа
+ * @var string
+ */
 	private $confirm_description; //описание этого подтверждения
+
+/**
+ * Участники мероприятия
+ * @var Application\Orm\EUserCollection
+ */
 	private $partners;
+
+/**
+ * Группа для комментариев
+ * @var Application\Model\CommentMessageGroup
+ */
 	private $comment_group;
-	private $notice_groups; 		// как таковой пока нет, но обязательно появится
+
+/**
+ * Группы для оповещений участников
+ * @var Application\Orm\NoticeMessageGroupCollection
+ */
+	private $notice_groups;
+
+/**
+ * Прикрепленные файлы
+ * @var Application\Orm\FileCollection
+ */
 	private $files;
 
+/**
+ * Статутус мероприятия
+ * @var string
+ */
+	private $status;
 
 	public function setTitle($text) {
 		$this->title = $text;
@@ -134,6 +193,15 @@ class Event extends \System\Orm\DomainObject{
 	public function addFile(\Application\Model\File $file) {
 		$this->files->add($file);
 		$this->markDirty();
+	}
+
+	public function setStatus($new_status) {
+		$this->status = $new_status;
+		$this->markDirty();
+	}
+
+	public function getStatus() {
+		return $this->status;
 	}
 
 	public function targetClass() {

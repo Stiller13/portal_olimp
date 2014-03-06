@@ -20,13 +20,13 @@ class MyMSPersonalGroupShow extends \System\Core\Command {
 		$idobj->addOrder(array('user_name'=>'ASC'));
 		$user_list = $finder_user->find($idobj, 'user');
 
-		$type = \System\Helper\Helper::getId("typegroup", "personal");
+		$type = \System\Helper\Helper::getId("type", "personal");
 		$personal_mess = \System\Msg\VisitManager::getCountMess(array("for" => "type_group", "user_id" => $user->getId(), "group_type_id" => $type));
 
-		$type = \System\Helper\Helper::getId("typegroup", "system");
+		$type = \System\Helper\Helper::getId("type", "system");
 		$system_mess = \System\Msg\VisitManager::getCountMess(array("for" => "type_group", "user_id" => $user->getId(), "group_type_id" => $type));;
 
-		$type = \System\Helper\Helper::getId("typegroup", "notice");
+		$type = \System\Helper\Helper::getId("type", "notice");
 		$notice_mess = \System\Msg\VisitManager::getCountMess(array("for" => "type_group", "user_id" => $user->getId(), "group_type_id" => $type));
 
 		return $this->render(array("user" => $user, "group" => $group, "user_list" => $user_list, "personal_mess" => $personal_mess, "system_mess" => $system_mess, "notice_mess" => $notice_mess));

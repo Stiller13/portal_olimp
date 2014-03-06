@@ -8,7 +8,7 @@ class EventUpdateFactory extends \System\Orm\UpdateFactory{
 		$values["title"] = $obj->getTitle();
 		$values["description_public"] = $obj->getDescription_public();
 		$values["description_private"] = $obj->getDescription_private();
-		$values["type"] = (\System\Helper\Helper::getId("type_event", $obj->getEvent_type()));
+		$values["type"] = (\System\Helper\Helper::getId("type", $obj->getEvent_type()));
 		$values["confirm"] = $obj->getConfirm();
 		$values["confirm_description"] = $obj->getConfirm_description();
 

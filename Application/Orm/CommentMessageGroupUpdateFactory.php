@@ -15,7 +15,7 @@ class CommentMessageGroupUpdateFactory extends \System\Orm\UpdateFactory {
 			return $this->buildStatement('update_messagegroup', $values);
 		}
 
-		$values["type_mg"] = \System\Helper\Helper::getId("typegroup", "comment");
+		$values["type_mg"] = \System\Helper\Helper::getId("type", "comment");
 		$values["status_mg"] = $obj->getStatus();
 
 		return $this->buildStatement('insert_messagegroup', $values, 1);

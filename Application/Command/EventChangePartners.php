@@ -40,7 +40,7 @@ class EventChangePartners extends \System\Core\Command{
 				case 'add':
 					if ($event->getConfirm() === "1") {
 						$upload = \System\File\FileManager::upload_files();//есть метод только на загрузку нескольких файлов
-						print_r($upload);
+
 						foreach ($upload as $one_file) {
 							$file = $one_file;
 						}
@@ -53,9 +53,10 @@ class EventChangePartners extends \System\Core\Command{
 							$userfile->setFile($file->getId());
 
 							$finder->insert($userfile);
+						} else {
+							$this->render(array("message" => "Необходимо отправить файл", "type_message" => "alert-danger"), "EventShow");
 						}
-					}
-					if (!$file) {
+					} else {
 						$file = new \Application\Model\File();
 					}
 

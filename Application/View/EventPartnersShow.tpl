@@ -17,7 +17,7 @@
 					<a href="/profile/{$one_user->getId()}">
 					{$one_user->getName()} 
 					{$one_user->getFamily()}</a>
-					{if $one_user->getFile()} !{/if}
+					{if $one_user->getFile()} <a href="/file/{$one_user->getFile()->getCode()}"><span class="glyphicon glyphicon-file"></span></a>{/if}
 				</label><br>
 				{/if}
 			{/foreach}
