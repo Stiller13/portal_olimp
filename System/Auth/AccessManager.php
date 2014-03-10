@@ -106,20 +106,19 @@ class AccessManager {
 	 * @return string
 	 */
 	public function getRuleObj($user_id, $obj_id, $obj_type){
-		$factory= PersistenceFactory::getFactory('RuleObj');
-		$finder= new DomainObjectAssembler($factory);
-		$idobj=$factory->getIndentityObject();
+		$factory = PersistenceFactory::getFactory('RuleObj');
+		$finder = new DomainObjectAssembler($factory);
+		$idobj = $factory->getIndentityObject();
 		$idobj->field('user_id')->eq($user_id);
-		$idobj->field('object_name')->eq($obj_type);
-		$idobj->field('object_id')->eq($obj_id);
+		$idobj->field('obj_type')->eq(\System\Helper\Helper::getId("type", $obj_type));
+		$idobj->field('obj_id')->eq($obj_id);
+
 		$rule = $finder->findOne($idobj, 'rule');
 		if ($rule) {
 			return $rule->getRule();
 		}
 		return NULL;
 	}
-	
-	
 
 
 	/**
@@ -132,9 +131,12 @@ class AccessManager {
 	 */
 	public function getObjStatus($obj_id, $objType){
 		//тут запрос к VIEW на статус объекта
-		$factory= PersistenceFactory::getFactory('StatusObj');
-		$finder= new DomainObjectAssembler($factory);
-		$idobj=$factory->getIndentityObject()->field('object_id')->eq($obj_id)->field('object_type')->eq($objType);
+		$factory = PersistenceFactory::getFactory('StatusObj');
+		$finder = new DomainObjectAssembler($factory);
+		$idobj = $factory->getIndentityObject();
+		$idobj->field('obj_id')->eq($obj_id);
+		$idobj->field('obj_type')->eq(\System\Helper\Helper::getId("type", $objType));
+
 		$status = $finder->findOne($idobj,'status');
 		if ($status){
 			return $status->getObj_Status();
@@ -145,10 +147,12 @@ class AccessManager {
 
 
 	public function getUserRoles($user_id){
-		$factory= PersistenceFactory::getFactory('UserRole');
-		$finder= new DomainObjectAssembler($factory);
-		$idobj=$factory->getIndentityObject()->field('user_id')->eq($user_id);
-		$user_roles = $finder->find($idobj,'roles');
+		$factory = PersistenceFactory::getFactory('UserRole');
+		$finder = new DomainObjectAssembler($factory);
+		$idobj = $factory->getIndentityObject();
+		$idobj->field('role_user')->eq($user_id);
+
+		$user_roles = $finder->find($idobj,'role');
 
 		$roles = array();
 

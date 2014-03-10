@@ -54,7 +54,6 @@ class Uploader {
 
 						if (copy($_FILES['uploadfiles']["tmp_name"][$i], $dir)) {
 							$status_result[$i]['status'] = self::UPLOAD_STAT_OK;
-							echo "copy";
 						}
 						else {
 							$status_result[$i]['status'] = self::UPLOAD_STAT_COPY;
