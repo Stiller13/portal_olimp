@@ -25,7 +25,7 @@ class FactoryMGManager {
 
 	public static function getManager($type) {
 		$class = '\System\Msg\\'.self::$managers[$type];
-		$type_id = \System\Helper\Helper::getid("typegroup", $type);
+		$type_id = \System\Helper\Helper::getid("type", $type);
 
 		return new $class($type_id, self::$classes[$type]);
 	}
