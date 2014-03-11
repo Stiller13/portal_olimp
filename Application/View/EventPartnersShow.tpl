@@ -1,7 +1,6 @@
 {extends file="EventPanel.tpl"}
 {block name=title}Мероприятие{/block}
 {block name=epanel_partners}active{/block}
-{block name=panel_title}{$event->getTitle()}{/block}
 
 {block name=epanel_content}
 

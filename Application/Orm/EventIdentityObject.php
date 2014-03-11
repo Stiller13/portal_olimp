@@ -12,7 +12,7 @@ class EventIdentityObject extends \System\Orm\IdentityObject{
 			'event_type',
 			'event_confirm',
 			'event_confirm_description',
-			'event_messagegroup_id'));
+			'event_status'));
 	}
 }
 

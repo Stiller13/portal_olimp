@@ -9,70 +9,70 @@ namespace Application\Model;
 
 class Event extends \System\Orm\DomainObject{
 
-/**
- * Название мероприятия
- * @var string 
- */
+	/**
+	 * Название мероприятия
+	 * @var string 
+	 */
 	private $title;
 
-/**
- * Публичное описание мероприятия
- * @var string
- */
+	/**
+	 * Публичное описание мероприятия
+	 * @var string
+	 */
 	private $description_public;
 
-/**
- * Описание, доступное только участникам мероприятия
- * @var string
- */
+	/**
+	 * Описание, доступное только участникам мероприятия
+	 * @var string
+	 */
 	private $description_private;
 
-/**
- * Тип мероприятия
- * @var string
- */
+	/**
+	 * Тип мероприятия
+	 * @var string
+	 */
 	private $event_type;
 
-/**
- * Требуется ли документ при подаче заявки на участие
- * @var bool
- */
+	/**
+	 * Требуется ли документ при подаче заявки на участие
+	 * @var bool
+	 */
 	private $confirm;
 
-/**
- * Описание требуемого документа
- * @var string
- */
+	/**
+	 * Описание требуемого документа
+	 * @var string
+	 */
 	private $confirm_description; //описание этого подтверждения
 
-/**
- * Участники мероприятия
- * @var Application\Orm\EUserCollection
- */
+	/**
+	 * Участники мероприятия
+	 * @var Application\Orm\EUserCollection
+	 */
 	private $partners;
 
-/**
- * Группа для комментариев
- * @var Application\Model\CommentMessageGroup
- */
+	/**
+	 * Группа для комментариев
+	 * @var Application\Model\CommentMessageGroup
+	 */
 	private $comment_group;
 
-/**
- * Группы для оповещений участников
- * @var Application\Orm\NoticeMessageGroupCollection
- */
+	/**
+	 * Группы для оповещений участников
+	 * @var Application\Orm\NoticeMessageGroupCollection
+	 */
 	private $notice_groups;
 
-/**
- * Прикрепленные файлы
- * @var Application\Orm\FileCollection
- */
+	/**
+	 * Прикрепленные файлы
+	 * @var Application\Orm\FileCollection
+	 */
 	private $files;
 
-/**
- * Статутус мероприятия
- * @var string
- */
+	/**
+	 * Статутус мероприятия
+	 * @var string
+	 */
 	private $status;
 
 	public function setTitle($text) {
@@ -209,4 +209,3 @@ class Event extends \System\Orm\DomainObject{
 	}
 
 }
- 

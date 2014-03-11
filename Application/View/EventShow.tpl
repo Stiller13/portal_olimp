@@ -4,7 +4,6 @@
 {block name=panel_title}{$event->getTitle()}{/block}
 {block name=epanel_content}
 
-
 {if $rule eq "e_admin"}
 	<div class="well">
 		{$event->getDescription_public()}
@@ -25,7 +24,7 @@
 {/if}
 
 
-{if $event->getEvent_type() eq "0"}
+{if $event->getEvent_type() eq "private"}
 <div class="row">
 	<div class="alert alert-warning col-md-4 col-md-offset-4">
 		<p class="text-center">Данное мероприятие закрытое. Необходимо подтверждение на участие.</p>
@@ -71,7 +70,7 @@
 			{$message->getText()}
 
 			<div class="spoiler">
-				<label class="btn btn-warning btn-xs" for="{$message->getId()}">Ответить</label>
+				<label class="btn btn-default btn-xs" for="{$message->getId()}">Ответить</label>
 				<input class="spoiler-input" type="checkbox" id="{$message->getId()}" />
 				<div class="spoiler-body">
 					<form role="form" action="/event/{$event->getId()}/new_comment" method="post">
@@ -102,7 +101,7 @@
 					{$message2->getText()}
 
 					<div class="spoiler">
-						<label class="btn btn-warning btn-xs" for="{$message2->getId()}">Ответить</label>
+						<label class="btn btn-default btn-xs" for="{$message2->getId()}">Ответить</label>
 						<input class="spoiler-input" type="checkbox" id="{$message2->getId()}" />
 						<div class="spoiler-body">
 							<form role="form" action="/event/{$event->getId()}/new_comment" method="post">

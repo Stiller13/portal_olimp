@@ -1,7 +1,7 @@
 <?php
 
 namespace Application\Command;
-use Application\Model\Event;
+
 use System\Orm\PersistenceFactory;
 use System\Orm\DomainObjectAssembler;
 
@@ -11,15 +11,13 @@ class EventSave extends \System\Core\Command{
 		$session = new \System\Session\Session();
 		$user = $session->get("user");
 
-		if ($this->req["e_id"]) {
-			$factory = PersistenceFactory::getFactory('Event');
-			$finder = new DomainObjectAssembler($factory);
-			$idobj = $factory->getIndentityObject();
+		$factory = PersistenceFactory::getFactory('Event');
+		$finder = new DomainObjectAssembler($factory);
+		$idobj = $factory->getIndentityObject();
 
-			$idobj->field('event_id')->eq($this->req['e_id']);
+		$idobj->field('event_id')->eq($this->req['e_id']);
 
-			$event = $finder->findOne($idobj, 'event');
-		}
+		$event = $finder->findOne($idobj, 'event');
 
 		if ($event) {
 			$upload = \System\File\FileManager::upload_files();
@@ -38,6 +36,7 @@ class EventSave extends \System\Core\Command{
 			$event->setConfirm($this->req["confirm"]);
 			$event->setConfirm_description($this->req["confirm_description"]);
 			$event->setFiles($upload);
+			$event->setStatus($this->req["status"]?$this->req["status"]:$event->getStatus());
 
 			$finder->insert($event);
 

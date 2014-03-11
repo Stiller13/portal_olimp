@@ -15,6 +15,8 @@
 
 		<command class="Registration" view="Registration" />
 
+		<command class="InitSystem" view="InitSystem"/>
+
 
 <!-- кабинет -->
 		<command class="MyProfileShow" view="MyProfileShow" />
@@ -72,7 +74,7 @@
 
 		<command class="AdminMSSystemGroupsShow" view="AdminMSSystemGroupsShow" />
 
-		<command class="AdminMSSystemInit" />
+		<command class="AdminMSNoticeGroupsShow" view="AdminMSNoticeGroupsShow" />
 
 		<command class="AdminUsersShow" view="AdminUsersShow" />
 
@@ -81,28 +83,32 @@
 
 		<command class="EventCreate" />
 
-		<command class="EventSave" />
+		<command class="EventSave" mainObj="event">
+			<param name="e_id" required="1" objId="1"/>
+		</command>
 
 		<command class="EventShow" view="EventShow" >
 			<param name="e_id" required="1" />
 		</command>
 
-		<command class="EventChange" view="EventChange" >
-			<param name="e_id" required="1" />
+		<command class="EventChange" view="EventChange" mainObj="event">
+			<param name="e_id" required="1" objId="1"/>
 		</command>
 
-		<command class="EventsShow" view="EventsShow" />
+		<command class="EventsShow" view="EventsShow">
+			<param name="mode"/>
+		</command>
 
-		<command class="EventPartnersShow" view="EventPartnersShow" >
-			<param name="e_id" required="1"/>
+		<command class="EventPartnersShow" view="EventPartnersShow" mainObj="event">
+			<param name="e_id" required="1" objId="1"/>
 		</command>
 
 		<command class="EventChangePartners" >
 			<param name="e_id" required="1"/>
 		</command>
 
-		<command class="EventMessageShow" view="EventMessageShow">
-			<param name="e_id" required="1"/>
+		<command class="EventMessageShow" view="EventMessageShow" mainObj="event">
+			<param name="e_id" required="1" objId="1"/>
 			<param name="mode" />
 		</command>
 
@@ -110,8 +116,31 @@
 			<param name="e_id" required="1"/>
 		</command>
 
-		<command class="EventNewComment" view="EventNewComment">
-			<param name="e_id" required="1"/>
+		<command class="EventNewComment" view="EventNewComment" mainObj="event">
+			<param name="e_id" required="1" objId="1"/>
+		</command>
+
+<!-- Новости -->
+		<command class="NewsShowAll" view="NewsShowAll" />
+
+		<command class="NewsShow" view="NewsShow">
+			<param name="news_id" required="1"/>
+		</command>
+
+		<command class="NewsCreateShow" view="NewsChange" />
+
+		<command class="NewsChangeShow" view="NewsChange" mainObj="post">
+			<param name="news_id" required="1" objId="1"/>
+		</command>
+
+		<command class="NewsCreate" />
+
+		<command class="NewsSave" mainObj="post">
+			<param name="news_id" required="1" objId="1"/>
+		</command>
+
+		<command class="NewsNewComment" view="NewsNewComment">
+			<param name="news_id" required="1"/>
 		</command>
 	</commands>
 </config>

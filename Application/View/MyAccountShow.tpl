@@ -4,6 +4,9 @@
 {block name=cab_content}
 
 <div class="row">
+	<!-- <div class="col-md-4 col-md-offset-4">
+		<img src="/Design/Images/picture2.png" alt="..." class="img-thumbnail">
+	</div> -->
 	<div class="col-md-4 col-md-offset-4">
 		<form class="form-horizontal" action="/cabinet/account" method="post">
 			<div class="input-group">

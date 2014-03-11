@@ -8,30 +8,27 @@ class NewsShowAll extends \System\Core\Command {
 		$session = new \System\Session\Session();
 		$user = $session->get("user"); 
 
-		// $factory =\System\Orm\ PersistenceFactory::getFactory("EUser");
-		// $finder = new \System\Orm\DomainObjectAssembler($factory);
-		// $idobj = $factory->getIndentityObject();
+		$factory = \System\Orm\PersistenceFactory::getFactory("Post");
+		$finder = new \System\Orm\DomainObjectAssembler($factory);
+		$idobj = $factory->getIndentityObject();
 
-		// $idobj->field("event_user_user")->eq($user->getId());
-		// $idobj->field("event_user_rule")->eq(\System\Helper\Helper::getId("rule", "e_admin"));
+		$idobj->field("post_status")->eq(\System\Helper\Helper::getId("status", "open"));
+		$idobj->addOrder(array("post_date"=>"DESC"));
 
-		// $list_euser = $finder->find($idobj, "event_user");
+		$news = $finder->find($idobj, "post");
 
-		// $factory =\System\Orm\ PersistenceFactory::getFactory("Event");
-		// $finder = new \System\Orm\DomainObjectAssembler($factory);
+		$factory = \System\Orm\PersistenceFactory::getFactory("UserRole");
+		$finder = new \System\Orm\DomainObjectAssembler($factory);
+		$idobj = $factory->getIndentityObject();
 
-		// $idobj = $factory->getIndentityObject();
-		// $idobj->field("event_status")->eq(\System\Helper\Helper::getId("status", "open"));
+		$idobj->field("role_user")->eq($user->getId());
+		$idobj->field("role_role")->eq(\System\Helper\Helper::getId("role", "MODERATOR"));
 
-		// foreach ($list_euser as $one_euser) {
-		// 	$idobj->field("event_id")->eq($one_euser->getEvent());
-		// }
-		// $idobj->changeLink();
+		$user_role = $finder->findOne($idobj,"role");
+		if ($user_role) {
+			$can_create = 1;
+		}
 
-		// $events = $finder->find($idobj, "event");
-
-		// $can_create = 1;//Пока так(На создание пероприятия)
-
-		return $this->render(array("user" => $user, "can_create" => $can_create));
+		return $this->render(array("user" => $user, "news" => $news, "can_create" => $can_create));
 	}
 }

@@ -54,7 +54,7 @@ class EventChangePartners extends \System\Core\Command{
 
 							$finder->insert($userfile);
 						} else {
-							$this->render(array("message" => "Необходимо отправить файл", "type_message" => "alert-danger"), "EventShow");
+							return $this->render(array("message" => "Необходимо отправить файл", "type_message" => "alert-danger", "event" => $event, "user" => $user), "EventShow");
 						}
 					} else {
 						$file = new \Application\Model\File();
@@ -64,13 +64,21 @@ class EventChangePartners extends \System\Core\Command{
 
 					$euser->setId($user_id);
 					$euser->setEvent($event->getId());
-					$euser->setRule("e_user");
+					if ($event->getEvent_type() === "private"){
+						$euser->setRule("e_user");
+					} else {
+						$euser->setRule("e_partner");
+					}
 					$euser->setFile($file);
 
 					$finder_euser->insert($euser);
 
-					$manager->addUser($group_all_id, $user_id, "e_user");
-					$manager->addUser($group_users_id, $user_id, "e_user");
+					if ($event->getEvent_type() === "private"){
+						$manager->addUser($group_users_id, $user_id, "nmg_partner");
+					} else {
+						$manager->addUser($group_partners_id, $user_id, "nmg_partner");
+					}
+					$manager->addUser($group_all_id, $user_id, "nmg_partner");
 					break;
 
 				case 'del':
@@ -96,7 +104,7 @@ class EventChangePartners extends \System\Core\Command{
 					$finder_euser->insert($euser);
 
 					$manager->delUser($group_users_id, $user_id);
-					$manager->addUser($group_partners_id, $user_id, "e_user");
+					$manager->addUser($group_partners_id, $user_id, "nmg_partner");
 					break;
 
 				case 'invit':
@@ -109,8 +117,8 @@ class EventChangePartners extends \System\Core\Command{
 
 					$finder_euser->insert($euser);
 
-					$manager->addUser($group_all_id, $user_id, "e_user");
-					$manager->addUser($group_partners_id, $user_id, "e_user");
+					$manager->addUser($group_all_id, $user_id, "nmg_partner");
+					$manager->addUser($group_partners_id, $user_id, "nmg_partner");
 					break;
 			}
 		}

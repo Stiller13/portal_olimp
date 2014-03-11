@@ -2,12 +2,24 @@
 
 namespace Application\Model;
 
+/**
+ * Класс участника мероприятия
+ */
+
 class EUser extends \Application\Model\User{
 
+	/**
+	 * Права участника на мероприятие
+	 * @var string
+	 */
 	private $rule;
 
 	private $file;
 
+	/**
+	 * id мероприятия
+	 * @var integer
+	 */
 	private $event;
 
 	public function setRule($rule) {

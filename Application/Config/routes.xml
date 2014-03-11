@@ -17,6 +17,8 @@
 
 		<route id="Msg404" path="/Msg404" command="Msg404" method="get" />
 
+		<route id="InitSystem" path="/init" command="InitSystem" method="get" />
+
 
 <!-- кабинет -->
 		<route id="MyCabinet" path="/cabinet" command="MyAccountShow" method="get" />
@@ -66,17 +68,17 @@
 <!-- Кабинет админа -->
 		<route id="AdminMSSystemGroupsShow" path="/admin_cabinet/message/system" command="AdminMSSystemGroupsShow" method="get" />
 
+		<route id="AdminMSNoticeGroupsShow" path="/admin_cabinet/message/notice" command="AdminMSNoticeGroupsShow" method="get" />
+
 		<route id="AdminMSSystemGroupShow" path="/admin_cabinet/message/system/{mg_id}" command="AdminMSSystemGroupShow" method="get">
 			<param name="mg_id" pattern="uid"/>
 		</route>
 
 		<route id="AdminMessageShow" path="/admin_cabinet/message" command="AdminMessageShow" method="get" />
 
-		<route id="AdminMSSystemInit" path="/admin_cabinet/message/system/init" command="AdminMSSystemInit" method="post" />
-
 		<route id="AdminUsersShow" path="/admin_cabinet/users" command="AdminUsersShow" method="get" />
 
-		<route id="AdminUsersShow" path="/admin_cabinet" command="AdminUsersShow" method="get" />
+		<route id="AdminUsersShow1" path="/admin_cabinet" command="AdminUsersShow" method="get" />
 
 
 		<route id="AdminMSSystemGroupMessageCreate" path="/admin_cabinet/message/system/new_message" command="AdminMSSystemGroupMessageCreate" method="post" />
@@ -87,7 +89,9 @@
 
 		<route id="EventCreate" path="/event/create" command="EventCreate" method="post" />
 
-		<route id="EventSave" path="/event/save" command="EventSave" method="post" />
+		<route id="EventSave" path="/event/{e_id}/save" command="EventSave" method="post">
+			<param name="e_id">[1-9][0-9]*</param>
+		</route>
 
 		<route id="EventShow" path="/event/{e_id}" command="EventShow" method="get">
 			<param name="e_id">[1-9][0-9]*</param>
@@ -102,6 +106,10 @@
 		</route>
 
 		<route id="EventsShow" path="/event" command="EventsShow" method="get" />
+
+		<route id="EventsShowMode" path="/event/{mode}" command="EventsShow" method="get">
+			<param name="mode">[a-z]{1,10}</param>
+		</route>
 
 		<route id="EventChangePartners" path="/event/{e_id}/change_partners" command="EventChangePartners" method="post" >
 			<param name="e_id">[1-9][0-9]*</param>
@@ -123,5 +131,29 @@
 		<route id="EventNewComment" path="/event/{e_id}/new_comment" command="EventNewComment" method="post" >
 			<param name="e_id">[1-9][0-9]*</param>
 		</route>
+
+<!-- Новости -->
+		<route id="NewsShowAll" path="/news" command="NewsShowAll" method="get" />
+
+		<route id="NewsShow" path="/news/{news_id}" command="NewsShow" method="get">
+			<param name="news_id">[1-9][0-9]*</param>
+		</route>
+
+		<route id="NewsCreateShow" path="/news/create" command="NewsCreateShow" method="get" />
+
+		<route id="NewsChangeShow" path="/news/{news_id}/change" command="NewsChangeShow" method="get">
+			<param name="news_id">[1-9][0-9]*</param>
+		</route>
+
+		<route id="NewsCreate" path="/news/create" command="NewsCreate" method="post" />
+
+		<route id="NewsNewComment" path="/news/{news_id}/new_comment" command="NewsNewComment" method="post">
+			<param name="news_id">[1-9][0-9]*</param>
+		</route>
+
+		<route id="NewsSave" path="/news/{news_id}/save" command="NewsSave" method="post">
+			<param name="news_id">[1-9][0-9]*</param>
+		</route>
+
 	</routes>
 </config>

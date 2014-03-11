@@ -157,12 +157,12 @@ class AccessManager {
 		$roles = array();
 
 		$roles[] = "USER";
-		
+
 		while ($user_roles->valid()){
 			$role = $user_roles->current();
 			$roles[] = $role->getRole();
 			$user_roles->next();
-		}	
+		}
 
 		if ($roles){
 			return $roles;

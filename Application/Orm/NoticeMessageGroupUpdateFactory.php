@@ -9,7 +9,7 @@ class NoticeMessageGroupUpdateFactory extends \System\Orm\UpdateFactory {
 		$values["desc_mg"] = $obj->getDescription();
 
 		if ($obj->getId() >-1) {
-			$values["status_mg"] = $obj->getStatus();
+			$values["status_mg"] = \System\Helper\Helper::getId("status", $obj->getStatus());
 			$values['id_mg']=$obj->getId();
 
 			return $this->buildStatement('update_messagegroup', $values);

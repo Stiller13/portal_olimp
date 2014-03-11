@@ -15,9 +15,9 @@
 	{/foreach}
 	<hr>
 
-	<!-- <ul class="media-list"> -->
+	<ul class="media-list">
 	{foreach from=$group->getMessages() item=one_message}
-		<!-- <li class="media">
+		<li class="media">
 			<a class="pull-left" href="#">
 				<img class="media-object" src="/Design/Images/noavatar92.jpg" alt="...">
 			</a>
@@ -29,29 +29,29 @@
 				</h4>
 				{$one_message->getText()}
 				{foreach from=$one_message->getFiles() item=one_file name=foo}
-				{if $smarty.foreach.foo.first}<hr>{/if}
+				{if $smarty.foreach.foo.first}<br>{/if}
 				<a href="/file/{$one_file->getCode()}">{$one_file->getName()}</a>
 				{/foreach}
 			</div>
-		</li> -->
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">
-				{$one_message->getAuthor()->getName()} 
-				{$one_message->getAuthor()->getFamily()} 
-				<p class="pull-right">{$one_message->getDate()}</p>
-			</h3>
-		</div>
-		<div class="panel-body">
-			{$one_message->getText()}
-			{foreach from=$one_message->getFiles() item=one_file name=foo}
-				{if $smarty.foreach.foo.first}<hr>{/if}
-				<a href="/file/{$one_file->getCode()}">{$one_file->getName()}</a>
-			{/foreach}
-		</div>
+		</li>
+<!-- 	<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			{$one_message->getAuthor()->getName()} 
+			{$one_message->getAuthor()->getFamily()} 
+			<p class="pull-right">{$one_message->getDate()}</p>
+		</h3>
 	</div>
+	<div class="panel-body">
+		{$one_message->getText()}
+		{foreach from=$one_message->getFiles() item=one_file name=foo}
+			{if $smarty.foreach.foo.first}<hr>{/if}
+			<a href="/file/{$one_file->getCode()}">{$one_file->getName()}</a>
+		{/foreach}
+	</div>
+</div> -->
 	{/foreach}
-	<!-- </ul> -->
+	</ul>
 
 	<form role="form" action="/cabinet/message/personal/new_message" method="post" enctype="multipart/form-data">
 		<div class="form-group">

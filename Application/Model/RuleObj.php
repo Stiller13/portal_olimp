@@ -166,7 +166,7 @@ class RuleObj extends \System\Orm\DomainObject{
 	public function targetClass(){
 		return 'RuleObj';
 	}
-}	
+}
 
 
 ?>

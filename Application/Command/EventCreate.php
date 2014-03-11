@@ -62,6 +62,7 @@ class EventCreate extends \System\Core\Command {
 		$event->setComments($new_cmg);
 		$event->setNoticeGroups($list_noticegroup);
 		$event->setFiles($upload);
+		$event->setStatus("create");
 
 		$factory = \System\Orm\PersistenceFactory::getFactory("Event");
 		$finder = new \System\Orm\DomainObjectAssembler($factory);

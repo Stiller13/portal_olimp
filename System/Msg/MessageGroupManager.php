@@ -25,12 +25,16 @@ abstract class MessageGroupManager {
 		$this->group_class_name = $class_name;
 	}
 
-	public function getAllGroups() {
+	public function getAllGroups($param = null) {
 		$factory = \System\Orm\PersistenceFactory::getFactory($this->group_class_name);
 		$finder = new \System\Orm\DomainObjectAssembler($factory);
 		$idobj = $factory->getIndentityObject();
 
 		$idobj->field("messagegroup_type")->eq($this->type_group);
+
+		if ($param["status"]) {
+			$idobj->field("messagegroup_status")->eq($param["status"]);
+		}
 
 		$list_group = $finder->find($idobj, "messagegroup");
 
@@ -87,8 +91,8 @@ abstract class MessageGroupManager {
 		$class_name = '\Application\Model\\'.$this->group_class_name;
 		$new_mg = new $class_name();
 
-		$new_mg->setStatus($data['status']);
-		$new_mg->setDescription($data['desc']);
+		$new_mg->setStatus($data['status']?$data['status']:"default");
+		$new_mg->setDescription($data['desc']?$data['desc']:"");
 
 		$factory_group = \System\Orm\PersistenceFactory::getFactory($this->group_class_name);
 		$group_finder = new \System\Orm\DomainObjectAssembler($factory_group);

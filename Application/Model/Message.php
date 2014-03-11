@@ -122,6 +122,7 @@ class Message extends \System\Orm\DomainObject {
 		if (!isset($this->files)) {
 			$this->files = $this->getCollection($this->targetClass(), $this->getId());
 		}
+
 		return $this->files;
 	}
 

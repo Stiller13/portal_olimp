@@ -10,19 +10,25 @@ namespace Application\Model;
 
 class PersonalMessageGroup extends \System\Msg\MessageGroup {
 
-	public function targetClass() {
-		return 'PersonalMessageGroup';
-	}
+	private $count_new_message;
 
 	public function getCountNewMessage() {
-		$session = new \System\Session\Session();
-		$user = $session->get('user');
+		if (!isset($this->count_new_message)) {
+			$session = new \System\Session\Session();
+			$user = $session->get('user');
 
-		if ($user){
-			return \System\Msg\VisitManager::getCountMess(array("for" => "group", "user_id" => $user->getId(), "group_id" => $this->getId()));
-		} else {
-			return 0;
+			if ($user) {
+				$this->count_new_message = \System\Msg\VisitManager::getCountMess(array("for" => "group", "user_id" => $user->getId(), "group_id" => $this->getId()));
+			} else {
+				$this->count_new_message = 0;
+			}
 		}
+
+		return $this->count_new_message;
+	}
+
+	public function targetClass() {
+		return 'PersonalMessageGroup';
 	}
 
 }

@@ -10,7 +10,7 @@ class EUserUpdateFactory extends \System\Orm\UpdateFactory{
 		$values['id_rule'] = \System\Helper\Helper::getId("rule", $obj->getRule());
 		$values['id_file'] = $obj->getFile()->getId();
 
-		return $this->buildStatement('insert_event_user',$values);
+		return $this->buildStatement('insert_event_user', $values);
 	}
 }
 

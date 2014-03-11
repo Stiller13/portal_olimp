@@ -2,17 +2,21 @@
 	<map>
 		<type name="messagegroup" id="1"/>
 		<type name="event" id="2"/>
+		<type name="post" id="3"/>
 
-		<type name="personal" id="3"/>
-		<type name="comment" id="4"/>
-		<type name="system" id="5"/>
-		<type name="notice" id="6"/>
+		<type name="personal" id="4"/>
+		<type name="comment" id="5"/>
+		<type name="system" id="6"/>
+		<type name="notice" id="7"/>
 
-		<type name="public" id="7"/>
-		<type name="private" id="8"/>
+		<type name="public" id="8"/>
+		<type name="private" id="9"/>
 
-		<role name="user" id="1"/>
-		<role name="admin" id="404"/>
+		<type name="news" id="10"/>
+
+		<role name="USER" id="1"/>
+		<role name="MODERATOR" id="2"/>
+		<role name="ADMIN" id="404"/>
 
 		<user_status name="Не выбрано" id="0"/>
 		<user_status name="Школьник" id="1"/>
@@ -24,7 +28,10 @@
 		<status name="all" id="2"/>
 		<status name="users" id="3"/>
 		<status name="partners" id="4"/>
+		<status name="all_user" id="5"/>
+		<status name="create" id="6"/>
 		<status name="closed" id="200"/>
+		<status name="default" id="201"/>
 
 		<rule name="e_admin" id="1"/>
 		<rule name="e_partner" id="2"/>
@@ -32,5 +39,7 @@
 		<rule name="pmg_admin" id="5"/>
 		<rule name="pmg_partner" id="6"/>
 		<rule name="smg_partner" id="7"/>
+		<rule name="nmg_partner" id="8"/>
+		<rule name="p_admin" id="1"/>
 	</map>
 </config>

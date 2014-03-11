@@ -1,5 +1,6 @@
 {extends file="AdminMessage.tpl"}
 {block name=title}{$group->getDescription()}{/block}
+{block name=system_mg}active{/block}
 {block name=admin_message_content}
 
 <div class="col-md-5">

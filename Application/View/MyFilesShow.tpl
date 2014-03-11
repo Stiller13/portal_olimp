@@ -24,6 +24,9 @@
 				<p class="help-block">Выберите файл для загрузки</p>
 			</div>
 			<input type="hidden" name="user_id" value={$user->getId()}>
+			<div class="form-group">
+				<button type="submit" class="btn btn-success">Отправить</button>
+			</div>
 		</form>
 	</div>
 </div>

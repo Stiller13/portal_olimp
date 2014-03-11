@@ -9,6 +9,7 @@
 				<command class="MSPersonalGroupsShow"/>
 			</allow>
 		</group>
+
 		<group name="pmg_admin">
 			<allow>
 				<command class="MSPersonalGroupAddUsers"/>
@@ -18,6 +19,36 @@
 		<group name="smg_partner">
 			<allow>
 				<command class="MessageSystemGroupShow"/>
+			</allow>
+		</group>
+
+		<group name="e_admin">
+			<allow>
+				<command class="EventChange"/>
+				<command class="EventSave"/>
+				<command class="EventChangePartners"/>
+				<command class="EventMessageShow"/>
+				<command class="EventNewComment"/>
+				<command class="EventPartnersShow"/>
+				<command class="EventNewNotice"/>
+			</allow>
+		</group>
+
+		<group name="e_partner">
+			<allow>
+				<command class="EventNewComment"/>
+			</allow>
+		</group>
+
+		<group name="e_user">
+			<allow>
+			</allow>
+		</group>
+
+		<group name="p_admin">
+			<allow>
+				<command class="NewsChangeShow"/>
+				<command class="NewsSave"/>
 			</allow>
 		</group>
 
@@ -32,12 +63,9 @@
 		</group>
 		<group name="USER" parent="ALL" role="1">
 			<allow>
-				<command class="AdminMessageShow"/>
-				<command class="AdminMSSystemInit"/>
-				<command class="AdminMSSystemGroupShow"/>
-				<command class="AdminMSSystemGroupsShow"/>
-				<command class="AdminUsersShow"/>
-				<command class="AdminMSSystemGroupMessageCreate"/>
+				<command class="NewsShowAll"/>
+				<command class="NewsShow"/>
+				<command class="NewsNewComment"/>
 
 				<command class="MyMSNoticeShow"/>
 				<command class="MyMSSystemShow"/>
@@ -59,23 +87,19 @@
 				<command class="MyAccountSave"/>
 				<command class="MyFilesShow"/>
 
-				<command class="EventCreateShow"/>
-				<command class="EventCreate"/>
-				<command class="EventSave"/>
-				<command class="EventChange"/>
-				<command class="EventShow"/>
-				<command class="EventPartnersShow"/>
-				<command class="EventsShow"/>
 				<command class="EventChangePartners"/>
-				<command class="EventMessageShow"/>
-				<command class="EventNewComment"/>
-				<command class="EventNewNotice"/>
+				<command class="EventShow"/>
+				<command class="EventsShow"/>
 			</allow>
 			<deny>
 			</deny>
 		</group>
 		<group name="GUEST" parent="ALL" role="1">
 			<allow>
+				<command class="NewsShowAll"/>
+
+				<command class="InitSystem"/>
+
 				<command class="EventShow"/>
 				<command class="EventsShow"/>
 				<command class="SignIn"/>
@@ -87,6 +111,21 @@
 		</group>
 		<group name="ADMIN" parent="ALL" role="1">
 			<allow>
+				<command class="AdminMessageShow"/>
+				<command class="AdminMSSystemGroupShow"/>
+				<command class="AdminMSSystemGroupsShow"/>
+				<command class="AdminMSNoticeGroupsShow"/>
+				<command class="AdminUsersShow"/>
+				<command class="AdminMSSystemGroupMessageCreate"/>
+			</allow>
+		</group>
+		<group name="MODERATOR" parent="ALL" role="1">
+			<allow>
+				<command class="EventCreateShow"/>
+				<command class="EventCreate"/>
+
+				<command class="NewsCreateShow"/>
+				<command class="NewsCreate"/>
 			</allow>
 		</group>
 	</roles>

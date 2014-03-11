@@ -24,12 +24,11 @@
 						<li class="{block name=menu_main}{/block}"><a href="/">Главная</a></li>
 						<li class="{block name=menu_news}{/block}"><a href="/news">Новости</a></li>
 						<li class="{block name=menu_events}{/block}"><a href="/event">Мероприятия</a></li>
-						<!-- <li><a href="#">Курсы</a></li> -->
-						<!-- <li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+						<!-- <li class="dropdown {block name=menu_events}{/block}">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Мероприятия <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Action</a></li>
-								<li><a href="#">Another action</a></li>
+								<li><a href="/event">Все</a></li>
+								<li><a href="/event/my">Мои</a></li>
 								<li><a href="#">Something else here</a></li>
 								<li><a href="#">Separated link</a></li>
 								<li><a href="#">One more separated link</a></li>
@@ -48,10 +47,10 @@
 					<p class="navbar-text pull-right">Вы вошли как {$user->getName()} {$user->getFamily()}</p>
 					{else}
 					<div class="pull-right">
-						<a href="/SignIn" >
+						<a href="/SignIn">
 							<button type="button" class="btn btn-default navbar-btn">Вход</button>
 						</a>
-						<a href="/Registration" >
+						<a href="/Registration">
 							<button type="button" class="btn btn-primary navbar-btn">Регистрация</button>
 						</a>
 					</div>
@@ -61,7 +60,7 @@
 			{if $message}<div class="alert {$type_message}"><p class="text-center">{$message}</p></div>{/if}
 
 			{block name=content}{/block}
-			<div class="well margtp-25">БГУ 2014</div>
+			<div class="well margtp-25">&copy;&nbsp;2013 <a href="http://bsu.ru">Бурятский государственный университет</a></div>
 		</div>
 		<script src="/Design/js/jquery-1.10.2.min.js"></script>
 		<script src="/Design/js/bootstrap.min.js"></script>

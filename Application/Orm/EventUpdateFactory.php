@@ -25,6 +25,8 @@ class EventUpdateFactory extends \System\Orm\UpdateFactory{
 		}
 		$values['files'] = implode(',', $list_file);
 
+		$values['status'] = \System\Helper\Helper::getId("status", $obj->getStatus());
+
 		if($obj->getId() > -1){
 			$values["e_id"] = $obj->getId();
 			return $this->buildStatement('update_event',$values);

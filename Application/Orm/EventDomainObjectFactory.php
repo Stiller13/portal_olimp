@@ -18,6 +18,7 @@ class EventDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$obj->setComments($this->createComments($array['event_id']));
 		$obj->setNoticeGroups($this->createNoticeGroups($array['event_id']));
 		$obj->setFiles($this->createFiles($array['event_id']));
+		$obj->setStatus(\System\Helper\Helper::getName("status", $array['event_status']));
 
 		return $obj;
 	}

@@ -6,10 +6,14 @@
 <h2 class="text-center">Все Мероприятия</h2>
 
 <div class="row margtp-25">
-	<div class="col-md-6 col-md-offset-3">
+	<div class="col-md-8 col-md-offset-2">
 		{if $can_create}
 		<p class="text-center"><a href="/event/create"><button class="btn btn-success">Создать мероприятие</button></a></p>
 		{/if}
+		<p class="text-center">
+			<a href="/event/all">Все</a>
+			<a href="/event/my">Мои</a>
+		</p>
 		<table class="table table-striped margtp-25">
 			<tr>
 				<th><p class="text-center">Название</p></th>
@@ -19,7 +23,7 @@
 		{foreach from=$events item=event}
 			<tr>
 				<td><p class="text-center"><a href="/event/{$event->getId()}">{$event->getTitle()}</a></p></td>
-				<td><p class="text-center">{if $event->getEvent_type() eq "open"}открытое{else}закрытое{/if}</p></td>
+				<td><p class="text-center">{if $event->getEvent_type() eq "public"}открытое{else}закрытое{/if}</p></td>
 				<td><p class="text-center">{if $event->getConfirm() eq "1"}требуется{else}не требуется{/if}</p></td>
 			</tr>
 		{/foreach}

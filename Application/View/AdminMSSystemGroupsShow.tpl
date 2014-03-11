@@ -1,14 +1,8 @@
 {extends file="AdminMessage.tpl"}
+{block name=system_mg}active{/block}
 {block name=admin_message_content}
 
 <div class="col-md-4">
-	{if $to_init}
-	<form role="form" action="/admin_cabinet/message/system/init" method="post">
-		<input type="hidden" name="secret_param" value='top_secret!'>
-		<input type="submit" class="btn btn-success" value="Провести инициализацию">
-	</form>
-	{/if}
-
 	<ul class="nav nav-pills nav-stacked">
 	{foreach from=$list_group item=one_group}
 		<li>

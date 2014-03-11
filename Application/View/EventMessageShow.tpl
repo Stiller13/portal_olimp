@@ -1,7 +1,6 @@
 {extends file="EventPanel.tpl"}
 {block name=title}Мероприятие{/block}
 {block name=epanel_message}active{/block}
-{block name=panel_title}{$event->getTitle()}{/block}
 
 {block name=epanel_content}
 
@@ -10,7 +9,7 @@
 		<div class="col-md-4 col-md-offset-1">
 			<div class="form-group">
 				<label for="exampleInputText">Текст сообщения</label>
-				<textarea class="form-control" id="exampleInputText" name="text"  rows="3"></textarea>
+				<textarea class="form-control" id="exampleInputText" name="text" rows="3"></textarea>
 			</div>
 			<div class="form-group">
 				<label for="exampleInputFile">Файл</label>
@@ -18,6 +17,8 @@
 				<p class="help-block">Выберите файл для отправки</p>
 			</div>
 			<input type="hidden" name="user_id" value="{$user->getId()}">
+			<input type="hidden" name="event_title" value="{$event->getTitle()}">
+			<input type="hidden" name="event_id" value="{$event->getId()}">
 			{$group = $event->getNoticeGroup($mode)}
 			<input type="hidden" name="group_id" value="{$group->getId()}">
 
@@ -34,10 +35,8 @@
 			{foreach from=$group->getMessages() item=one_message}
 			<div class="panel panel-default margtp-25">
 				<div class="panel-heading">
-					<h3 class="panel-title">
-						{$one_message->getAuthor()->getName()} 
-						{$one_message->getAuthor()->getFamily()} 
-						<p class="pull-right">{$one_message->getDate()}</p>
+					<h3 class="panel-title"> 
+						<p class="text-center">{$one_message->getDate()}</p>
 					</h3>
 				</div>
 				<div class="panel-body">
