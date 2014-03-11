@@ -8,10 +8,20 @@
 		{if $can_create}
 		<p class="text-center"><a href="/news/create"><button class="btn btn-success">Создать новость</button></a></p>
 		{/if}
+
+		<ul class="pager">
+			{if $page eq 1}
+				<li class="disabled"><a>Предыдущая</a></li>
+			{else}
+				<li><a href="/news/page/{$page-1}">Предыдущая</a></li>
+			{/if}
+			<li><a href="/news/page/{$page+1}">Следующая</a></li>
+		</ul>
+
 		{foreach from=$news item=one_news}
 		<div class="panel panel-default">
 			<div class="panel-body">
-				{$one_news->getTitle()}
+				<h4><p class="text-center">{$one_news->getTitle()}</p></h4>
 			</div>
 			<div class="panel-footer">
 				{$one_news->getDate()}
@@ -19,6 +29,7 @@
 			</div>
 		</div>
 		{/foreach}
+
 	</div>
 </div>
 

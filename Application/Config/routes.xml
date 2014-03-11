@@ -135,24 +135,30 @@
 <!-- Новости -->
 		<route id="NewsShowAll" path="/news" command="NewsShowAll" method="get" />
 
+		<route id="NewsShowAll1" path="/news/page/{page}" command="NewsShowAll" method="get">
+			<param name="page">[1-9]{1,10}</param>
+		</route>
+
+		<route id="NewsShowAllpost" path="/news" command="NewsShowAll" method="post" />
+
 		<route id="NewsShow" path="/news/{news_id}" command="NewsShow" method="get">
-			<param name="news_id">[1-9][0-9]*</param>
+			<param name="news_id">[1-9]{1,10}</param>
 		</route>
 
 		<route id="NewsCreateShow" path="/news/create" command="NewsCreateShow" method="get" />
 
 		<route id="NewsChangeShow" path="/news/{news_id}/change" command="NewsChangeShow" method="get">
-			<param name="news_id">[1-9][0-9]*</param>
+			<param name="news_id">[1-9]{1,10}</param>
 		</route>
 
 		<route id="NewsCreate" path="/news/create" command="NewsCreate" method="post" />
 
 		<route id="NewsNewComment" path="/news/{news_id}/new_comment" command="NewsNewComment" method="post">
-			<param name="news_id">[1-9][0-9]*</param>
+			<param name="news_id">[1-9]{1,10}</param>
 		</route>
 
 		<route id="NewsSave" path="/news/{news_id}/save" command="NewsSave" method="post">
-			<param name="news_id">[1-9][0-9]*</param>
+			<param name="news_id">[1-9]{1,10}</param>
 		</route>
 
 	</routes>

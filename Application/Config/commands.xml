@@ -121,7 +121,9 @@
 		</command>
 
 <!-- Новости -->
-		<command class="NewsShowAll" view="NewsShowAll" />
+		<command class="NewsShowAll" view="NewsShowAll">
+			<param name="page" />
+		</command>
 
 		<command class="NewsShow" view="NewsShow">
 			<param name="news_id" required="1"/>

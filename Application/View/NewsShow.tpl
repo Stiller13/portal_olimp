@@ -3,7 +3,7 @@
 {block name=menu_news}active{/block}
 {block name=content}
 
-<p class="text-center">{$news->getTitle()}</p>
+<h2><p class="text-center">{$news->getTitle()}</p></h2>
 <hr>
 {$news->getText()}
 
