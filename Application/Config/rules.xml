@@ -97,6 +97,7 @@
 		<group name="GUEST" parent="ALL" role="1">
 			<allow>
 				<command class="NewsShowAll"/>
+				<command class="NewsShow"/>
 
 				<command class="InitSystem"/>
 
@@ -116,6 +117,10 @@
 				<command class="AdminMSSystemGroupsShow"/>
 				<command class="AdminMSNoticeGroupsShow"/>
 				<command class="AdminUsersShow"/>
+				<command class="AdminUserShow"/>
+				<command class="AdminModerDel"/>
+				<command class="AdminModerAdd"/>
+				<command class="AdminUsersSearch"/>
 				<command class="AdminMSSystemGroupMessageCreate"/>
 			</allow>
 		</group>

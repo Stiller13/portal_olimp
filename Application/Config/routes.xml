@@ -80,8 +80,32 @@
 
 		<route id="AdminUsersShow1" path="/admin_cabinet" command="AdminUsersShow" method="get" />
 
+		<route id="AdminUsersShow2" path="/admin_cabinet/users/{type_users}" command="AdminUsersShow" method="get">
+			<param name="type_users">all|moderators</param>
+		</route>
+
+		<route id="AdminUsersShow3" path="/admin_cabinet/users/{type_users}/{mode_sort}" command="AdminUsersShow" method="get">
+			<param name="type_users">all|moderators</param>
+			<param name="mode_sort">id_up|id_down|name_up|name_down|surname_up|surname_down|gender_up|gender_down</param>
+		</route>
+
+		<route id="AdminUserShow" path="/admin_cabinet/user/{user_id}" command="AdminUserShow" method="get">
+			<param name="user_id">[1-9][0-9]*</param>
+		</route>
 
 		<route id="AdminMSSystemGroupMessageCreate" path="/admin_cabinet/message/system/new_message" command="AdminMSSystemGroupMessageCreate" method="post" />
+
+		<route id="AdminModerDel" path="/admin_cabinet/users/moderators/{user_id}/del" command="AdminModerDel" method="get">
+			<param name="user_id">[1-9][0-9]*</param>
+		</route>
+
+		<route id="AdminModerAdd" path="/admin_cabinet/users/moderators/{user_id}/add" command="AdminModerAdd" method="get">
+			<param name="user_id">[1-9][0-9]*</param>
+		</route>
+
+		<route id="AdminUsersSearch" path="/admin_cabinet/users/search" command="AdminUsersSearch" method="get" />
+
+		<route id="AdminUsersSearch1" path="/admin_cabinet/users/search" command="AdminUsersSearch" method="post" />
 
 
 <!-- Мероприятия -->

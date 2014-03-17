@@ -81,4 +81,7 @@
 	</div>
 </form>
 
+<script src="/Design/TinyMCE/tiny_mce.js"></script>
+<script src="/Design/TinyMCE/tiny_mce_my.js"></script>
+
 {/block}

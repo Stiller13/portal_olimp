@@ -8,6 +8,9 @@
 	</head>
 	<body>
 		<div class="container">
+			<a href="/">
+			<img src="/Design/images/bsu2.gif" alt="olimpBSU">
+			</a>
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
@@ -24,24 +27,21 @@
 						<li class="{block name=menu_main}{/block}"><a href="/">Главная</a></li>
 						<li class="{block name=menu_news}{/block}"><a href="/news">Новости</a></li>
 						<li class="{block name=menu_events}{/block}"><a href="/event">Мероприятия</a></li>
-						<!-- <li class="dropdown {block name=menu_events}{/block}">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Мероприятия <b class="caret"></b></a>
+						<li class="dropdown {block name=menu_info}{/block}">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Информация <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="/event">Все</a></li>
-								<li><a href="/event/my">Мои</a></li>
-								<li><a href="#">Something else here</a></li>
-								<li><a href="#">Separated link</a></li>
-								<li><a href="#">One more separated link</a></li>
+								<li><a href="#">О проекте</a></li>
+								<li><a href="#">О нас</a></li>
 							</ul>
-						</li> -->
+						</li>
 					</ul>
 
-					<form class="navbar-form navbar-left" role="search">
+<!-- 					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
 						<input type="text" class="form-control" placeholder="Поиск">
 						</div>
 						<button type="submit" class="btn btn-primary">Найти</button>
-					</form>
+					</form> -->
 
 					{if $user}
 					<p class="navbar-text pull-right">Вы вошли как {$user->getName()} {$user->getFamily()}</p>
@@ -60,24 +60,10 @@
 			{if $message}<div class="alert {$type_message}"><p class="text-center">{$message}</p></div>{/if}
 
 			{block name=content}{/block}
-			<div class="well margtp-25">&copy;&nbsp;2013 <a href="http://bsu.ru">Бурятский государственный университет</a></div>
+
+			<div class="well margtp-25">&copy;&nbsp;2014 <a href="http://bsu.ru">Бурятский государственный университет</a></div>
 		</div>
 		<script src="/Design/js/jquery-1.10.2.min.js"></script>
 		<script src="/Design/js/bootstrap.min.js"></script>
-		<script src="/Design/TinyMCE/tiny_mce.js"></script>
-		<script type="text/javascript">
-		tinyMCE.init({
-			mode:"specific_textareas",
-			editor_selector: "edit",
-			language : "ru",
-			plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
-			theme : "advanced",
-			theme_advanced_buttons1 : "bold,italic,underline,strikethrough,formatselect,forecolor,backcolor,link,unlink,justifyleft,justifycenter,justifyright,bullist,numlist,|,pasteword,pastetext,table,image,|,undo,redo,|,code,fullscreen",
-			theme_advanced_buttons2 : "",
-			theme_advanced_buttons3 : "",
-			theme_advanced_toolbar_align : "left",
-			relative_urls : false
-		});
-		</script>
 	</body>
 </html>

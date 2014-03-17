@@ -10,10 +10,10 @@
 {if $rule eq "p_admin"}
 <a href="/news/{$news->getId()}/change"><button class="btn btn-warning">Редактировать</button></a>
 {/if}
-<hr>
 
 {if $user}
 {if $news->getComments()}
+<hr>
 <ul class="media-list">
 	{foreach from=$news->getComments()->getMessages() item=message}
 	<li class="media">

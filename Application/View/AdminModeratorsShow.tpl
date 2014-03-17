@@ -1,5 +1,5 @@
 {extends file="AdminUsersPanel.tpl"}
-{block name=admin_users_menu_all}active{/block}
+{block name=admin_users_menu_moderators}active{/block}
 {block name=admin_users_content}
 
 <div class="row margtp-25">
@@ -45,7 +45,7 @@
 				<td><p class="text-center">{$user->getTelephone()}</p></td>
 				<td><p class="text-center">{$user->getResidence()}</p></td>
 				<td><a href="/admin_cabinet/user/{$user->getId()}">Изм</a>
-				<a href="/admin_cabinet/users/moderators/{$user->getId()}/add">Мод</a></td>
+				<a href="/admin_cabinet/users/moderators/{$user->getId()}/del">Уд</a></td>
 			</tr>
 		{/foreach}
 		</table>

@@ -12,7 +12,9 @@ class EventIdentityObject extends \System\Orm\IdentityObject{
 			'event_type',
 			'event_confirm',
 			'event_confirm_description',
-			'event_status'));
+			'event_status',
+			'event_user_user',
+			'event_user_rule'));
 	}
 }
 

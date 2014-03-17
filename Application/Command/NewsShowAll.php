@@ -22,16 +22,18 @@ class NewsShowAll extends \System\Core\Command {
 
 		$news = $finder->find($idobj, "post");
 
-		$factory = \System\Orm\PersistenceFactory::getFactory("UserRole");
-		$finder = new \System\Orm\DomainObjectAssembler($factory);
-		$idobj = $factory->getIndentityObject();
+		if ($user) {
+			$factory = \System\Orm\PersistenceFactory::getFactory("UserRole");
+			$finder = new \System\Orm\DomainObjectAssembler($factory);
+			$idobj = $factory->getIndentityObject();
 
-		$idobj->field("role_user")->eq($user->getId());
-		$idobj->field("role_role")->eq(\System\Helper\Helper::getId("role", "MODERATOR"));
+			$idobj->field("role_user")->eq($user->getId());
+			$idobj->field("role_role")->eq(\System\Helper\Helper::getId("role", "MODERATOR"));
 
-		$user_role = $finder->findOne($idobj,"role");
-		if ($user_role) {
-			$can_create = 1;
+			$user_role = $finder->findOne($idobj,"role");
+			if ($user_role) {
+				$can_create = 1;
+			}
 		}
 
 		return $this->render(array("user" => $user, "news" => $news, "can_create" => $can_create, "page" => $page));

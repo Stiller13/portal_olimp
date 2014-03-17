@@ -1,34 +1,27 @@
 {extends file="AdminUsersPanel.tpl"}
-{block name=admin_users_menu_all}active{/block}
+{block name=admin_users_menu_search}active{/block}
 {block name=admin_users_content}
 
 <div class="row margtp-25">
+	<div class="col-md-4 col-md-offest-4">
+		<form class="form" action="/admin_cabinet/users/search" method="post">
+			<div class="form-group">
+				<label class="control-label" for="search_name">Имя</label>
+				<input type="text" class="form-control	" name="name" id="search_name">
+			</div>
+			<button class="btn btn-success">Искать</button>
+		</form>
+	</div>
 	<div class="col-md-12">
 		<table class="table table-striped margtp-25">
 			<tr>
-				<th>
-					<p class="text-center">
-						{if $id_up}<a href="/admin_cabinet/users/all/id_down">Id</a>{else}<a href="/admin_cabinet/users/all/id_up">Id</a>{/if}
-					</p>
-				</th>
-				<th>
-					<p class="text-center">
-						{if $name_up}<a href="/admin_cabinet/users/all/name_down">Имя</a>{else}<a href="/admin_cabinet/users/all/name_up">Имя</a>{/if}
-					</p>
-				</th>
-				<th>
-					<p class="text-center">
-						{if $surname_up}<a href="/admin_cabinet/users/all/surname_down">Фамилия</a>{else}<a href="/admin_cabinet/users/all/surname_up">Фамилия</a>{/if}
-					</p>
-				</th>
+				<th><p class="text-center">Id</p></th>
+				<th><p class="text-center">Имя</p></th>
+				<th><p class="text-center">Фамилия</p></th>
 				<th><p class="text-center">Отчество</p></th>
 				<th><p class="text-center">День рождения<p></th>
 				<th><p class="text-center">Статус в системе</p></th>
-				<th>
-					<p class="text-center">
-						{if $gender_up}<a href="/admin_cabinet/users/all/gender_down">Пол</a>{else}<a href="/admin_cabinet/users/all/gender_up">Пол</a>{/if}
-					</p>
-				</th>
+				<th><p class="text-center">Пол</p></th>
 				<th><p class="text-center">Телефон</p></th>
 				<th><p class="text-center">Город</p></th>
 				<th><p class="text-center">Действие</p></th>

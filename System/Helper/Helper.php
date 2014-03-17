@@ -4,10 +4,8 @@ use System\Core\Application;
 
 class Helper {
 	static private $helper=array();
-	
+
 	static public function getName($conf_type, $id){
-		$app = Application::instance();
-		$config = $app->getData("map");
 		if (!isset(self::$helper[$conf_type])) {
 			self::parse($conf_type);
 		}
@@ -15,8 +13,6 @@ class Helper {
 	}
 
 	static public function getId($conf_type, $name){
-		$app = Application::instance();
-		$config = $app->getData("map");
 		if (!isset(self::$helper[$conf_type])) {
 			self::parse($conf_type);
 		}
@@ -26,11 +22,18 @@ class Helper {
 		return NULL;
 	}
 
+	static public function getAll($conf_type) {
+		if (!isset(self::$helper[$conf_type])) {
+			self::parse($conf_type);
+		}
+		return self::$helper[$conf_type];
+	}
+
 	static private function parse($conf_type){
 		$app = Application::instance();
 		$config = $app->getData("map");
 		foreach ($config->$conf_type as $p){
-			self::$helper[$conf_type][(string)$p["id"]] = $p["name"];	
+			self::$helper[$conf_type][(string)$p["id"]] = $p["name"];
 		}
-	}	
+	}
 }

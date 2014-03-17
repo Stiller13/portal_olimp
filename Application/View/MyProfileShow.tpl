@@ -46,7 +46,7 @@
 				<span class="input-group-addon">Статус в системе</span>
 				<select class="form-control" name="user_system_status">
 				{foreach from=$list_uss item=value}
-					<option value={$value["id"]} {if $value["id"] eq $user->getStatusSys()}selected{/if}>{$value["name"]}</option>
+					<option value={$value} {if $value eq $user->getStatusSys()}selected{/if}>{$value}</option>
 				{/foreach}
 				</select>
 			</div>

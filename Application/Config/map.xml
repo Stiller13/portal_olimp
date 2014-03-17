@@ -40,6 +40,6 @@
 		<rule name="pmg_partner" id="6"/>
 		<rule name="smg_partner" id="7"/>
 		<rule name="nmg_partner" id="8"/>
-		<rule name="p_admin" id="1"/>
+		<rule name="p_admin" id="9"/>
 	</map>
 </config>

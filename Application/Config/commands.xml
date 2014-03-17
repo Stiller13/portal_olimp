@@ -76,7 +76,24 @@
 
 		<command class="AdminMSNoticeGroupsShow" view="AdminMSNoticeGroupsShow" />
 
-		<command class="AdminUsersShow" view="AdminUsersShow" />
+		<command class="AdminUserShow" view="AdminUserShow">
+			<param name="user_id" />
+		</command>
+
+		<command class="AdminUsersShow">
+			<param name="type_users" />
+			<param name="mode_sort" />
+		</command>
+
+		<command class="AdminModerDel">
+			<param name="user_id" />
+		</command>
+
+		<command class="AdminModerAdd">
+			<param name="user_id" />
+		</command>
+
+		<command class="AdminUsersSearch" view="AdminUsersSearch" />
 
 <!--Мероприятия -->
 		<command class="EventCreateShow" view="EventCreateShow" />
