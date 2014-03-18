@@ -34,10 +34,10 @@ class Logger {
 		self::raw_log($_SERVER["REQUEST_METHOD"]);
 		self::raw_log(" ");
 		self::raw_log($_SERVER["REQUEST_URI"]);
-		self::raw_log(" ");
-		self::raw_log($_SERVER["REMOTE_ADDR"]);
-		self::raw_log(" ");
-		self::raw_log($_SERVER["HTTP_USER_AGENT"]);
+		// self::raw_log(" ");
+		// self::raw_log($_SERVER["REMOTE_ADDR"]);
+		// self::raw_log(" ");
+		// self::raw_log($_SERVER["HTTP_USER_AGENT"]);
 		self::raw_log(" - ");
 		self::raw_log($str);
 		self::raw_log(PHP_EOL);

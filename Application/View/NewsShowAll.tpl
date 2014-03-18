@@ -21,12 +21,14 @@
 		{foreach from=$news item=one_news}
 		<div class="panel panel-default">
 			<div class="panel-body">
+			{$one_news->getDate()}
 				<h4><p class="text-center">{$one_news->getTitle()}</p></h4>
-			</div>
-			<div class="panel-footer">
-				{$one_news->getDate()}
 				<p class="pull-right"><a href="/news/{$one_news->getId()}">Подробнее</a></p>
 			</div>
+<!-- 			<div class="panel-footer">
+				{$one_news->getDate()}
+				<p class="pull-right"><a href="/news/{$one_news->getId()}">Подробнее</a></p>
+			</div> -->
 		</div>
 		{/foreach}
 

@@ -64,6 +64,6 @@
 			<div class="well margtp-25">&copy;&nbsp;2014 <a href="http://bsu.ru">Бурятский государственный университет</a></div>
 		</div>
 		<script src="/Design/js/jquery-1.10.2.min.js"></script>
-		<script src="/Design/js/bootstrap.min.js"></script>
+		<script src="/Design/js/bootstrap.js"></script>
 	</body>
 </html>
