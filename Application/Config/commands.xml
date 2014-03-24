@@ -159,7 +159,11 @@
 		</command>
 
 		<command class="NewsNewComment" view="NewsNewComment">
-			<param name="news_id" required="1"/>
+			<param name="news_id" required="1" />
+		</command>
+
+		<command class="NewsRatioChange" mainObj="post">
+			<param name="news_id" required="1" objId="1"/>
 		</command>
 	</commands>
 </config>

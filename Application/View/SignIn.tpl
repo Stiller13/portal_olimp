@@ -1,9 +1,10 @@
 {extends file="Main.tpl"}
 {block name=title}Авторизация{/block}
 {block name=content}
+
 <div class="row">
 	<div class="col-md-3 col-md-offset-4">
-		<form class="form-horizontal" method="post" action="/SignIn">
+		<form class="form" action="/SignIn" method="post">
 			<div class="form-group">
 				<label class="control-label" for="inputLogin">Логин</label>
 				<input type="text" name="login" class="form-control" id="inputLogin" placeholder="Логин">
@@ -18,4 +19,5 @@
 		</form>
 	</div>
 </div>
+
 {/block}

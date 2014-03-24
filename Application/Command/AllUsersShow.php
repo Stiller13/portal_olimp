@@ -12,6 +12,7 @@ class AllUsersShow extends \System\Core\Command {
 		$user_finder = new \System\Orm\DomainObjectAssembler($factory_user);
 		$user_io = $factory_user->getIndentityObject();
 		$user_io->addOrder(array('user_name'=>'ASC'));
+		$user_io->field('user_id')->neq($user->getId());
 
 		$user_list = $user_finder->find($user_io, 'user');
 

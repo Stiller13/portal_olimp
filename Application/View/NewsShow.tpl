@@ -9,7 +9,18 @@
 
 {if $rule eq "p_admin"}
 <a href="/news/{$news->getId()}/change"><button class="btn btn-warning">Редактировать</button></a>
+<br />
+{else}
+	{if $user}
+	<form action="/news/{$news->getId()}/ratio" method="post">
+		<input type="hidden" name="ratio" value={$ratio}>
+		<button type="submit" class="btn {if $ratio eq 1}btn-success{/if}" name="do_ratio" value="1">+ [{$news->getRatioUp()}]</button>
+		<button type="submit" class="btn {if $ratio eq -1}btn-danger{/if}" name="do_ratio" value="-1">- [{$news->getRatioDown()}]</button>
+	</form>
+	{/if}
 {/if}
+
+Оценка : {$news->getRatio()}
 
 {if $user}
 {if $news->getComments()}

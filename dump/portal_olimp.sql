@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Мар 05 2014 г., 19:08
+-- Время создания: Мар 24 2014 г., 00:14
 -- Версия сервера: 5.1.40-community
 -- Версия PHP: 5.3.3
 
@@ -39,9 +39,9 @@ TRUNCATE message;
 TRUNCATE messagegroup;
 TRUNCATE messagegroup_user;
 TRUNCATE message_file;
-TRUNCATE userset;
+TRUNCATE post;
+TRUNCATE post_user;
 TRUNCATE user_file;
-TRUNCATE user_userset;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_account`(IN `login` VARCHAR(25) CHARSET utf8, IN `password` VARCHAR(40) CHARSET utf8, IN `salt` VARCHAR(255) CHARSET utf8, OUT `id` INT)
@@ -54,11 +54,11 @@ INSERT INTO account(account_id, account_login, account_password, account_salt) V
 COMMIT;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_event`(IN `title` VARCHAR(100) CHARSET utf8, IN `description_public` TEXT CHARSET utf8, IN `description_private` TEXT CHARSET utf8, IN `type` VARCHAR(10) CHARSET utf8, IN `confirm` BOOLEAN, IN `confirm_description` VARCHAR(100) CHARSET utf8, IN `groups` TEXT CHARSET utf8, IN `files` TEXT CHARSET utf8, OUT `id` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_event`(IN `title` VARCHAR(100) CHARSET utf8, IN `description_public` TEXT CHARSET utf8, IN `description_private` TEXT CHARSET utf8, IN `type` VARCHAR(10) CHARSET utf8, IN `confirm` BOOLEAN, IN `confirm_description` VARCHAR(100) CHARSET utf8, IN `groups` TEXT CHARSET utf8, IN `files` TEXT CHARSET utf8, IN `status` INT, OUT `id` INT)
     NO SQL
 BEGIN
 	START TRANSACTION;
-	INSERT INTO event(event_title, event_description_public, event_description_private, event_type, event_confirm, event_confirm_description) VALUES (title, description_public, description_private, type, confirm, confirm_description);
+	INSERT INTO event(event_title, event_description_public, event_description_private, event_type, event_confirm, event_confirm_description, event_status) VALUES (title, description_public, description_private, type, confirm, confirm_description, status);
 	SET id=LAST_INSERT_ID();
 	CALL insert_event_mg(groups, id);
 	CALL insert_event_file(files, id);
@@ -111,11 +111,11 @@ BEGIN
 	COMMIT;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_file`(IN `file_name` VARCHAR(100), IN `file_code` VARCHAR(50), OUT `id` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_file`(IN `file_name` VARCHAR(100) CHARSET utf8, IN `file_code` VARCHAR(50) CHARSET utf8, IN `file_type` INT, IN `file_status` INT, OUT `id` INT)
     NO SQL
 BEGIN
 	START TRANSACTION;
-    INSERT INTO `file`(`file_name`, `file_code`) VALUES (file_name, file_code);
+    INSERT INTO `file`(`file_name`, `file_code`, `file_type`, `file_status`) VALUES (file_name, file_code, file_type, file_status);
     SET id=LAST_INSERT_ID();
     COMMIT;
 END$$
@@ -168,12 +168,44 @@ IF mylist = '' THEN LEAVE body; END IF;
   COMMIT;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_userset`(OUT `id` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_post`(IN `id_post` INT(100), IN `title_post` VARCHAR(100) CHARSET utf8, IN `text_post` TEXT CHARSET utf8, IN `id_mg` INT, IN `status_post` INT, IN `type_post` INT, OUT `id` INT)
     NO SQL
 BEGIN
+	IF id_post > 0 THEN
+		UPDATE `post` SET `post_title`  = title_post, `post_text` = text_post, `post_status` = status_post WHERE `post_id` = id_post;
+		SET id = id_post;
+	ELSE
+		INSERT INTO `post`(`post_title`, `post_text`, `post_comment_mg`, `post_status`, `post_type`) VALUES (title_post, text_post, id_mg, status_post, type_post);
+		SET id = LAST_INSERT_ID();
+	END IF;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_post_user`(IN `id_user` INT, IN `id_post` INT, IN `id_rule` INT, IN `ratio` INT)
+    NO SQL
+BEGIN
+	DECLARE id int;
 	START TRANSACTION;
-	INSERT INTO userset(userset_id) value (NULL);
-	SET id=LAST_INSERT_ID();
+	SET id = (SELECT `post_user_id` FROM `post_user` WHERE `post_user_user` = id_user AND `post_user_post` = id_post);
+	IF id > 0 THEN
+		UPDATE `post_user` SET `post_user_ratio` = ratio, `post_user_rule` = id_rule WHERE `post_user_id` = id;
+	ELSE
+		INSERT INTO `post_user`(`post_user_user`, `post_user_post`, `post_user_ratio`, `post_user_rule`) value (id_user, id_post, ratio, id_rule);
+	END IF;
+	COMMIT;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_role`(IN `id_user` INT, IN `id_role` INT, OUT `id` INT)
+    NO SQL
+BEGIN
+	DECLARE idd int;
+	START TRANSACTION;
+	SET idd = (SELECT `role_id` FROM `role` WHERE `role_user` = id_user AND `role_role` = id_role);
+	IF idd > 0 THEN
+		SET id = idd;
+	ELSE
+		INSERT INTO `role`(`role_user`, `role_role`) VALUES (id_user, id_role);
+		SET id = LAST_INSERT_ID();
+	END IF;
 	COMMIT;
 END$$
 
@@ -181,28 +213,6 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_user_file`(IN `id_user` INT,
     NO SQL
 BEGIN
 	INSERT INTO `user_file` (`user_file_user`,`user_file_file`) VALUES (id_user, id_file);
-END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_user_userset`(IN `id_user` INT, IN `id_obj` INT, IN `id_rule` INT, IN `obj_type` INT)
-    NO SQL
-BEGIN
-	DECLARE userset_id, old_rule int;
-START TRANSACTION;
-	CASE obj_type
-		WHEN 1 THEN
-			SET userset_id = (SELECT messagegroup_partners FROM messagegroup WHERE messagegroup_id = id_obj);
-		WHEN 2 THEN
-			SET userset_id = (SELECT event_userset_id FROM event WHERE event_id = id_obj);
-	END CASE;
-
-	SET old_rule = (SELECT user_userset_rule_id FROM user_userset WHERE user_userset_user_id = id_user AND user_userset_userset_id = userset_id);
-	
-	IF old_rule > 0 THEN
-		UPDATE user_userset SET user_userset_rule_id = id_rule WHERE user_userset_userset_id = userset_id AND user_userset_user_id = id_user;
-	ELSE
-		INSERT INTO user_userset(user_userset_user_id, user_userset_userset_id, user_userset_rule_id) value (id_user, userset_id, id_rule);
-	END IF;
-COMMIT;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_account`(IN `login` VARCHAR(25), IN `password` VARCHAR(40) CHARSET utf8, IN `salt` VARCHAR(255) CHARSET utf8)
@@ -213,11 +223,11 @@ UPDATE `account` SET `account_password`=password, `account_salt`=salt WHERE `acc
 COMMIT;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_event`(IN `title` VARCHAR(100) CHARSET utf8, IN `desc_publ` TEXT CHARSET utf8, IN `desc_priv` TEXT CHARSET utf8, IN `type` VARCHAR(10) CHARSET utf8, IN `confirm` BOOLEAN, IN `confirm_desc` VARCHAR(100) CHARSET utf8, IN `groups` TEXT CHARSET utf8, IN `files` TEXT CHARSET utf8, IN `e_id` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_event`(IN `title` VARCHAR(100) CHARSET utf8, IN `desc_publ` TEXT CHARSET utf8, IN `desc_priv` TEXT CHARSET utf8, IN `type` VARCHAR(10) CHARSET utf8, IN `confirm` BOOLEAN, IN `confirm_desc` VARCHAR(100) CHARSET utf8, IN `groups` TEXT CHARSET utf8, IN `files` TEXT CHARSET utf8, IN `status` INT, IN `e_id` INT)
     NO SQL
 BEGIN
 	START TRANSACTION;
-	UPDATE `event` SET `event_title`=title, `event_description_public`=desc_publ,`event_description_private`=desc_priv, `event_type`=type, `event_confirm`=confirm, `event_confirm_description`=confirm_desc WHERE `event_id`=e_id;
+	UPDATE `event` SET `event_title`=title, `event_description_public`=desc_publ,`event_description_private`=desc_priv, `event_type`=type, `event_confirm`=confirm, `event_confirm_description`=confirm_desc, `event_status`=status WHERE `event_id`=e_id;
 	DELETE FROM `event_mg` WHERE `event_mg_event` = e_id;
 	CALL insert_event_mg(groups, e_id);
 	DELETE FROM `event_file` WHERE `event_file_event` = e_id;
@@ -268,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `account_password` varchar(40) NOT NULL,
   `account_salt` varchar(14) NOT NULL,
   PRIMARY KEY (`account_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
 -- Дамп данных таблицы `account`
@@ -280,7 +290,8 @@ INSERT INTO `account` (`account_id`, `account_login`, `account_password`, `accou
 (17, 'dim', '5e35c69583248f72d56c9643f97f43c2016ba39a', '#m+n28h+r*2ejs'),
 (18, 'dim2', '203b306a46e1a296bfbf2d5a237d9708b471f070', '5%hc#nv_jl$!q'),
 (19, 'fffaf', '2222231', 'dadsad'),
-(20, 'qqq', 'f29e05566dbf26107dede7ffe71cd29032929cb1', 'dl6w%xt8yi6z3');
+(20, 'qqq', 'f29e05566dbf26107dede7ffe71cd29032929cb1', 'dl6w%xt8yi6z3'),
+(21, 'admin', '74f123b3aa8a73ad89e336696a68eb82934bd708', 'm8!e##5r%l*1i');
 
 -- --------------------------------------------------------
 
@@ -307,19 +318,12 @@ CREATE TABLE IF NOT EXISTS `event` (
   `event_title` varchar(255) NOT NULL,
   `event_description_public` text NOT NULL,
   `event_description_private` text NOT NULL,
-  `event_type` varchar(10) NOT NULL,
+  `event_type` int(11) NOT NULL,
   `event_confirm` tinyint(1) NOT NULL,
   `event_confirm_description` text NOT NULL,
   `event_status` int(11) NOT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Дамп данных таблицы `event`
---
-
-INSERT INTO `event` (`event_id`, `event_title`, `event_description_public`, `event_description_private`, `event_type`, `event_confirm`, `event_confirm_description`, `event_status`) VALUES
-(1, '1', '<p style="text-align: center;">123123123</p>', '<p style="text-align: center;">123123123</p>', '2', 1, '<p style="text-align: center;">you must send file</p>', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -345,17 +349,7 @@ CREATE TABLE IF NOT EXISTS `event_mg` (
   `event_mg_event` int(11) NOT NULL,
   `event_mg_group` int(11) NOT NULL,
   PRIMARY KEY (`event_mg_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
-
---
--- Дамп данных таблицы `event_mg`
---
-
-INSERT INTO `event_mg` (`event_mg_id`, `event_mg_event`, `event_mg_group`) VALUES
-(1, 1, 6),
-(2, 1, 7),
-(3, 1, 8),
-(4, 1, 9);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -370,15 +364,7 @@ CREATE TABLE IF NOT EXISTS `event_user` (
   `event_user_rule` int(11) NOT NULL,
   `event_user_file` int(11) NOT NULL,
   PRIMARY KEY (`event_user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=21 ;
-
---
--- Дамп данных таблицы `event_user`
---
-
-INSERT INTO `event_user` (`event_user_id`, `event_user_user`, `event_user_event`, `event_user_rule`, `event_user_file`) VALUES
-(1, 17, 1, 1, -1),
-(20, 19, 1, 2, -1);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -391,15 +377,17 @@ CREATE TABLE IF NOT EXISTS `file` (
   `file_name` varchar(255) NOT NULL,
   `file_code` varchar(255) NOT NULL,
   `file_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `file_type` int(11) NOT NULL,
+  `file_status` int(11) NOT NULL,
   PRIMARY KEY (`file_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Дамп данных таблицы `file`
 --
 
-INSERT INTO `file` (`file_id`, `file_name`, `file_code`, `file_date`) VALUES
-(1, 'Sims.bat', '9d077b4bbc510c3d4531640480af5400', '2014-03-03 05:47:47');
+INSERT INTO `file` (`file_id`, `file_name`, `file_code`, `file_date`, `file_type`, `file_status`) VALUES
+(2, 'Безымянный.png', '7135905e759008a2201d488467aa9f28', '2014-03-22 07:54:21', 200, 201);
 
 -- --------------------------------------------------------
 
@@ -416,29 +404,18 @@ CREATE TABLE IF NOT EXISTS `message` (
   `message_message` int(11) NOT NULL,
   `message_status` smallint(6) NOT NULL,
   PRIMARY KEY (`message_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Дамп данных таблицы `message`
 --
 
 INSERT INTO `message` (`message_id`, `message_text`, `message_date`, `message_user`, `message_group`, `message_message`, `message_status`) VALUES
-(1, '1', '2014-03-02 10:20:19', 17, 5, 0, 0),
-(2, '2', '2014-03-02 10:20:21', 17, 5, 0, 0),
-(3, 'Привет!', '2014-03-03 07:56:17', 17, 10, 0, 0),
-(4, 'Hi!', '2014-03-03 08:16:11', 20, 10, 0, 0),
-(5, 'yes yes', '2014-03-03 09:19:43', 17, 10, 0, 0),
-(6, '1', '2014-03-03 09:22:53', 17, 9, 0, 0),
-(7, 'всем!\r\n', '2014-03-03 09:23:14', 17, 9, 0, 0),
-(8, '444', '2014-03-03 11:39:36', 17, 11, 0, 0),
-(9, '6', '2014-03-03 11:39:57', 17, 11, 0, 0),
-(10, '1', '2014-03-05 04:39:59', 17, 6, 0, 0),
-(11, '2', '2014-03-05 05:38:55', 17, 6, 0, 0),
-(12, '21312313', '2014-03-05 05:43:47', 17, 6, 10, 0),
-(13, '222', '2014-03-05 05:45:29', 17, 6, 12, 0),
-(14, '444444', '2014-03-05 05:46:03', 17, 6, 0, 0),
-(15, '2222333', '2014-03-05 05:46:13', 17, 6, 14, 0),
-(16, '555555', '2014-03-05 05:46:22', 17, 6, 15, 0);
+(1, '1', '2014-03-22 07:51:30', 17, 1, 0, 201),
+(2, '2', '2014-03-22 07:51:44', 17, 1, 0, 201),
+(3, '2', '2014-03-22 07:53:04', 17, 1, 0, 201),
+(4, '2', '2014-03-22 07:53:39', 17, 1, 0, 201),
+(5, '2', '2014-03-22 07:54:21', 17, 1, 0, 201);
 
 -- --------------------------------------------------------
 
@@ -452,24 +429,16 @@ CREATE TABLE IF NOT EXISTS `messagegroup` (
   `messagegroup_status` int(11) NOT NULL,
   `messagegroup_desc` varchar(100) NOT NULL,
   PRIMARY KEY (`messagegroup_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Дамп данных таблицы `messagegroup`
 --
 
 INSERT INTO `messagegroup` (`messagegroup_id`, `messagegroup_type`, `messagegroup_status`, `messagegroup_desc`) VALUES
-(1, 1, 0, ''),
-(2, 1, 0, ''),
-(3, 1, 0, ''),
-(4, 1, 0, ''),
-(5, 1, 0, ''),
-(6, 2, 0, 'Комментарии'),
-(7, 4, 4, 'Для участников'),
-(8, 4, 3, 'Для заявителей'),
-(9, 4, 2, 'Для всех'),
-(10, 1, 0, ''),
-(11, 3, 0, 'Для всех пользователей');
+(1, 4, 201, ''),
+(2, 5, 1, 'Комментарии для новости'),
+(3, 5, 1, 'Комментарии для новости');
 
 -- --------------------------------------------------------
 
@@ -484,27 +453,15 @@ CREATE TABLE IF NOT EXISTS `messagegroup_user` (
   `messagegroup_user_rule` int(11) NOT NULL,
   `messagegroup_user_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`messagegroup_user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=27 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
 
 --
 -- Дамп данных таблицы `messagegroup_user`
 --
 
 INSERT INTO `messagegroup_user` (`messagegroup_user_id`, `messagegroup_user_group`, `messagegroup_user_user`, `messagegroup_user_rule`, `messagegroup_user_date`) VALUES
-(4, 5, 17, 5, '2014-03-03 04:45:48'),
-(5, 5, 20, 6, '2014-03-03 11:45:06'),
-(3, 4, 19, 6, '2014-03-02 10:12:37'),
-(6, 5, 16, 6, '2014-03-02 10:20:16'),
-(18, 10, 17, 5, '2014-03-03 09:19:43'),
-(17, 10, 20, 6, '2014-03-03 09:31:15'),
-(19, 9, 19, 3, '2014-03-03 09:46:27'),
-(20, 7, 19, 3, '2014-03-03 09:46:27'),
-(21, 11, 15, 7, '2014-03-03 11:39:22'),
-(22, 11, 16, 7, '2014-03-03 11:39:22'),
-(23, 11, 17, 7, '2014-03-03 11:39:57'),
-(24, 11, 18, 7, '2014-03-03 11:39:22'),
-(25, 11, 19, 7, '2014-03-03 11:39:22'),
-(26, 11, 20, 7, '2014-03-03 11:39:22');
+(1, 1, 17, 5, '2014-03-22 09:24:18'),
+(2, 1, 19, 6, '2014-03-22 07:51:26');
 
 -- --------------------------------------------------------
 
@@ -517,8 +474,99 @@ CREATE TABLE IF NOT EXISTS `message_file` (
   `file_id` int(11) NOT NULL,
   `message_id` int(11) NOT NULL,
   PRIMARY KEY (`message_file_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+--
+-- Дамп данных таблицы `message_file`
+--
+
+INSERT INTO `message_file` (`message_file_id`, `file_id`, `message_id`) VALUES
+(1, 2, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `post`
+--
+
+CREATE TABLE IF NOT EXISTS `post` (
+  `post_id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_title` varchar(100) COLLATE utf8_bin NOT NULL,
+  `post_text` text COLLATE utf8_bin NOT NULL,
+  `post_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `post_comment_mg` int(11) NOT NULL,
+  `post_status` int(11) NOT NULL,
+  `post_type` int(11) NOT NULL,
+  PRIMARY KEY (`post_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
+
+--
+-- Дамп данных таблицы `post`
+--
+
+INSERT INTO `post` (`post_id`, `post_title`, `post_text`, `post_date`, `post_comment_mg`, `post_status`, `post_type`) VALUES
+(1, 'Это первая новость', '<p style="text-align: center;">йййцуцйуйцуфывфывфывфыв</p>', '2014-03-22 09:24:42', 2, 1, 10),
+(2, 'Эталонная модель взаимодействия открытых систем', '<p style="text-align: center;">В соответствии с моделью OSI выделяются следующие иерархические уровни (см. <br />рис. 1.13): физический (Physical); канальный (Data Link); сетевой (Network); <br />транспортный (Transport); сеансовый (Session); уровень представления (Presentation); <br />прикладной (Application). <br /> В соответствии с эталонной моделью OSI эти уровни взаимодействуют так, как <br />показано на рис. 1.14. Таким образом, сложная задача обмена информацией между <br />компьютерами в сети разбивается на ряд относительно независимых и менее сложных <br />подзадач взаимодействия между соседними уровнями. Каждая такая подзадача <br />выполняется в соответствии с унифицированными правилами &ndash; протоколом <br />взаимодействия.</p>', '2014-03-23 15:46:06', 3, 1, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Дублирующая структура для представления `post_ratio_down`
+--
+CREATE TABLE IF NOT EXISTS `post_ratio_down` (
+`post_id` int(11)
+,`post_ratio_down` bigint(21)
+);
+-- --------------------------------------------------------
+
+--
+-- Дублирующая структура для представления `post_ratio_up`
+--
+CREATE TABLE IF NOT EXISTS `post_ratio_up` (
+`post_id` int(11)
+,`post_ratio_up` bigint(21)
+);
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `post_user`
+--
+
+CREATE TABLE IF NOT EXISTS `post_user` (
+  `post_user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_user_post` int(11) NOT NULL,
+  `post_user_user` int(11) NOT NULL,
+  `post_user_rule` int(11) NOT NULL,
+  `post_user_ratio` int(11) NOT NULL,
+  PRIMARY KEY (`post_user_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=6 ;
+
+--
+-- Дамп данных таблицы `post_user`
+--
+
+INSERT INTO `post_user` (`post_user_id`, `post_user_post`, `post_user_user`, `post_user_rule`, `post_user_ratio`) VALUES
+(2, 1, 17, 9, -1),
+(3, 1, 15, 10, 1),
+(4, 1, 16, 10, 1),
+(5, 2, 17, 9, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Дублирующая структура для представления `post_wratio`
+--
+CREATE TABLE IF NOT EXISTS `post_wratio` (
+`post_id` int(11)
+,`post_title` varchar(100)
+,`post_text` text
+,`post_date` timestamp
+,`post_comment_mg` int(11)
+,`post_status` int(11)
+,`post_type` int(11)
+,`post_ratio_up` bigint(21)
+,`post_ratio_down` bigint(21)
+);
 -- --------------------------------------------------------
 
 --
@@ -546,6 +594,27 @@ INSERT INTO `question` (`question_id`, `question_text`, `question_grouplist`) VA
 (10, 'должность', 0),
 (11, 'ученная степень', 0),
 (12, 'ученное звание', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `role`
+--
+
+CREATE TABLE IF NOT EXISTS `role` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_user` int(11) NOT NULL,
+  `role_role` int(11) NOT NULL,
+  PRIMARY KEY (`role_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
+
+--
+-- Дамп данных таблицы `role`
+--
+
+INSERT INTO `role` (`role_id`, `role_user`, `role_role`) VALUES
+(3, 21, 404),
+(4, 17, 2);
 
 -- --------------------------------------------------------
 
@@ -586,7 +655,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_mail` varchar(32) NOT NULL,
   `user_telephone` varchar(11) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
 -- Дамп данных таблицы `user`
@@ -598,18 +667,8 @@ INSERT INTO `user` (`user_id`, `user_name`, `user_surname`, `user_patronymic`, `
 (17, 'Дмитрий', 'Залуцкий', 'Андреевич', '2014-02-04', 'male', 'Улан-Удэ', 3, '', '66543567890'),
 (18, 'Алексей', 'Bold', '', '0000-00-00', '', '', 0, '', ''),
 (19, 'Bon', 'Asdf', '', '0000-00-00', '', '', 0, '', ''),
-(20, 'Nil', 'Asdinger', '', '0000-00-00', '', '', 0, '', '');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `userset`
---
-
-CREATE TABLE IF NOT EXISTS `userset` (
-  `userset_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`userset_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+(20, 'Nil', 'Asdinger', '', '0000-00-00', '', '', 0, '', ''),
+(21, 'Адиминистратор', '', '', '0000-00-00', '', '', 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -622,28 +681,7 @@ CREATE TABLE IF NOT EXISTS `user_file` (
   `user_file_user` int(11) NOT NULL,
   `user_file_file` int(11) NOT NULL,
   PRIMARY KEY (`user_file_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
-
---
--- Дамп данных таблицы `user_file`
---
-
-INSERT INTO `user_file` (`user_file_id`, `user_file_user`, `user_file_file`) VALUES
-(1, 20, 1);
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `user_userset`
---
-
-CREATE TABLE IF NOT EXISTS `user_userset` (
-  `user_userset_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_userset_user_id` int(11) NOT NULL,
-  `user_userset_userset_id` int(11) NOT NULL,
-  `user_userset_rule_id` int(11) NOT NULL,
-  PRIMARY KEY (`user_userset_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -678,11 +716,38 @@ CREATE TABLE IF NOT EXISTS `visit3` (
 -- --------------------------------------------------------
 
 --
+-- Структура для представления `post_ratio_down`
+--
+DROP TABLE IF EXISTS `post_ratio_down`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `post_ratio_down` AS select `post`.`post_id` AS `post_id`,count(`post_user`.`post_user_id`) AS `post_ratio_down` from (`post` left join `post_user` on(((`post`.`post_id` = `post_user`.`post_user_post`) and (`post_user`.`post_user_ratio` < 0))));
+
+-- --------------------------------------------------------
+
+--
+-- Структура для представления `post_ratio_up`
+--
+DROP TABLE IF EXISTS `post_ratio_up`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `post_ratio_up` AS select `post`.`post_id` AS `post_id`,count(`post_user`.`post_user_id`) AS `post_ratio_up` from (`post` left join `post_user` on(((`post`.`post_id` = `post_user`.`post_user_post`) and (`post_user`.`post_user_ratio` > 0))));
+
+-- --------------------------------------------------------
+
+--
+-- Структура для представления `post_wratio`
+--
+DROP TABLE IF EXISTS `post_wratio`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `post_wratio` AS select `post`.`post_id` AS `post_id`,`post`.`post_title` AS `post_title`,`post`.`post_text` AS `post_text`,`post`.`post_date` AS `post_date`,`post`.`post_comment_mg` AS `post_comment_mg`,`post`.`post_status` AS `post_status`,`post`.`post_type` AS `post_type`,`post_ratio_up`.`post_ratio_up` AS `post_ratio_up`,`post_ratio_down`.`post_ratio_down` AS `post_ratio_down` from ((`post` left join `post_ratio_up` on((`post`.`post_id` = `post_ratio_up`.`post_id`))) left join `post_ratio_down` on((`post`.`post_id` = `post_ratio_down`.`post_id`)));
+
+-- --------------------------------------------------------
+
+--
 -- Структура для представления `rule`
 --
 DROP TABLE IF EXISTS `rule`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `rule` AS select `event`.`event_id` AS `obj_id`,`event_user`.`event_user_user` AS `user_id`,`event_user`.`event_user_rule` AS `rule_id`,2 AS `obj_type` from (`event` join `event_user`) where (`event_user`.`event_user_event` = `event`.`event_id`) union all select `messagegroup`.`messagegroup_id` AS `obj_id`,`messagegroup_user`.`messagegroup_user_user` AS `user_id`,`messagegroup_user`.`messagegroup_user_rule` AS `rule_id`,1 AS `obj_type` from (`messagegroup` join `messagegroup_user`) where (`messagegroup_user`.`messagegroup_user_group` = `messagegroup`.`messagegroup_id`);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `rule` AS select `event`.`event_id` AS `obj_id`,`event_user`.`event_user_user` AS `user_id`,`event_user`.`event_user_rule` AS `rule_id`,2 AS `obj_type` from (`event` join `event_user`) where (`event_user`.`event_user_event` = `event`.`event_id`) union all select `messagegroup`.`messagegroup_id` AS `obj_id`,`messagegroup_user`.`messagegroup_user_user` AS `user_id`,`messagegroup_user`.`messagegroup_user_rule` AS `rule_id`,1 AS `obj_type` from (`messagegroup` join `messagegroup_user`) where (`messagegroup_user`.`messagegroup_user_group` = `messagegroup`.`messagegroup_id`) union all select `post`.`post_id` AS `obj_id`,`post_user`.`post_user_user` AS `user_id`,`post_user`.`post_user_rule` AS `rule_id`,3 AS `obj_type` from (`post` join `post_user`) where (`post_user`.`post_user_post` = `post`.`post_id`);
 
 -- --------------------------------------------------------
 
@@ -691,7 +756,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `status`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `status` AS select `messagegroup`.`messagegroup_id` AS `obj_id`,`messagegroup`.`messagegroup_status` AS `obj_status`,1 AS `obj_type` from `messagegroup` union all select `event`.`event_id` AS `obj_id`,`event`.`event_status` AS `obj_status`,2 AS `obj_type` from `event`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `status` AS select `messagegroup`.`messagegroup_id` AS `obj_id`,`messagegroup`.`messagegroup_status` AS `obj_status`,1 AS `obj_type` from `messagegroup` union all select `event`.`event_id` AS `obj_id`,`event`.`event_status` AS `obj_status`,2 AS `obj_type` from `event` union all select `post`.`post_id` AS `obj_id`,`post`.`post_status` AS `obj_status`,3 AS `obj_type` from `post`;
 
 -- --------------------------------------------------------
 

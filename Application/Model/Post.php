@@ -57,6 +57,18 @@ class Post extends \System\Orm\DomainObject{
 	 */
 	private $date;
 
+	/**
+	 * Положительные оценки
+	 * @var integer
+	 */
+	private $ratio_up = 0;
+
+	/**
+	 * Отрицательные оценки
+	 * @var integer
+	 */
+	private $ratio_down = 0;
+
 	public function setTitle($text) {
 		$this->title = $text;
 		$this->markDirty();
@@ -139,6 +151,26 @@ class Post extends \System\Orm\DomainObject{
 
 	public function getDate() {
 		return $this->date;
+	}
+
+	public function setRatioUp($ratio_up) {
+		$this->ratio_up = $ratio_up;
+	}
+
+	public function getRatioUp() {
+		return $this->ratio_up;
+	}
+
+	public function setRatioDown($ratio_down) {
+		$this->ratio_down = $ratio_down;
+	}
+
+	public function getRatioDown() {
+		return $this->ratio_down;
+	}
+
+	public function getRatio() {
+		return $this->ratio_up - $this->ratio_down;
 	}
 
 	public function targetClass() {

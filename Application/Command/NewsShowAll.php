@@ -16,11 +16,12 @@ class NewsShowAll extends \System\Core\Command {
 		$idobj = $factory->getIndentityObject();
 
 		$idobj->field("post_status")->eq(\System\Helper\Helper::getId("status", "open"));
+		$idobj->field("post_type")->eq(\System\Helper\Helper::getId("type", "news"));
 		$idobj->addOrder(array("post_date"=>"DESC"));
 
 		$idobj->addLimit(array("0" => $count_news_on_page*($page - 1), "1" => $count_news_on_page));
 
-		$news = $finder->find($idobj, "post");
+		$news = $finder->find($idobj, "post_wratio");
 
 		if ($user) {
 			$factory = \System\Orm\PersistenceFactory::getFactory("UserRole");

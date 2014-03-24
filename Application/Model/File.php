@@ -11,11 +11,13 @@ namespace Application\Model;
 class File extends \System\Orm\DomainObject {
 	/**
 	* Название файла
+	* @var  string
 	*/
 	private $name;
 
 	/**
 	* Уникальный код файла
+	* @var string
 	*/
 	private $code;
 
@@ -24,6 +26,18 @@ class File extends \System\Orm\DomainObject {
 	 * @var date
 	 */
 	private $date;
+
+	/**
+	 * Тип файла
+	 * @var integer
+	 */
+	private $type;
+
+	/**
+	 * Статус файла
+	 * @var integer
+	 */
+	private $status;
 
 	/**
 	* Задать имя файла
@@ -70,6 +84,24 @@ class File extends \System\Orm\DomainObject {
 	 */
 	public function getDate() {
 		return $this->date;
+	}
+
+	public function setFile_type($new_type) {
+		$this->type = $new_type;
+		$this->markDirty();
+	}
+
+	public function getFile_type() {
+		return $this->type;
+	}
+
+	public function setStatus($new_status) {
+		$this->status = $new_status;
+		$this->markDirty();
+	}
+
+	public function getStatus() {
+		return $this->status;
 	}
 
 	public function targetClass() {

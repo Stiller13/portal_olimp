@@ -11,27 +11,30 @@ class NewsShow extends \System\Core\Command {
 
 		$idobj->field("post_id")->eq($this->data["news_id"]);
 
-		$news = $finder->findOne($idobj, "post");
+		$news = $finder->findOne($idobj, "post_wratio");
 
 
 		$session = new \System\Session\Session();
-		$user = $session->get("user"); 
+		$user = $session->get("user");
 
 		if ($user) {
-			$factory = \System\Orm\PersistenceFactory::getFactory("RuleObj");
+			$factory = \System\Orm\PersistenceFactory::getFactory("PUser");
 			$finder = new \System\Orm\DomainObjectAssembler($factory);
 			$idobj = $factory->getIndentityObject();
 
-			$idobj->field("user_id")->eq($user->getId());
-			$idobj->field("obj_type")->eq(\System\Helper\Helper::getId("type", "post"));
-			$idobj->field("obj_id")->eq($this->data["news_id"]);
+			$idobj->field("post_user_user")->eq($user->getId());
+			// $idobj->field("obj_type")->eq(\System\Helper\Helper::getId("type", "post"));
+			$idobj->field("post_user_post")->eq($news->getId());
 
-			$rule = $finder->findOne($idobj, "rule");
+			$rule = $finder->findOne($idobj, "post_user");
 			if ($rule) {
+				$ratio = $rule->getRatio();
 				$rule = $rule->getRule();
+			} else {
+				$ratio = 0;
 			}
 		}
 
-		return $this->render(array("user" => $user, "news" => $news, "rule" => $rule));
+		return $this->render(array("user" => $user, "news" => $news, "rule" => $rule, "ratio" => $ratio));
 	}
 }

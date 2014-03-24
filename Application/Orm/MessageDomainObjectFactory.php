@@ -11,7 +11,7 @@ class MessageDomainObjectFactory extends \System\Orm\DomainObjectFactory {
 		$obj->setText($array['message_text']);
 		$obj->setDate($array['message_date']);
 		$obj->setGroup($array['message_group']);
-		$obj->setStatus($array['message_status']);
+		$obj->setStatus(\System\Helper\Helper::getName("status" , $array['message_status']));
 		$obj->setReMessage($array['message_message']);
 
 		$obj->setMessages($this->createMessages($array['message_id']));

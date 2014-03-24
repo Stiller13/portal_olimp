@@ -1,5 +1,7 @@
 <config>
 	<map>
+		<type name="default" id="200"/>
+
 		<type name="messagegroup" id="1"/>
 		<type name="event" id="2"/>
 		<type name="post" id="3"/>
@@ -41,5 +43,6 @@
 		<rule name="smg_partner" id="7"/>
 		<rule name="nmg_partner" id="8"/>
 		<rule name="p_admin" id="9"/>
+		<rule name="p_user" id="10"/>
 	</map>
 </config>

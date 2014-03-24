@@ -14,6 +14,8 @@ class PostDomainObjectFactory extends \System\Orm\DomainObjectFactory{
 		$obj->setComments($this->createComments($array["post_comment_mg"]));
 		$obj->setStatus(\System\Helper\Helper::getName("status", $array["post_status"]));
 		$obj->setPost_type(\System\Helper\Helper::getName("type", $array["post_type"]));
+		$obj->setRatioUp($array["post_ratio_up"]);
+		$obj->setRatioDown($array["post_ratio_down"]);
 
 		return $obj;
 	}

@@ -19,7 +19,7 @@
 	{foreach from=$group->getMessages() item=one_message}
 		<li class="media">
 			<a class="pull-left" href="#">
-				<img class="media-object" src="/Design/Images/noavatar92.jpg" alt="...">
+				<img class="media-object" src="/Design/images/noavatar92.jpg" alt="...">
 			</a>
 			<div class="media-body">
 				<h4 class="media-heading">

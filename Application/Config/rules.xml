@@ -50,8 +50,15 @@
 				<command class="NewsChangeShow"/>
 				<command class="NewsSave"/>
 			</allow>
+			<deny>
+				<command class="NewsRatioChange"/>
+			</deny>
 		</group>
-
+		<group name="p_user">
+			<allow>
+				<command class="NewsRatioChange"/>
+			</allow>
+		</group>
 	</rules>
 
 	<roles>
@@ -66,6 +73,7 @@
 				<command class="NewsShowAll"/>
 				<command class="NewsShow"/>
 				<command class="NewsNewComment"/>
+				<command class="NewsRatioChange"/>
 
 				<command class="MyMSNoticeShow"/>
 				<command class="MyMSSystemShow"/>

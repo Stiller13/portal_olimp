@@ -9,7 +9,7 @@ class MessageUpdateFactory extends \System\Orm\UpdateFactory {
 		$values['id_user'] = $obj->getAuthor()->getId();
 		$values['id_group'] = $obj->getGroup();
 		$values['id_message'] = $obj->getReMessage();
-		$values['status_message'] = $obj->getStatus();
+		$values['status_message'] = \System\Helper\Helper::getId("status", $obj->getStatus());
 
 		$send_files = array();
 		foreach ($obj->getFiles() as $one_file) {

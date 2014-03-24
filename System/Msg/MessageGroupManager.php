@@ -145,11 +145,12 @@ abstract class MessageGroupManager {
 		$author->setId($data['user_id']);
 
 		$upload = \System\File\FileManager::upload_files();
+
 		if (is_null($upload))
 			$upload = new \Application\Orm\FileCollection();
 
 		if (!$data['status'])
-			$data['status'] = 0;
+			$data['status'] = "default";
 
 		if (!$data['id_remessage'])
 			$data['id_remessage'] = 0;

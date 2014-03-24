@@ -34,7 +34,7 @@ class User extends \System\Orm\DomainObject{
 			return $this->name;
 	}
 
-	function setFamily($family) { 
+	function setFamily($family) {
 		$this->family = $family;
 		$this->markDirty();
 

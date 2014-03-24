@@ -185,5 +185,9 @@
 			<param name="news_id">[1-9]{1,10}</param>
 		</route>
 
+		<route id="NewsRatioChange" path="/news/{news_id}/ratio" command="NewsRatioChange" method="post">
+			<param name="news_id">[1-9]{1,10}</param>
+		</route>
+
 	</routes>
 </config>

@@ -19,21 +19,23 @@ class FileManager {
 	}
 
 	/**
-	 * Запись информации о файлах в БДS
+	 * Запись информации о файлах в БД
 	 * @return \Application\Orm\FileCollection
 	 */
-	public function upload_files(){
+	public static function upload_files() {
 		$files = new \Application\Orm\FileCollection();
 
 		$dir = UPL.self::get_dir();
-		$file_factory = \System\Orm\PersistenceFactory::getFactory('File');
+		$file_factory = \System\Orm\PersistenceFactory::getFactory("File");
 		$file_finder = new \System\Orm\DomainObjectAssembler($file_factory);
 
 		foreach (Uploader::upload($dir) as $one_upload) {
-			if ($one_upload['status'] === Uploader::UPLOAD_STAT_OK) {
+			if ($one_upload["status"] === Uploader::UPLOAD_STAT_OK) {
 				$new_file = new \Application\Model\File();
-				$new_file->setName($one_upload['name']);
-				$new_file->setCode($one_upload['code']);
+				$new_file->setName($one_upload["name"]);
+				$new_file->setCode($one_upload["code"]);
+				$new_file->setFile_type("default");
+				$new_file->setStatus("default");
 
 				$file_finder->insert($new_file);
 
@@ -44,20 +46,19 @@ class FileManager {
 		return $files;
 	}
 
-
-	public static function download_file($file_code){
-		$file_factory = \System\Orm\PersistenceFactory::getFactory('File');
+	public static function download_file($file_code) {
+		$file_factory = \System\Orm\PersistenceFactory::getFactory("File");
 		$file_finder = new \System\Orm\DomainObjectAssembler($file_factory);
 		$idobj = $file_factory->getIndentityObject();
 
-		$idobj->field('file_code')->eq($file_code);
+		$idobj->field("file_code")->eq($file_code);
 
-		$file = $file_finder->findOne($idobj, 'file');
+		$file = $file_finder->findOne($idobj, "file");
 
 		$file_dir = DS.self::get_dir($file->getDate());
 
 		$file_path = UPL.$file_dir.DS.$file_code;
-		
+
 		return array("path" => $file_path, "name" => $file->getName());
 		// self::download($file_path, $file->getName());
 	}

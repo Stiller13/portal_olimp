@@ -21,8 +21,11 @@
 		{foreach from=$news item=one_news}
 		<div class="panel panel-default">
 			<div class="panel-body">
-			{$one_news->getDate()}
+			{$my_date = date_parse($one_news->getDate())}
+			{$my_date["year"]}-{$my_date["month"]}-{$my_date["day"]}
+
 				<h4><p class="text-center">{$one_news->getTitle()}</p></h4>
+				<p class="pull-left">Оценка : {$one_news->getRatio()}</p>
 				<p class="pull-right"><a href="/news/{$one_news->getId()}">Подробнее</a></p>
 			</div>
 <!-- 			<div class="panel-footer">

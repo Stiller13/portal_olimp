@@ -49,7 +49,6 @@ class UserFile extends \System\Orm\DomainObject {
 		return $this->file_id;
 	}
 
-
 	public function targetClass() {
 		return 'UserFile';
 	}
